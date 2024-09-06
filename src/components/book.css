@@ -1,0 +1,22 @@
+.book {
+    border: 1px solid #ddd;
+    margin: 1em;
+    padding: 1em;
+    text-align: center;
+    max-width: 200px;
+}
+
+.book img {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 1em;
+}
+
+.book h3 {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+}
+
+.book p {
+    margin: 0.5em 0;
+}
