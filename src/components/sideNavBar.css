@@ -1,0 +1,56 @@
+.nav-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.nav {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+    transition: right 0.3s ease;
+    overflow: hidden;
+    z-index: 1000;
+    padding-top: 30px;
+}
+
+.nav-open {
+    right: 0;
+}
+
+.nav-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.nav ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav li {
+    padding: 15px;
+    color: white;
+}
+
+.nav li:hover {
+    cursor: pointer;
+}

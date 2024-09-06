@@ -1,5 +1,7 @@
 header {
+    flex: none;
     background-color: #f8f8f8;
+    height: 50px;
     padding: 1em;
     text-align: center;
 }
@@ -25,6 +27,6 @@ header nav ul li a {
     color: #333;
 }
 
-header nav ul li a:hover {
-    text-decoration: underline;
+header nav ul li:hover {
+    cursor: pointer;
 }

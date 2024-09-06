@@ -1,17 +1,30 @@
 import React from 'react';
-import './Header.css';
+import './header.css';
+import SideNavBar from "./sideNavBar.tsx";
+import {useMediaQuery} from "react-responsive";
+import {useNavigate} from 'react-router-dom';
 
 const Header: React.FC = () => {
+    const navigate = useNavigate();
+    const isSmallScreen = useMediaQuery({query: '(max-width: 800px)'});
+
     return (
         <header>
             {/*<div className="logo">Children's Bookstore</div>*/}
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-            </nav>
+            {
+                isSmallScreen &&
+                <SideNavBar />
+            }
+            {
+                !isSmallScreen &&
+                <nav>
+                    <ul>
+                        <li onClick={() => navigate('/')}>דף הבית</li>
+                        <li onClick={() => navigate('/about')}>אודות</li>
+                        <li onClick={() => navigate('/contact')}>צור קשר</li>
+                    </ul>
+                </nav>
+            }
         </header>
     );
 }
