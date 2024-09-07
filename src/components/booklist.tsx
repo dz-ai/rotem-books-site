@@ -1,7 +1,7 @@
 import React from 'react';
 import Book, {IBook} from './book';
 import './BookList.css';
-import {cloud, mouse, fish, rabbit, little, cricket} from "../assets/images";
+import {cloud, mouse, fish, rabbit, little, cricket} from "../assets";
 
 const books: IBook[] = [
     {title: 'הנמלה הצרצר והחורף הקר', price: 10, coverImage: cricket},

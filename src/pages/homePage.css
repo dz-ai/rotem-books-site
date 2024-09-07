@@ -6,4 +6,16 @@
 .home-page h1 {
     font-size: 2em;
     margin-bottom: 1em;
+    margin-top: 0;
+}
+
+.home-page .logo {
+    margin-top: 10px;
+    position: unset;
+}
+
+@media (max-width: 800px) {
+    .home-page h1 {
+        margin-top: 50px;
+    }
 }

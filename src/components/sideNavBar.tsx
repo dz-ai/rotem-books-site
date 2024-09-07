@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './sideNavBar.css';
+import {logo} from '../assets';
 
 const SideNavBar = () => {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ const SideNavBar = () => {
 
     return (
         <>
+            <img className="logo" src={logo} alt="logo child read a book"/>
             <button className="nav-toggle" onClick={toggleNav}>
                 ☰
             </button>
