@@ -1,22 +1,23 @@
 import React from 'react';
 import './Book.css';
 
-interface BookProps {
-    book: {
-        title: string;
-        author: string;
-        price: string;
-        coverImage: string;
-    };
+export interface IBook {
+    title: string;
+    price: number;
+    coverImage: string;
+    description?: string;
 }
 
-const Book: React.FC<BookProps> = ({ book }) => {
+interface BookProperties {
+    book: IBook;
+}
+
+const Book: React.FC<BookProperties> = ({book}) => {
     return (
         <div className="book">
-            <img src={book.coverImage} alt={book.title} />
+            <img src={book.coverImage} alt={book.title}/>
             <h3>{book.title}</h3>
-            <p>{book.author}</p>
-            <p>{book.price}</p>
+            <p>₪{book.price}</p>
         </div>
     );
 }
