@@ -1,10 +1,14 @@
 .book {
+    height: 320px;
     width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     border: 1px solid #ddd;
     margin: 1em;
     padding: 1em;
     text-align: center;
-    max-width: 200px;
     border-radius: 7px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -23,7 +27,6 @@
 .book img {
     max-width: 150px;
     height: auto;
-    margin-bottom: 1em;
 }
 
 .book h3 {
@@ -33,4 +36,16 @@
 
 .book p {
     margin: 0.5em 0;
+}
+
+.add-to-cart-text {
+    color: teal;
+}
+
+.add-to-cart-text:hover {
+    color: #00d3d3;
+}
+
+.add-to-cart-text:active {
+    color: #3bffff;
 }
