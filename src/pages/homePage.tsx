@@ -1,6 +1,6 @@
 import React from 'react';
 import BookList from '../components/booklist';
-import './HomePage.css';
+import './homePage.css';
 import {logo} from '../assets';
 import {useMediaQuery} from "react-responsive";
 
