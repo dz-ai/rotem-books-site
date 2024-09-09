@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import './bookDetailsPage.css';
 import {useNavigate, useParams} from 'react-router-dom';
 import {IBook} from '../../components/book/book.tsx';
 import {useCart} from "../../context/cartContext.tsx";
+import {useInterSectionObserver} from "../../hooks/useIntersectionObserver.ts";
 import {MdKeyboardDoubleArrowRight} from "react-icons/md";
 
 interface IBtnSectionTemplateProps {
@@ -41,6 +42,9 @@ interface IBookDetailPageProps {
 }
 
 const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
+    const upperBtnSectionRef = useRef<null>(null);
+    const isElementOnTheScreen = useInterSectionObserver(upperBtnSectionRef);
+
     const {id} = useParams<{ id: string }>();
     const book = books.find(book => id && book.id === decodeURIComponent(id));
 
@@ -56,7 +60,9 @@ const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
     return (
         <div className="book-details-container">
 
-            <BtnSectionTemplate book={book}/>
+            <span ref={upperBtnSectionRef}>
+                <BtnSectionTemplate book={book}/>
+            </span>
             <h2>{book.title}</h2>
 
             <div className="bookDetail">
@@ -74,7 +80,10 @@ const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
                     <p className='book-details-description'>{book.description}</p>
                 </div>
             </div>
-            <BtnSectionTemplate book={book}/>
+            {
+                !isElementOnTheScreen &&
+                <BtnSectionTemplate book={book}/>
+            }
         </div>
     );
 };

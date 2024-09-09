@@ -5,13 +5,13 @@
 }
 
 .quantity-input button {
-    height: 25px;
-    width: 25px;
+    height: 35px;
+    width: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #ffc700;
-    font-size: 16px;
+    font-size: 17px;
     border: none;
     border-radius: unset;
     padding: 5px 10px;
@@ -39,10 +39,10 @@
 
 
 .quantity-input input {
-    height: 25px;
-    width: 25px;
+    height: 35px;
+    width: 35px;
     text-align: center;
-    font-size: 16px;
+    font-size: 17px;
     border: none;
     background: antiquewhite;
     -moz-appearance: textfield;

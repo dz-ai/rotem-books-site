@@ -5,6 +5,11 @@
     padding: 20px 0;
 }
 
+.book-details-btn-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .book-details-columns {
     display: flex;
     flex-direction: column;

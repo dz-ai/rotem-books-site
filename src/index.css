@@ -16,11 +16,12 @@ button:hover {
 }
 
 .reusable-control-btn {
-    height: 30px;
+    height: 35px;
     width: fit-content;
     display: inline-flex;
     align-items: center;
     background: #ffc700;
+    font-size: 17px;
     border: none;
     border-radius: 20px;
     margin-left: 7px;

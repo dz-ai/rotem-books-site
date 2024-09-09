@@ -1,6 +1,6 @@
 .book {
-    height: 320px;
-    width: 200px;
+    height: 420px;
+    width: 290px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -25,7 +25,7 @@
 }
 
 .book img {
-    max-width: 150px;
+    max-width: 100%;
     height: auto;
 }
 
@@ -45,16 +45,16 @@
 
 .book-add-remove-from-cart-controllers svg {
     padding: 1px;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 .book-add-remove-from-cart-controllers svg:hover {
     padding: 0;
 }
 
-.add-to-cart-text {
-    color: teal;
-}
+/*.add-to-cart-text {*/
+/*    color: teal;*/
+/*}*/
 
 .add-to-cart-text:hover {
     color: #00d3d3;

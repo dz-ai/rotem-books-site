@@ -33,7 +33,17 @@ const Book: React.FC<BookProperties> = ({book, quantityInCart}) => {
             <div className="add-to-cart-container">
                 {
                     !quantityInCart &&
-                    <p className="add-to-cart-text" onClick={(e) => {
+                    // <p className="add-to-cart-text" onClick={(e) => {
+                    //     e.preventDefault();
+                    //     cartContext.addToCart({
+                    //         id: book.id,
+                    //         title: book.title,
+                    //         price: book.price,
+                    //         image: book.coverImage,
+                    //         quantity: 1
+                    //     });
+                    // }}>הוסף לעגלה</p>
+                    <button className="reusable-control-btn" onClick={(e) => {
                         e.preventDefault();
                         cartContext.addToCart({
                             id: book.id,
@@ -42,7 +52,9 @@ const Book: React.FC<BookProperties> = ({book, quantityInCart}) => {
                             image: book.coverImage,
                             quantity: 1
                         });
-                    }}>הוסף לעגלה</p>
+                    }}>
+                        הוסף לעגלה
+                    </button>
                 }
                 {
                     quantityInCart &&
