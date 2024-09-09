@@ -1,9 +1,12 @@
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, {useState} from 'react';
 import './sideNavBar.css';
-import {logo} from '../assets';
+import {useNavigate} from 'react-router-dom';
+import {logo} from '../../assets';
+import {useCart} from "../../context/cartContext.tsx";
+import {GiShoppingCart} from "react-icons/gi";
 
 const SideNavBar = () => {
+    const cartContext = useCart();
     const navigate = useNavigate();
 
     const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +21,7 @@ const SideNavBar = () => {
     }
 
     return (
-        <>
+        <div className="sideBar-container">
             <img className="logo" src={logo} alt="logo child read a book"/>
             <button className="nav-toggle" onClick={toggleNav}>
                 ☰
@@ -29,11 +32,16 @@ const SideNavBar = () => {
                 </button>
                 <ul>
                     <li onClick={() => onNavBtnClicked('/')}>דף הבית</li>
+                    <li className="cart-icon" onClick={() => onNavBtnClicked('/cart-page')}>
+                        עגלת הקניות
+                        <GiShoppingCart/>
+                        <span>{cartContext.totalQuantityINCart}</span>
+                    </li>
                     <li onClick={() => onNavBtnClicked('/about')}>אודות</li>
                     <li onClick={() => onNavBtnClicked('/contact')}>צור קשר</li>
                 </ul>
             </nav>
-        </>
+        </div>
     );
 };
 

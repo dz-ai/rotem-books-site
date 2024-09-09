@@ -1,8 +1,8 @@
 import React from 'react';
-import BookList from '../components/booklist';
 import './homePage.css';
-import {logo} from '../assets';
 import {useMediaQuery} from "react-responsive";
+import BookList from '../../components/bookList/booklist.tsx';
+import {logo} from '../../assets';
 
 const HomePage: React.FC = () => {
     const isSmallScreen = useMediaQuery({query: '(max-width: 800px)'});

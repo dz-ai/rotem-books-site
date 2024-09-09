@@ -1,25 +1,37 @@
 import React, {useEffect} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
 import './bookDetailsPage.css';
-import {IBook} from '../components/book';
+import {useNavigate, useParams} from 'react-router-dom';
+import {IBook} from '../../components/book/book.tsx';
+import {useCart} from "../../context/cartContext.tsx";
 import {MdKeyboardDoubleArrowRight} from "react-icons/md";
-import {useMediaQuery} from "react-responsive";
-
 
 interface IBtnSectionTemplateProps {
     book: IBook
 }
 
 const BtnSectionTemplate: React.FC<IBtnSectionTemplateProps> = ({book}) => {
+    const cartContext = useCart();
     const navigate = useNavigate();
+
+    const addToCart = () => {
+        cartContext.addToCart({id: book.id, title: book.title, price: book.price, image: book.coverImage, quantity: 1})
+    }
+
+    const buyNow = () => {
+        const itemInCart = cartContext.cart.find(item => item.id === book.id);
+
+        !itemInCart && addToCart();
+        navigate('/cart-page');
+    }
+
     return (
         <div className="book-details-btn-section">
-            <button className="book-details-btn" onClick={() => navigate('/')}>
+            <button className="reusable-control-btn" onClick={() => navigate('/')}>
                 <MdKeyboardDoubleArrowRight/>
                 חזרה לתפריט הראשי
             </button>
-            <button className="book-details-btn">הוסף לעגלה</button>
-            <button className="book-details-btn">לרכישה</button>
+            <button className="reusable-control-btn" onClick={addToCart}>הוסף לעגלה</button>
+            <button className="reusable-control-btn" onClick={buyNow}>לרכישה</button>
         </div>
     );
 };
@@ -29,9 +41,6 @@ interface IBookDetailPageProps {
 }
 
 const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
-    const isSmallScreen = useMediaQuery({query: '(max-width: 800px)'});
-    const navigate = useNavigate();
-
     const {id} = useParams<{ id: string }>();
     const book = books.find(book => id && book.id === decodeURIComponent(id));
 

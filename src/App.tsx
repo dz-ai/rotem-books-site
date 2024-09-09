@@ -1,12 +1,13 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Header from './components/header';
-import Footer from './components/footer';
-import HomePage from './pages/homePage';
 import './App.css';
-import BookDetailPage from "./pages/booksDetailsPage.tsx";
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import Header from './components/header/header.tsx';
+import Footer from './components/footer/footer.tsx';
+import HomePage from './pages/homePage/homePage.tsx';
+import BookDetailPage from "./pages/bookDetailsPage/booksDetailsPage.tsx";
+import CartPage from "./pages/cartPage/cartPage.tsx";
 import {cloud, mouse, fish, rabbit, little, cricket} from "./assets";
-import {IBook} from "./components/book.tsx";
+import {IBook} from "./components/book/book.tsx";
 
 export const books: IBook[] = [
     {
@@ -176,6 +177,7 @@ const App: React.FC = () => {
                     <Routes>
                         <Route path="/" element={<HomePage/>} index/>
                         <Route path="/book-details/:id" element={<BookDetailPage books={books}/>}/>
+                        <Route path="/cart-page" element={<CartPage/>}/>
                     </Routes>
                 </main>
                 <Footer/>

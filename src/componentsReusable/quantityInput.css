@@ -1,0 +1,62 @@
+.quantity-input {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.quantity-input button {
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffc700;
+    font-size: 16px;
+    border: none;
+    border-radius: unset;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.quantity-input button:hover {
+    background: #ffd640;
+}
+
+.quantity-input button:active {
+    background: #ffde6f;
+}
+
+.quantity-input .plus-btn {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.quantity-input .minus-btn {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+}
+
+
+.quantity-input input {
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    font-size: 16px;
+    border: none;
+    background: antiquewhite;
+    -moz-appearance: textfield;
+}
+
+/* remove the default arrows from the input */
+.quantity-input input::-webkit-outer-spin-button,
+.quantity-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, Edge, Opera */
+    margin: 0;
+}
+
+.quantity-input input::-webkit-inner-spin-button,
+.quantity-input input::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Chrome */
+    margin: 0; /* Removes the margin in Chrome */
+}

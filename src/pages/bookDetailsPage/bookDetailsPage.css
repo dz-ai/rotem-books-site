@@ -43,30 +43,6 @@
     text-align: justify;
 }
 
-.book-details-btn {
-    height: 30px;
-    display: inline-flex;
-    align-items: center;
-    background: #ffc700;
-    border: none;
-    border-radius: 20px;
-    margin-left: 7px;
-    margin-top: 7px;
-    padding: 0 10px;
-}
-
-.book-details-btn svg {
-    margin-left: 5px;
-}
-
-.book-details-btn:hover {
-    background: #ffd640;
-}
-
-.book-details-btn:active {
-    background: #ffde6f;
-}
-
 @media (max-width: 750px) {
     .bookDetail {
         flex-direction: column;

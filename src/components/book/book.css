@@ -16,7 +16,7 @@
 
 .book:hover {
     cursor: pointer;
-    transform: translateY(-10px);
+    transform: translateY(-1px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -35,7 +35,21 @@
 }
 
 .book p {
-    margin: 0.5em 0;
+    margin: 0;
+}
+
+.book-add-remove-from-cart-controllers {
+    display: flex;
+    align-items: center;
+}
+
+.book-add-remove-from-cart-controllers svg {
+    padding: 1px;
+    font-size: 18px;
+}
+
+.book-add-remove-from-cart-controllers svg:hover {
+    padding: 0;
 }
 
 .add-to-cart-text {
