@@ -1,5 +1,9 @@
+.cart-wrapper {
+    padding: 20px;
+}
+
 .cart-container {
-    height: 100%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

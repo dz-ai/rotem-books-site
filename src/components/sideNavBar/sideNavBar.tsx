@@ -38,7 +38,7 @@ const SideNavBar = () => {
                         <span>{cartContext.totalQuantityINCart}</span>
                     </li>
                     <li onClick={() => onNavBtnClicked('/about')}>אודות</li>
-                    <li onClick={() => onNavBtnClicked('/contact')}>צור קשר</li>
+                    <li onClick={() => onNavBtnClicked('/contact-page')}>צור קשר</li>
                 </ul>
             </nav>
         </div>

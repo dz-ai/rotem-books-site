@@ -1,3 +1,7 @@
+.book-details-container {
+    padding: 20px;
+}
+
 .bookDetail {
     display: flex;
     flex-direction: row-reverse;

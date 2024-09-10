@@ -54,7 +54,9 @@ const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
 
     // make sure that the user start from the top of the page as user navigate to the page
     useEffect(() => {
-        window.scrollTo(0, 0);
+        const mainElement = document.querySelector('main');
+        mainElement &&
+        mainElement.scrollTo(0, 0);
     }, []);
 
     return (

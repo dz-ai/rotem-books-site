@@ -2,7 +2,7 @@ import React from 'react';
 import './header.css';
 import SideNavBar from "../sideNavBar/sideNavBar.tsx";
 import {useMediaQuery} from "react-responsive";
-import {useNavigate} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import {useCart} from "../../context/cartContext.tsx";
 import {GiShoppingCart} from "react-icons/gi";
 
@@ -32,14 +32,30 @@ const Header: React.FC = () => {
                 !isSmallScreen &&
                 <nav>
                     <ul>
-                        <li className="cart-icon" onClick={() => navigate('/cart-page')}>
-                            עגלת הקניות
-                            <GiShoppingCart/>
-                            <span>{cartContext.totalQuantityINCart}</span>
+                        <li>
+                            <NavLink to="/cart-page"
+                                     className={({isActive}) => isActive ? 'cart-icon active-nav-link' : 'cart-icon'}>
+                                עגלת הקניות
+                                <GiShoppingCart/>
+                                <span>{cartContext.totalQuantityINCart}</span>
+                            </NavLink>
                         </li>
-                        <li onClick={() => navigate('/')}>דף הבית</li>
-                        <li onClick={() => navigate('/about')}>אודות</li>
-                        <li onClick={() => navigate('/contact')}>צור קשר</li>
+                        <li>
+                            <NavLink to="/" className={({isActive}) => isActive ? 'active-nav-link' : undefined}>
+                                דף הבית
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/about" className={({isActive}) => isActive ? 'active-nav-link' : undefined}>
+                                אודות
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/contact-page"
+                                     className={({isActive}) => isActive ? 'active-nav-link' : undefined}>
+                                צור קשר
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
             }

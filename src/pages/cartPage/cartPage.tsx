@@ -22,7 +22,7 @@ const CartPage: React.FC = () => {
     const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     return (
-        <>
+        <div className="cart-wrapper">
             <button className="reusable-control-btn" onClick={() => navigate('/')}>
                 <MdKeyboardDoubleArrowRight/>
                 חזרה לתפריט הראשי
@@ -63,7 +63,7 @@ const CartPage: React.FC = () => {
                     <MdKeyboardDoubleArrowLeft/>
                 </button>
             </div>
-        </>
+        </div>
 
     );
 };
