@@ -10,7 +10,7 @@ const HomePage: React.FC = () => {
         <div className="home-page">
             {
                 !isSmallScreen &&
-                <img className="logo" src={logo} alt="logo child read a book"/>
+                <img className="logo" src={logo} alt="לוגו קיפוד עם גיטרה"/>
             }
             <h1>הספרים של רותם</h1>
             <BookList/>

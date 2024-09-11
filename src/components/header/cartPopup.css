@@ -1,0 +1,67 @@
+.popup-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.talk-bubble {
+    position: absolute;
+    top: 40px;
+    left: -95px;
+    background-color: #e4e4e4;
+    border-radius: 10px;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+.talk-bubble::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 20px 20px 20px;
+    border-style: solid;
+    border-color: transparent transparent #e4e4e4 transparent;
+}
+
+.talk-text {
+    margin: 0;
+}
+
+.talk-bubble .reusable-control-btn {
+    width: 100%;
+    border-radius: 5px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s forwards; /* forwards - The element retains the styles set by the last keyframe after the animation ends */
+}
+
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}

@@ -1,12 +1,18 @@
-.sideBar-container .cart-icon {
+.side-bar-container .cart-icon {
     position: unset;
 }
 
-.sideBar-container .cart-icon svg path {
+.side-bar-container .logo {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
+.side-bar-container .cart-icon svg path {
     color: white;
 }
 
-.sideBar-container .cart-icon span {
+.side-bar-container .cart-icon span {
     color: white;
 }
 
@@ -51,6 +57,7 @@
 }
 
 .nav ul {
+    width: 100%;
     display: flex;
     flex-direction: column;
     list-style: none;

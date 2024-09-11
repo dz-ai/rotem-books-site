@@ -12,6 +12,8 @@ header {
 }
 
 header nav {
+    display: flex;
+    justify-content: space-between;
     height: 100%;
 }
 
@@ -26,12 +28,13 @@ header nav ul {
 
 nav ul li {
     height: 100%;
-    display: inline;
+    display: flex;
+    align-items: center;
     margin: 0 10px;
     position: relative;
 }
 
-nav ul li a {
+nav ul li a.nav-link {
     height: 100%;
     display: flex;
     align-items: center;
@@ -40,7 +43,7 @@ nav ul li a {
     position: relative;
 }
 
-nav ul li a::after {
+nav ul li a.nav-link::after {
     content: '';
     position: absolute;
     width: 0;
@@ -52,17 +55,18 @@ nav ul li a::after {
     transition: width 0.4s ease, right 0.4s ease;
 }
 
-nav ul li a:hover::after {
+nav ul li a.nav-link:hover::after {
     width: 100%;
     right: 0;
 }
 
-.active-nav-link::after {
+.active-nav-link.nav-link::after {
     width: 100%;
     right: 0;
 }
 
 .cart-icon {
+    position: relative;
     display: flex;
     align-items: center;
 }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './sideNavBar.css';
-import {useNavigate} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import {logo} from '../../assets';
 import {useCart} from "../../context/cartContext.tsx";
 import {GiShoppingCart} from "react-icons/gi";
@@ -21,8 +21,7 @@ const SideNavBar = () => {
     }
 
     return (
-        <div className="sideBar-container">
-            <img className="logo" src={logo} alt="logo child read a book"/>
+        <div className="side-bar-container">
             <button className="nav-toggle" onClick={toggleNav}>
                 ☰
             </button>
@@ -41,6 +40,9 @@ const SideNavBar = () => {
                     <li onClick={() => onNavBtnClicked('/contact-page')}>צור קשר</li>
                 </ul>
             </nav>
+            <NavLink to="/">
+                <img className="logo" src={logo} alt="לוגו קיפוד עם גיטרה"/>
+            </NavLink>
         </div>
     );
 };

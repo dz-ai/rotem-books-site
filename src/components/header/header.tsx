@@ -5,6 +5,8 @@ import {useMediaQuery} from "react-responsive";
 import {NavLink, useNavigate} from 'react-router-dom';
 import {useCart} from "../../context/cartContext.tsx";
 import {GiShoppingCart} from "react-icons/gi";
+import CartPopup from "./cartPopup.tsx";
+import {logo} from "../../assets";
 
 const Header: React.FC = () => {
     const cartContext = useCart();
@@ -22,6 +24,7 @@ const Header: React.FC = () => {
                             <li className="cart-icon" onClick={() => navigate('/cart-page')}>
                                 עגלת הקניות
                                 <GiShoppingCart/>
+                                <CartPopup/>
                                 <span>{cartContext.totalQuantityINCart}</span>
                             </li>
                         </ul>
@@ -33,27 +36,42 @@ const Header: React.FC = () => {
                 <nav>
                     <ul>
                         <li>
-                            <NavLink to="/cart-page"
-                                     className={({isActive}) => isActive ? 'cart-icon active-nav-link' : 'cart-icon'}>
-                                עגלת הקניות
-                                <GiShoppingCart/>
-                                <span>{cartContext.totalQuantityINCart}</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/" className={({isActive}) => isActive ? 'active-nav-link' : undefined}>
+                            <NavLink to="/"
+                                     className={({isActive}) => isActive ? 'active-nav-link nav-link' : 'nav-link'}>
                                 דף הבית
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/about" className={({isActive}) => isActive ? 'active-nav-link' : undefined}>
+                            <NavLink to="/about"
+                                     className={({isActive}) => isActive ? 'active-nav-link nav-link' : 'nav-link'}>
                                 אודות
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/contact-page"
-                                     className={({isActive}) => isActive ? 'active-nav-link' : undefined}>
+                                     className={({isActive}) => isActive ? 'active-nav-link nav-link' : 'nav-link'}>
                                 צור קשר
+                            </NavLink>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <NavLink to="/cart-page"
+                                     className={({isActive}) => isActive ? 'cart-icon active-nav-link nav-link' : 'cart-icon nav-link'}
+                            >
+                                עגלת הקניות
+                                <GiShoppingCart/>
+                                <CartPopup/>
+                                <span>{cartContext.totalQuantityINCart}</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/">
+                                <img
+                                    className="logo"
+                                    src={logo}
+                                    alt="לוגו קיפוד עם גיטרה"
+                                />
                             </NavLink>
                         </li>
                     </ul>

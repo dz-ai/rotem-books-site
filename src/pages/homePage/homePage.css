@@ -10,6 +10,7 @@
 }
 
 .home-page .logo {
+    width: 50px;
     margin-top: 10px;
     position: unset;
 }
