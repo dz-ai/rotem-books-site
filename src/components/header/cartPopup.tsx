@@ -18,7 +18,7 @@ const TalkBubblePopup: React.FC = () => {
             setPopupText(cartContext.changesReporter[0]);
 
             // set timeout to close the popup after 7 seconds
-            let timeOut: number;
+            let timeOut: number | NodeJS.Timeout;
             if (!isMouseOverThePopup) {
                 timeOut = setTimeout(async () => {
                     setAnimationClass('fade-out');

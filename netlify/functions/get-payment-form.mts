@@ -5,8 +5,8 @@ const handler: Handler = async (event) => {
         const getTokenUrl = 'https://sandbox.d.greeninvoice.co.il/api/v1/account/token'
         const getPaymentFormUrl = 'https://sandbox.d.greeninvoice.co.il/api/v1/payments/form'
 
-        const apiKey = Netlify.env.get("API_KEY");
-        const secret = Netlify.env.get("SECRET");
+        const apiKey = process.env.API_KEY;
+        const secret = process.env.SECRET;
         const authVals = {id: `${apiKey}`, secret: `${secret}`};
         // TODO get from the client through event.body
         const orderDetails = {
