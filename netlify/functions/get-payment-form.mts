@@ -43,7 +43,7 @@ const handler: Handler = async (event) => {
                 emails: emails,
                 address: createAddressString,
                 city,
-                zip: zipCode,
+                zip: `מיקוד - ${zipCode}`,
                 country: "IL",
                 phone,
                 add: true
