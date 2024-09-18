@@ -1,15 +1,17 @@
 import {Handler} from '@netlify/functions';
 import {IAddress, IClientDetails, IPaymentDetails} from "../../src/pages/clientDetailsPage/clientDetailsPage.tsx";
 
-const apiKey = process.env.API_KEY;
-const secret = process.env.SECRET;
-const authVals = {id: `${apiKey}`, secret: `${secret}`};
-const pluginId = process.env.PLUGIN_ID;
-
 // get credit card payment form from "morning API (חשבונית ירוקה)
 const handler: Handler = async (event) => {
+
+    const apiKey = process.env.API_KEY;
+    const secret = process.env.SECRET;
+    const authVals = {id: `${apiKey}`, secret: `${secret}`};
+    const pluginId = process.env.PLUGIN_ID;
+
     try {
-        if (event.body === null) {
+        console.log(event.body)
+        if (!event.body) {
             return {
                 statusCode: 500,
                 body: 'Error: the client details are missing',

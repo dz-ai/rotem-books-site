@@ -4,10 +4,12 @@ interface EventQueryStringParameters {
     [p: string]: string | undefined
 }
 
-const GOOGLE_MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY
 
 // get address auto complete search results from Google API
 const handler: Handler = async (event) => {
+
+    const GOOGLE_MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY
+
     try {
         if (event.queryStringParameters) {
             const {query}: EventQueryStringParameters = event.queryStringParameters;
