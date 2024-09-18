@@ -58,7 +58,11 @@ const CartPage: React.FC = () => {
                     ))}
                 </ul>
                 <h2 className="total-price">סכ״ה: ₪{totalPrice}</h2>
-                <button className="reusable-control-btn" disabled={totalPrice === 0}>
+                <button
+                    className="reusable-control-btn"
+                    disabled={totalPrice === 0}
+                    onClick={() => navigate('/client-details-page')}
+                >
                     לתשלום
                     <MdKeyboardDoubleArrowLeft/>
                 </button>

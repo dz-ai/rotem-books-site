@@ -1,15 +1,18 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {IBook} from "./components/book/book.tsx";
+import {cloud, mouse, fish, rabbit, little, cricket} from "./assets";
 import Header from './components/header/header.tsx';
 import Footer from './components/footer/footer.tsx';
 import HomePage from './pages/homePage/homePage.tsx';
 import BookDetailPage from "./pages/bookDetailsPage/booksDetailsPage.tsx";
 import CartPage from "./pages/cartPage/cartPage.tsx";
-import {cloud, mouse, fish, rabbit, little, cricket} from "./assets";
-import {IBook} from "./components/book/book.tsx";
-import {AboutPage} from "./pages/aboutPage/aboutPage.tsx";
-import {ContactPage} from "./pages/contactPage/contactPage.tsx";
+import AboutPage from "./pages/aboutPage/aboutPage.tsx";
+import ContactPage from "./pages/contactPage/contactPage.tsx";
+import ClientDetailsFormPage from "./pages/clientDetailsPage/clientDetailsPage.tsx";
+import PaymentSuccessPage from "./pages/paymentSuccessFailure/paymentSuccessPage.tsx";
+import PaymentFailurePage from "./pages/paymentSuccessFailure/paymentFailurePage.tsx";
 
 export const books: IBook[] = [
     {
@@ -182,8 +185,11 @@ const App: React.FC = () => {
                         <Route path="/cart-page" element={<CartPage/>}/>
                         <Route path="/about" element={<AboutPage/>}/>
                         <Route path="/contact-page" element={<ContactPage/>}/>
+                        <Route path="/client-details-page" element={<ClientDetailsFormPage/>}/>
+                        <Route path="/payment-success-page" element={<PaymentSuccessPage/>}/>
+                        <Route path="/payment-failure-page" element={<PaymentFailurePage/>}/>
                     </Routes>
-                <Footer/>
+                    <Footer/>
                 </main>
             </div>
         </Router>

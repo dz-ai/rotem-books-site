@@ -1,47 +1,62 @@
 import {Handler} from '@netlify/functions';
+import {IAddress, IClientDetails, IPaymentDetails} from "../../src/pages/clientDetailsPage/clientDetailsPage.tsx";
 
+const apiKey = process.env.API_KEY;
+const secret = process.env.SECRET;
+const authVals = {id: `${apiKey}`, secret: `${secret}`};
+const pluginId = process.env.PLUGIN_ID;
+
+// get credit card payment form from "morning API (חשבונית ירוקה)
 const handler: Handler = async (event) => {
     try {
+        if (event.body === null) {
+            return {
+                statusCode: 500,
+                body: 'Error: the client details are missing',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+        }
+
+        // get all the user and the payment details to create valid orderDetails Object that will be sent with the get payment form query
+        const {amount, client, income, remarks}: IPaymentDetails = JSON.parse(event.body);
+        const {city, street, houseNum, apartmentNum, zipCode}: IAddress = client.address;
+        const createAddressString = `רחוב ${street} ${houseNum} ${apartmentNum !== '' ? 'דירה ' + apartmentNum : ''}`;
+        const {name, phone, emails}: IClientDetails = client;
+
         const getTokenUrl = 'https://sandbox.d.greeninvoice.co.il/api/v1/account/token'
         const getPaymentFormUrl = 'https://sandbox.d.greeninvoice.co.il/api/v1/payments/form'
 
-        const apiKey = process.env.API_KEY;
-        const secret = process.env.SECRET;
-        const authVals = {id: `${apiKey}`, secret: `${secret}`};
-        // TODO get from the client through event.body
         const orderDetails = {
-            description: "Just an order",
-            remarks: "Some remarks",
-            type: 320,
-            date: "2017-12-27",
-            dueDate: "2018-01-27",
-            lang: "en",
-            currency: "USD",
+            description: "קבלה עבור רכישה באתר ״הספרים של רותם״",
+            type: 400,
+            lang: 'he',
+            currency: 'ILS',
             vatType: 0,
-            amount: 30,
+            amount,
             maxPayments: 1,
+            pluginId: pluginId,
+            group: 100,
             client: {
-                name: "name",
-                emails: [
-                    "client@example.com"
-                ],
-                taxId: "123456789",
-                address: "1 Luria st",
-                city: "Tel Aviv",
-                zip: "1234567",
+                name,
+                emails: emails,
+                address: createAddressString,
+                city,
+                zip: zipCode,
                 country: "IL",
-                phone: "+972-54-1234567",
-                fax: "+972-54-1234567",
-                mobile: "+972-54-1234567",
+                phone,
                 add: true
             },
-            successUrl: "https://www.your-site-here.com",
-            failureUrl: "https://www.your-site-here.com",
-            notifyUrl: "https://www.your-site-here.com",
-            custom: "12345"
+            income, /* the items */
+            remarks,
+            successUrl: "https://rotems-books-site.netlify.app/payment-success-page",
+            failureUrl: "https://rotems-books-site.netlify.app/payment-failure-page",
+            // TODO get the url in the header response to send e-mail to the client
+            notifyUrl: "https://webhook.site/3caa8059-93b8-416e-9cca-fbdf079a8500",
         };
 
-
+        // connect to the "morning" user account and get JWT token
         const tokenResponse = await fetch(getTokenUrl, {
             method: 'post',
             headers: {
@@ -52,6 +67,7 @@ const handler: Handler = async (event) => {
 
         const tokenData = await tokenResponse.json();
 
+        // fetch the payment form from "morning" API use of the JWT token and the orderDetails Object
         const paymentFormResponse = await fetch(getPaymentFormUrl, {
             method: 'POST',
             headers: {
@@ -63,6 +79,7 @@ const handler: Handler = async (event) => {
 
         const paymentFormData = await paymentFormResponse.json();
 
+        // return the form url to the client
         return {
             statusCode: paymentFormResponse.status,
             body: JSON.stringify(paymentFormData),
@@ -78,7 +95,7 @@ const handler: Handler = async (event) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-        };
+        }
     }
 };
 

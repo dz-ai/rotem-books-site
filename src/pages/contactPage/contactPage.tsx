@@ -5,10 +5,12 @@ type Props = {
 
 };
 
-export function ContactPage(props: Props) {
+function ContactPage(props: Props) {
     return (
         <div>
             contact Page in development
         </div>
     );
 }
+
+export default ContactPage;

@@ -1,0 +1,119 @@
+.client-details-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+
+.back-to-cart-btn-container {
+    width: 100%;
+}
+
+.client-details-page form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.client-details, .client-address {
+    flex: 1;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+.form-container h3 {
+    width: 100%;
+    text-align: start;
+    border-bottom: 1px solid #cccc;
+}
+
+.form-container label {
+    width: 100%;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-container input {
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    outline: none;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-container input, .form-container ul {
+    box-shadow: inset 0 0 3px #80808082;
+}
+
+.form-container .address-input {
+    margin-bottom: -1px;
+}
+
+.google-logo {
+    height: 15px;
+    width: auto;
+    margin-top: 5px;
+}
+
+.form-container .house-number-input {
+    margin-top: 10px;
+}
+
+.form-container ul {
+    background: white;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 0;
+}
+
+.form-container ul li {
+    padding: 2px 5px;
+}
+
+.form-container ul li:hover {
+    background: #419aff7d;
+    cursor: pointer;
+}
+
+.client-details-page .error-message {
+    border: 1px solid #ff000061;
+    padding: 7px;
+    border-radius: 10px;
+    color: red;
+}
+
+/* remove the default arrows from the input */
+.form-container input::-webkit-outer-spin-button,
+.form-container input::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, Edge, Opera */
+    margin: 0;
+}
+
+.form-container input::-webkit-inner-spin-button,
+.form-container input::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Chrome */
+    margin: 0; /* Removes the margin in Chrome */
+}
