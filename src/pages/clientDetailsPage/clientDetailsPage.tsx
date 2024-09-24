@@ -4,6 +4,7 @@ import {googleLogo} from "../../assets";
 import {NavLink} from 'react-router-dom';
 import {useCart} from "../../context/cartContext.tsx";
 import {MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight} from "react-icons/md";
+import {ThreeDots} from "react-loader-spinner";
 
 export interface IAddress {
     city: string;
@@ -57,13 +58,17 @@ const ClientDetailsFormPage: React.FC = () => {
     const [phone, setPhone] = useState('');
 
     const [showMessage, setShowMessage] = useState<null | string>(null);
+    const [loading, setLoading] = useState(false);
 
     const cartContext = useCart();
     const cartItems = cartContext.cart;
 
-    // TODO add loader to the button
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+
+        setLoading(true);
+
+        scrollToSubmitBtn();
 
         // prepare the payment details that should be sent to create the payment form in the server
         // TOTAL PRICE
@@ -94,7 +99,7 @@ const ClientDetailsFormPage: React.FC = () => {
             remarks: remarksTextContent,
         }
 
-        if (name && email && addressDetails && phone && totalPrice && income.length > 0) {
+        if (name && email && addressDetails && phone && totalPrice && income.length >= 0) {
 
             try {
                 // fetching the payment form (credit card form details) from "Morning API"
@@ -113,6 +118,7 @@ const ClientDetailsFormPage: React.FC = () => {
                 if (paymentForm.success) {
                     window.location.href = paymentForm.url;
                 } else {
+                    setLoading(false);
                     setShowMessage(paymentForm.errorMessage);
                 }
             } catch (err) {
@@ -120,7 +126,9 @@ const ClientDetailsFormPage: React.FC = () => {
             }
 
         } else {
-            alert('נא למלא את כל הפרטים');
+            setLoading(false);
+            if (income.length >= 0) setShowMessage('עגלת הקניות ריקה מפריטים');
+            else setShowMessage('נא למלא את כל הפרטים');
         }
     }
 
@@ -162,6 +170,13 @@ const ClientDetailsFormPage: React.FC = () => {
         mainElement &&
         mainElement.scrollTo(0, 0);
     }, []);
+
+    function scrollToSubmitBtn() {
+        const submitButton = document.querySelector('button[type="submit"].reusable-control-btn');
+        if (submitButton) {
+            submitButton.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+    }
 
     return (
         <div className="client-details-page">
@@ -276,8 +291,24 @@ const ClientDetailsFormPage: React.FC = () => {
                     </div>
                 </div>
                 <button className="reusable-control-btn" type="submit">
-                    למלוי פרטי אשראי ותשלום
-                    <MdKeyboardDoubleArrowLeft/>
+                    {
+                        !loading &&
+                        <>
+                            למלוי פרטי אשראי ותשלום
+                            <MdKeyboardDoubleArrowLeft/>
+                        </>
+                    }
+                    {
+                        loading &&
+                        <ThreeDots
+                            visible={true}
+                            height="35"
+                            width="35"
+                            color="#4fa94d"
+                            radius="9"
+                            ariaLabel="three-dots-loading"
+                        />
+                    }
                 </button>
                 {
                     showMessage &&

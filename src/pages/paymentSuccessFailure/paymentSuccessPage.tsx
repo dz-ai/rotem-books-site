@@ -4,8 +4,6 @@ import {NavLink, useLocation} from "react-router-dom";
 import {ColorRing} from 'react-loader-spinner'
 import {LuDownload} from "react-icons/lu";
 
-
-// TODO add timeout to stop calling the getReceipt after 40s
 function PaymentSuccessPage() {
     const location = useLocation();
 

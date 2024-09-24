@@ -43,3 +43,7 @@ ul {
 .reusable-control-btn:active {
     background: #ffde6f;
 }
+
+.reusable-control-btn:focus-visible {
+    outline: none;
+}
