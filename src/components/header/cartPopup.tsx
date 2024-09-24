@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import './cartPopup.css';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useCart} from "../../context/cartContext.tsx";
 
 const TalkBubblePopup: React.FC = () => {
     const cartContext = useCart();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [popupText, setPopupText] = useState<string>('');
@@ -38,6 +39,13 @@ const TalkBubblePopup: React.FC = () => {
         }
 
     }, [cartContext.changesReporter, isMouseOverThePopup]);
+
+    // clos the popup as the user navigate to cart page
+    useEffect(() => {
+        if (location.pathname === '/cart-page') {
+            setIsOpen(false);
+        }
+    }, [location.pathname]);
 
     return (
         <>
