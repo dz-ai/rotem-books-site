@@ -1,0 +1,17 @@
+.success-failure-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.success-failure-page .loading-text {
+    color: #1d1dfa;
+}
+
+.success-failure-page .something-went-wrong-text {
+    color: #4c7dfe;
+}
+
+.success-failure-page .reusable-control-btn svg {
+    margin-right: 5px;
+}

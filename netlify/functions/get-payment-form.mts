@@ -10,7 +10,6 @@ const handler: Handler = async (event) => {
     const pluginId = process.env.PLUGIN_ID;
 
     try {
-        console.log(event.body)
         if (!event.body) {
             return {
                 statusCode: 500,
@@ -54,8 +53,7 @@ const handler: Handler = async (event) => {
             remarks,
             successUrl: "https://rotems-books-site.netlify.app/payment-success-page",
             failureUrl: "https://rotems-books-site.netlify.app/payment-failure-page",
-            // TODO get the url in the header response to send e-mail to the client
-            notifyUrl: "https://webhook.site/3caa8059-93b8-416e-9cca-fbdf079a8500",
+            notifyUrl: "https://rotems-books-site.netlify.app/.netlify/functions/save-receipt-after-payment-success",
         };
 
         // connect to the "morning" user account and get JWT token

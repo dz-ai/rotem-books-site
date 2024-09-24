@@ -61,6 +61,7 @@ const ClientDetailsFormPage: React.FC = () => {
     const cartContext = useCart();
     const cartItems = cartContext.cart;
 
+    // TODO add loader to the button
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
@@ -108,7 +109,7 @@ const ClientDetailsFormPage: React.FC = () => {
 
                 const paymentForm = await getPaymentFormResponse.json();
 
-                // navigate to the payment from url if the fetch was success and show error if somthing went wrong
+                // navigate to the payment form url if the fetch was success and show error if something went wrong
                 if (paymentForm.success) {
                     window.location.href = paymentForm.url;
                 } else {
