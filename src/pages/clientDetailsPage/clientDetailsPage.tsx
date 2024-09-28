@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './clientDetailsPage.css';
 import {googleLogo} from "../../assets";
 import {NavLink} from 'react-router-dom';
@@ -45,6 +45,8 @@ const ClientDetailsFormPage: React.FC = () => {
         street: '',
         apartmentNum: ''
     };
+
+    const searchDebounceTimeoutIdRef = useRef<NodeJS.Timeout | null>(null);
 
     // get search results from the Google Address Autocomplete API and display them as suggestions under the address input for the user to choose from.
     const [addressSearchResults, setAddressSearchResults] = useState<string[]>([]);
@@ -135,8 +137,6 @@ const ClientDetailsFormPage: React.FC = () => {
     // Use Google Address Autocomplete API to display address suggestions for user selection
     const getGoogleAutoCompleteAddressInCity = async (searchVal: string) => {
 
-        setAddressInput(searchVal);
-
         try {
             const response = await fetch(`.netlify/functions/get-address?query=${searchVal}`);
 
@@ -171,11 +171,25 @@ const ClientDetailsFormPage: React.FC = () => {
         mainElement.scrollTo(0, 0);
     }, []);
 
+    // scroll down as the user click the submit button
     function scrollToSubmitBtn() {
         const submitButton = document.querySelector('button[type="submit"].reusable-control-btn');
         if (submitButton) {
             submitButton.scrollIntoView({behavior: 'smooth', block: 'start'});
         }
+    }
+
+    // delay the address search function by 500ms to minimize API calls.
+    // the function will only be called if the user pauses typing for at least 500ms.
+    function searchDebounceWrapper(searchValue: string, handleSearchCB: (searchVal: string) => Promise<void>): void {
+
+        if (searchDebounceTimeoutIdRef.current) {
+            clearTimeout(searchDebounceTimeoutIdRef.current)
+        }
+
+        searchDebounceTimeoutIdRef.current = setTimeout(() => {
+            handleSearchCB(searchValue).then();
+        }, 500);
     }
 
     return (
@@ -237,7 +251,10 @@ const ClientDetailsFormPage: React.FC = () => {
                                 className="address-input"
                                 type="text"
                                 value={addressInput}
-                                onChange={(e) => getGoogleAutoCompleteAddressInCity(e.target.value)}
+                                onChange={(e) => {
+                                    setAddressInput(e.target.value);
+                                    searchDebounceWrapper(e.target.value, getGoogleAutoCompleteAddressInCity);
+                                }}
                                 required
                                 placeholder="נא להזין כתובת מגורים למשלוח"
                             />
