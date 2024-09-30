@@ -3,7 +3,9 @@ import React, {useEffect, useRef, useState} from "react";
 import {NavLink, useLocation} from "react-router-dom";
 import {ColorRing} from 'react-loader-spinner'
 import {LuDownload} from "react-icons/lu";
+import {ISendMailEventBody} from "../../../netlify/functions/send-email.mjs";
 
+// TODO test on a mobile screen
 function PaymentSuccessPage() {
     const location = useLocation();
 
@@ -42,6 +44,49 @@ function PaymentSuccessPage() {
             if (intervalRef.current) {
                 clearInterval(intervalRef.current);
             }
+        }
+    }
+
+    // trigger notification email to the website owner about the new order
+    const triggerSendNotificationMail = async () => {
+
+        // get the request id from the url (passed from the clearing terminal after a successful payment)
+        const params: URLSearchParams = new URLSearchParams(location.search);
+        const requestIdParam: string | null = params.get('requestId');
+
+        if (!requestIdParam) {
+            new Error('request id is missing');
+            return;
+        }
+
+        const sendEmailBody: ISendMailEventBody = {
+            subject: 'הזמנה חדשה!',
+            parameters: {
+                url: 'the url will be added at the server form .env',
+                requestId: requestIdParam,
+            },
+        }
+
+        try {
+
+            const sendMailResponse = await fetch('/.netlify/functions/send-email', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sendEmailBody),
+            });
+
+            const sendEmailResults = await sendMailResponse.json();
+
+            if (!sendEmailResults) {
+                return new Error('Something went wrong during sending Email process');
+            } else {
+                return 'Email sent successfully';
+            }
+
+        } catch (err) {
+            return err;
         }
     }
 
@@ -93,6 +138,11 @@ function PaymentSuccessPage() {
             }
         };
     }, [receiptUrl]);
+
+    useEffect(() => {
+        // TODO maybe to call it with a web worker (thread) so it will not slow down the receipt fetching process
+        triggerSendNotificationMail().then(console.log);
+    }, []);
 
     return (
         <div className="success-failure-page">
