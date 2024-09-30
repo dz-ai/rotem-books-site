@@ -152,7 +152,7 @@ const ClientDetailsFormPage: React.FC = () => {
     const handleAddressChoice = (addressFromListResults: string): void => {
         setAddressInput(addressFromListResults);
 
-        // peek the city and street from the results string and set them as the user address
+        // peek the city and street from the results-string and set them as the user address
         const arrayFromAddress = addressFromListResults.split(',');
 
         const street = arrayFromAddress[0]
@@ -160,7 +160,7 @@ const ClientDetailsFormPage: React.FC = () => {
 
         setAddressDetails(prevState => ({...prevState, street, city}));
 
-        // Clear the search results and hide the suggestions list.
+        // Clear the search results and hide the suggestion list.
         setAddressSearchResults([]);
     }
 
@@ -218,6 +218,7 @@ const ClientDetailsFormPage: React.FC = () => {
                                 onChange={(e) => setName(e.target.value)}
                                 required
                                 placeholder="שם ושם משפחה"
+                                autoComplete="name"
                             />
                         </label>
                         <label>
@@ -228,16 +229,18 @@ const ClientDetailsFormPage: React.FC = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                                 placeholder="נא להזין כתובת אי-מייל למשלוח קבלה"
+                                autoComplete="email"
                             />
                         </label>
                         <label>
                             טלפון:
                             <input
-                                type="number"
+                                type="tel"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 required
                                 placeholder="נא להזין מספר טלפון"
+                                autoComplete="tel"
                             />
                         </label>
                     </div>
@@ -257,6 +260,7 @@ const ClientDetailsFormPage: React.FC = () => {
                                 }}
                                 required
                                 placeholder="נא להזין כתובת מגורים למשלוח"
+                                autoComplete="street-address"
                             />
                             {
                                 addressSearchResults && addressSearchResults.length > 0 &&
@@ -303,6 +307,7 @@ const ClientDetailsFormPage: React.FC = () => {
                                     setAddressDetails(prevState => ({...prevState, zipCode: e.target.value}))}
                                 required
                                 placeholder="נא להזין מיקוד"
+                                autoComplete="postal-code"
                             />
                         </label>
                     </div>

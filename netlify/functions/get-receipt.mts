@@ -34,7 +34,7 @@ const handler: Handler = async (event) => {
 
         let results = null;
 
-        // if we find the order we can then extract the transaction id and to use it to find the relevant receipt
+        // if we find the order, we can then extract the transaction id and to use it to find the relevant receipt
         if (order) {
             const transactions: { id: string }[] = order.transactions;
 
@@ -44,7 +44,7 @@ const handler: Handler = async (event) => {
 
             const receipt = await receiptsCollection.findOne({transaction_id: transactionId});
 
-            // if we find the receipt we send the url that allow the user to download the receipt
+            // if we find the receipt, we send the url that allow the user to download the receipt
             if (receipt) results = receipt.url;
         }
 
@@ -52,10 +52,10 @@ const handler: Handler = async (event) => {
             statusCode: 200,
             body: JSON.stringify(results),
         }
-    } catch (error) {
+    } catch (err) {
         return {
             statusCode: 500,
-            body: 'error' + error
+            body: 'error' + err
         }
     }
 }

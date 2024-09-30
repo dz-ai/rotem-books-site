@@ -1,11 +1,11 @@
 import {Handler} from '@netlify/functions';
 import {IAddress, IClientDetails, IPaymentDetails} from "../../src/pages/clientDetailsPage/clientDetailsPage.tsx";
 
-// get credit card payment form from "morning API (חשבונית ירוקה)
+// get a credit card payment from "morning API (חשבונית ירוקה)
 const handler: Handler = async (event) => {
 
-    const apiKey = process.env.API_KEY;
-    const secret = process.env.SECRET;
+    const apiKey = process.env.MORNING_API_KEY;
+    const secret = process.env.MORNING_SECRET;
     const authVals = {id: `${apiKey}`, secret: `${secret}`};
     const pluginId = process.env.PLUGIN_ID;
 
