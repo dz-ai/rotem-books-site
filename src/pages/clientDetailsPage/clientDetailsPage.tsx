@@ -85,7 +85,7 @@ const ClientDetailsFormPage: React.FC = () => {
         let remarksTextContent = 'פירוט הקניה: \n';
         cartItems.forEach(book => remarksTextContent += `${book.title} ${book.quantity} יח׳ מחיר לפריט: ${book.price} ש״ח סה״כ שורה: ${book.price * book.quantity} \n`);
 
-        // CLIENT ADDRESS AND E-MAIL - to send the reception and the products
+        // CLIENT ADDRESS AND DETAILS
         const client: IClientDetails = {
             address: addressDetails,
             emails: [email],
@@ -101,7 +101,7 @@ const ClientDetailsFormPage: React.FC = () => {
             remarks: remarksTextContent,
         }
 
-        if (name && email && addressDetails && phone && totalPrice && income.length >= 0) {
+        if (name && email && checkAddressDetails() && phone && totalPrice && income.length >= 0) {
 
             try {
                 // fetching the payment form (credit card form details) from "Morning API"
@@ -129,7 +129,7 @@ const ClientDetailsFormPage: React.FC = () => {
 
         } else {
             setLoading(false);
-            if (income.length >= 0) setShowMessage('עגלת הקניות ריקה מפריטים');
+            if (income.length === 0) setShowMessage('עגלת הקניות ריקה מפריטים');
             else setShowMessage('נא למלא את כל הפרטים');
         }
     }
@@ -153,10 +153,11 @@ const ClientDetailsFormPage: React.FC = () => {
         setAddressInput(addressFromListResults);
 
         // peek the city and street from the results-string and set them as the user address
-        const arrayFromAddress = addressFromListResults.split(',');
+        const removeNumbers = addressFromListResults.replace(/[0-9]/g, '');
+        const arrayFromAddress = removeNumbers.split(',');
 
-        const street = arrayFromAddress[0]
-        const city = arrayFromAddress[1]
+        const street = arrayFromAddress[0].trim();
+        const city = arrayFromAddress[1].trim();
 
         setAddressDetails(prevState => ({...prevState, street, city}));
 
@@ -171,7 +172,7 @@ const ClientDetailsFormPage: React.FC = () => {
         mainElement.scrollTo(0, 0);
     }, []);
 
-    // scroll down as the user click the submit button
+    // scroll down as the user clicks the "submit" button
     function scrollToSubmitBtn() {
         const submitButton = document.querySelector('button[type="submit"].reusable-control-btn');
         if (submitButton) {
@@ -179,8 +180,8 @@ const ClientDetailsFormPage: React.FC = () => {
         }
     }
 
-    // delay the address search function by 500ms to minimize API calls.
-    // the function will only be called if the user pauses typing for at least 500ms.
+    // delay the address search function by 500 ms to minimize API calls.
+    // the function will only be called if the user pauses typing for at least 500 ms.
     function searchDebounceWrapper(searchValue: string, handleSearchCB: (searchVal: string) => Promise<void>): void {
 
         if (searchDebounceTimeoutIdRef.current) {
@@ -190,6 +191,11 @@ const ClientDetailsFormPage: React.FC = () => {
         searchDebounceTimeoutIdRef.current = setTimeout(() => {
             handleSearchCB(searchValue).then();
         }, 500);
+    }
+
+    function checkAddressDetails(): boolean {
+        const {city, street, houseNum, zipCode} = addressDetails;
+        return city !== '' && street !== '' && houseNum !== '' && zipCode !== '';
     }
 
     return (
@@ -249,7 +255,7 @@ const ClientDetailsFormPage: React.FC = () => {
                         <h3>כתובת למשלוח</h3>
 
                         <label>
-                            כתובת מגורים:
+                            כתובת למשלוח:
                             <input
                                 className="address-input"
                                 type="text"
@@ -260,7 +266,6 @@ const ClientDetailsFormPage: React.FC = () => {
                                 }}
                                 required
                                 placeholder="נא להזין כתובת מגורים למשלוח"
-                                autoComplete="street-address"
                             />
                             {
                                 addressSearchResults && addressSearchResults.length > 0 &&
@@ -312,7 +317,7 @@ const ClientDetailsFormPage: React.FC = () => {
                         </label>
                     </div>
                 </div>
-                <button className="reusable-control-btn" type="submit">
+                <button className="reusable-control-btn" type="submit" disabled={addressSearchResults.length > 0}>
                     {
                         !loading &&
                         <>

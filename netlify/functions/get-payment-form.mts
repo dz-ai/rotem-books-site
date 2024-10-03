@@ -1,4 +1,5 @@
 import {Handler} from '@netlify/functions';
+import cookie from 'cookie';
 import {IAddress, IClientDetails, IPaymentDetails} from "../../src/pages/clientDetailsPage/clientDetailsPage.tsx";
 
 // get a credit card payment from "morning API (חשבונית ירוקה)
@@ -79,13 +80,19 @@ const handler: Handler = async (event) => {
 
         const paymentFormData = await paymentFormResponse.json();
 
+        // save the client address as a cookie to be used later after the payment complete
+        const serializedAddressInCookie: string = saveClientAddressInCookie(`${createAddressString} ${city}`);
+
         // return the form url to the client
+        const headers: Record<string, string> = {
+            'Set-Cookie': serializedAddressInCookie,
+            'Content-Type': 'application/json',
+        };
+
         return {
             statusCode: paymentFormResponse.status,
             body: JSON.stringify(paymentFormData),
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers,
         }
 
     } catch (error: unknown) {
@@ -100,3 +107,14 @@ const handler: Handler = async (event) => {
 };
 
 export {handler};
+
+function saveClientAddressInCookie(clientAddress: string): string {
+    console.log(clientAddress);
+    return cookie.serialize('address', JSON.stringify(clientAddress), {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 60 * 60,
+        path: '/',
+    });
+}

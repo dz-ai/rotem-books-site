@@ -1,4 +1,5 @@
-import React, {createContext, useContext, useState, ReactNode} from 'react';
+import React, {createContext, useContext, useState, ReactNode, useEffect} from 'react';
+import Cookies from 'js-cookie';
 
 export interface ICartItem {
     id: string;
@@ -15,11 +16,13 @@ interface CartContextType {
     addToCart: (item: ICartItem) => void;
     updateCartItem: (id: string, quantity: number) => void;
     removeFromCart: (id: string) => void;
+    cleanCartCookie: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({children}: { children: ReactNode }) => {
+    const [firstLoad, setFirstLoad] = useState(true);
     const [cart, setCart] = useState<ICartItem[]>([]);
     const [changesReporter, setChangesReporter] = useState<string[]>(['']);
 
@@ -62,9 +65,41 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
 
     const totalQuantityINCart = cart.reduce((total, item) => total + item.quantity, 0);
 
+    const cleanCartCookie = () => {
+        setCart([]);
+        Cookies.remove('cart');
+    }
+
+    // retrieve the cart stored in the cookie and set it to maintain the cart items even after the site is reloaded
+    useEffect(() => {
+        const cookieCart = Cookies.get('cart');
+        if (cookieCart) {
+            setCart(JSON.parse(cookieCart));
+        }
+        setFirstLoad(false);
+    }, []);
+
+    // update the cart stored in cookie as the cart value change (expires after 7 days)
+    useEffect(() => {
+        // at the first load, the cart is an empty array,
+        // so we don't want to set it as the value of our cookie.
+        if (!firstLoad) {
+            Cookies.set('cart', JSON.stringify(cart), {expires: 7});
+        }
+    }, [cart]);
+
+
     return (
         <CartContext.Provider
-            value={{cart, totalQuantityINCart, changesReporter, addToCart, updateCartItem, removeFromCart}}>
+            value={{
+                cart,
+                totalQuantityINCart,
+                changesReporter,
+                addToCart,
+                updateCartItem,
+                removeFromCart,
+                cleanCartCookie
+            }}>
             {children}
         </CartContext.Provider>
     );

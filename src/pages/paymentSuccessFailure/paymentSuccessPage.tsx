@@ -4,9 +4,13 @@ import {NavLink, useLocation} from "react-router-dom";
 import {ColorRing} from 'react-loader-spinner'
 import {LuDownload} from "react-icons/lu";
 import {ISendMailEventBody} from "../../../netlify/functions/send-email.mjs";
+import {useCart} from "../../context/cartContext.tsx";
 
 // TODO test on a mobile screen
 function PaymentSuccessPage() {
+
+    const cartContext = useCart();
+
     const location = useLocation();
 
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -48,13 +52,9 @@ function PaymentSuccessPage() {
     }
 
     // trigger notification email to the website owner about the new order
-    const triggerSendNotificationMail = async () => {
+    const triggerSendNotificationMail = async (requestId: string) => {
 
-        // get the request id from the url (passed from the clearing terminal after a successful payment)
-        const params: URLSearchParams = new URLSearchParams(location.search);
-        const requestIdParam: string | null = params.get('requestId');
-
-        if (!requestIdParam) {
+        if (!requestId) {
             new Error('request id is missing');
             return;
         }
@@ -63,7 +63,7 @@ function PaymentSuccessPage() {
             subject: 'הזמנה חדשה!',
             parameters: {
                 url: 'the url will be added at the server form .env',
-                requestId: requestIdParam,
+                requestId: requestId,
             },
         }
 
@@ -84,6 +84,26 @@ function PaymentSuccessPage() {
             } else {
                 return 'Email sent successfully';
             }
+
+        } catch (err) {
+            return err;
+        }
+    }
+
+    // send the cart and client address via a cookie and update the order in the database
+    // using its ID, which is equal to the request ID
+    const updateOrderDetails = async (requestId: string) => {
+
+        try {
+            const updateOrderResponse = await fetch('/.netlify/functions/add-missing-details-to-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestId),
+            });
+
+            return await updateOrderResponse.json();
 
         } catch (err) {
             return err;
@@ -139,9 +159,22 @@ function PaymentSuccessPage() {
         };
     }, [receiptUrl]);
 
+    // trigger Email sending and order details updating
     useEffect(() => {
-        // TODO maybe to call it with a web worker (thread) so it will not slow down the receipt fetching process
-        triggerSendNotificationMail().then(console.log);
+
+        // get the request id from the url (passed from the clearing terminal after a successful payment)
+        const params: URLSearchParams = new URLSearchParams(location.search);
+        const requestIdParam: string | null = params.get('requestId');
+
+        if (requestIdParam) {
+            triggerSendNotificationMail(requestIdParam).then(console.log);
+            updateOrderDetails(requestIdParam).then(() => {
+                cartContext.cleanCartCookie();
+            });
+        } else {
+            console.error('requestId from url Params is missing')
+        }
+
     }, []);
 
     return (
