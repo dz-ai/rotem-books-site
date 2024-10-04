@@ -125,6 +125,8 @@ const ClientDetailsFormPage: React.FC = () => {
                 }
             } catch (err) {
                 console.log(err);
+                setLoading(false);
+                setShowMessage('משהו השתבש :(');
             }
 
         } else {
