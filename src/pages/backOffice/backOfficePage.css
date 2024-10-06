@@ -1,0 +1,89 @@
+.back-office-page {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+}
+
+.back-office-page ul {
+    padding: 0;
+}
+
+.back-office-sidebar-wrapper {
+    display: flex;
+    flex: 1;
+}
+
+.back-office-sidebar {
+    width: 100%;
+    background: white;
+    border-left: 1px solid #ccc8c8;
+    box-shadow: -1px 0 4px 0 #80808082;
+}
+
+.bo-sidebar-mobile {
+    flex: none;
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100%;
+    transition: right 0.3s ease;
+    overflow: hidden;
+    z-index: 1000;
+    padding-top: 30px;
+    background: gray;
+}
+
+.bo-sidebar-mobile-open {
+    right: 0;
+    width: 100%;
+}
+
+.bo-sidebar-mobile .back-office-sidebar {
+    width: 70%;
+    height: 100%;
+    padding-top: 20px;
+}
+
+.back-office-sidebar h3 {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+}
+
+.back-office-sidebar li {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px 5px 0;
+}
+
+.back-office-sidebar li p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.back-office-sidebar li:hover {
+    background: #cbcbcb;
+    cursor: pointer;
+}
+
+.back-office-sidebar li:active {
+    background: #aaaaaa;
+}
+
+.back-office-sidebar-order-status {
+    font-size: smaller;
+    margin-left: 15px;
+    color: red;
+}
+
+.back-office-order-details-wrapper {
+    flex: 3;
+    overflow: auto;
+}
+
+.back-office-date {
+    margin-right: 10px;
+    font-size: smaller;
+    color: #b78849;
+}

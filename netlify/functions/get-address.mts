@@ -5,7 +5,7 @@ interface EventQueryStringParameters {
 }
 
 
-// get address auto complete search results from Google API
+// get address auto complete search results from Google-API
 const handler: Handler = async (event) => {
 
     const GOOGLE_MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY
@@ -21,11 +21,11 @@ const handler: Handler = async (event) => {
 
             const places = await placesResponse.json();
 
-            // create strings Array of the results addresses
+            // create string Array of the result addresses
             type TPlace = { description: string }
             const searchResults: string[] = places.predictions.map((place: TPlace) => place.description);
 
-            // send the Results Array with the addresses back to the client
+            // send the Result Array with the addresses back to the client
             return {
                 statusCode: 200,
                 body: JSON.stringify(searchResults),

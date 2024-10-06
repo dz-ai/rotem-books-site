@@ -13,6 +13,7 @@ import ContactPage from "./pages/contactPage/contactPage.tsx";
 import ClientDetailsFormPage from "./pages/clientDetailsPage/clientDetailsPage.tsx";
 import PaymentSuccessPage from "./pages/paymentSuccessFailure/paymentSuccessPage.tsx";
 import PaymentFailurePage from "./pages/paymentSuccessFailure/paymentFailurePage.tsx";
+import {BackOfficePage} from "./pages/backOffice/backOfficePage.tsx";
 
 export const books: IBook[] = [
     {
@@ -188,6 +189,7 @@ const App: React.FC = () => {
                         <Route path="/client-details-page" element={<ClientDetailsFormPage/>}/>
                         <Route path="/payment-success-page" element={<PaymentSuccessPage/>}/>
                         <Route path="/payment-failure-page" element={<PaymentFailurePage/>}/>
+                        <Route path="/back-office-page" element={<BackOfficePage/>}/>
                     </Routes>
                     <Footer/>
                 </main>

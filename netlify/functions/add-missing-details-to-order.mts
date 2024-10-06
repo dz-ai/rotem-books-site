@@ -52,6 +52,8 @@ export const handler: Handler = async (event) => {
                 $set: {
                     cart,
                     payer: {...order.payer, address},
+                    status: 'new',
+                    date: Date.now(),
                 },
             };
 
