@@ -36,6 +36,8 @@ export interface IPaymentDetails {
     remarks: string;
 }
 
+// TODO add price
+//  and maybe reduce the search debounce time also would be nice to have submit order btn on the side of the page
 const ClientDetailsFormPage: React.FC = () => {
 
     const addressDetailsDefaultVal = {

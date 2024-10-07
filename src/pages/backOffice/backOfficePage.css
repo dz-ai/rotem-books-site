@@ -52,6 +52,13 @@
     border-bottom: 1px solid #eee;
 }
 
+.orders-loading-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .back-office-sidebar li {
     display: flex;
     align-items: center;
@@ -73,14 +80,40 @@
 }
 
 .back-office-sidebar-order-status {
+    width: 30px;
+    display: flex;
+    justify-content: center;
     font-size: smaller;
-    margin-left: 15px;
+}
+
+.red {
     color: red;
+}
+
+.green {
+    color: green;
+}
+
+.gray {
+    color: gray;
+}
+
+.back-office-sidebar-client-name {
+    margin-right: 15px;
 }
 
 .back-office-order-details-wrapper {
     flex: 4;
     overflow: auto;
+}
+
+.back-office-order-details-wrapper [aria-label="three-dots-loading"] {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #3333331a;
 }
 
 .back-office-date {

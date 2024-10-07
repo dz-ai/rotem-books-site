@@ -1,19 +1,25 @@
 import React, {useEffect, useState} from "react";
 import {IOrder} from "../../pages/backOffice/backOfficePage.tsx";
 import {orderDate} from "./getOrderDateUtil.tsx";
+import {translateOrderStatus} from "./translateOrderStatus.ts";
+import {ThreeDots} from "react-loader-spinner";
 
 interface IBackofficeSideBarProps {
     orders: IOrder[];
     openMobileSideBar?: boolean;
     handleOrderClick: (order: IOrder) => void;
     setOpenMobileSideBar?: React.Dispatch<React.SetStateAction<boolean>>;
+    loadingStatus: false | string;
+    loadingOrders: boolean;
 }
 
 export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                                                                           orders,
                                                                           openMobileSideBar,
                                                                           handleOrderClick,
-                                                                          setOpenMobileSideBar
+                                                                          setOpenMobileSideBar,
+                                                                          loadingStatus,
+                                                                          loadingOrders
                                                                       }) => {
 
     const [classname, setClassname] = useState<string>('back-office-sidebar-wrapper');
@@ -37,29 +43,63 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
         <div className={classname}>
             <div className="back-office-sidebar">
                 <h3>הזמנות</h3>
-                <ul>
-                    {
-                        orders.map(order =>
-                            <li
-                                key={order.id}
-                                onClick={() => {
-                                    handleOrderClick(order);
-                                    setOpenMobileSideBar &&
-                                    setOpenMobileSideBar(false);
-                                }}
-                            >
-                                <p className="back-office-sidebar-order-status">
-                                    {order.status}
-                                </p>
-                                <p>
-                                    {order.payer.name}
-                                </p>
+                {
+                    loadingOrders &&
+                    <div className="orders-loading-wrapper">
+                        <p>הזמנות בטעינה</p>
+                        <ThreeDots
+                            visible={true}
+                            height="35"
+                            width="35"
+                            color="#008000ab"
+                            radius="9"
+                            ariaLabel="three-dots-loading"
+                        />
+                    </div>
+                }
+                {
+                    !loadingOrders &&
+                    <ul>
+                        {
+                            orders.map(order => {
+                                    const {status, color} = translateOrderStatus(order.status);
+                                    return <li
+                                        key={order.id}
+                                        onClick={() => {
+                                            handleOrderClick(order);
+                                            setOpenMobileSideBar &&
+                                            setOpenMobileSideBar(false);
+                                        }}
+                                    >
 
-                                {orderDate(order.date)}
-                            </li>
-                        )
-                    }
-                </ul>
+                                        <div className="back-office-sidebar-order-status">
+                                            {
+                                                loadingStatus && loadingStatus === order.id ?
+                                                    <ThreeDots
+                                                        visible={true}
+                                                        height="18"
+                                                        width="18"
+                                                        color="#008000ab"
+                                                        radius="9"
+                                                        ariaLabel="three-dots-loading"
+                                                    />
+                                                    :
+                                                    <p className={color}>
+                                                        {status}
+                                                    </p>
+                                            }
+                                        </div>
+                                        <p className="back-office-sidebar-client-name">
+                                            {order.payer.name}
+                                        </p>
+
+                                        {orderDate(order.date)}
+                                    </li>
+                                }
+                            )
+                        }
+                    </ul>
+                }
             </div>
         </div>
     );

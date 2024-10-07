@@ -5,6 +5,7 @@ import {IBackofficeSideBar} from "../../components/backOffice/backOfficeSideBar.
 import {ICartItem} from "../../context/cartContext.tsx";
 import {useSearchParams} from "react-router-dom";
 import {useMediaQuery} from "react-responsive";
+import {ThreeDots} from "react-loader-spinner";
 
 
 interface IPayer {
@@ -14,7 +15,7 @@ interface IPayer {
     address: string;
 }
 
-enum EOrderStatus {new = 'new', open = 'open', close = 'close'}
+export enum EOrderStatus {new = 'new', open = 'open', close = 'close'}
 
 export interface IOrder {
     id: string;
@@ -27,7 +28,7 @@ export interface IOrder {
 
 export const BackOfficePage: React.FC = () => {
 
-    const isSmallScreen = useMediaQuery({query: '(max-width: 600px)'});
+    const isSmallScreen = useMediaQuery({query: '(max-width: 700px)'});
 
     const [searchParams, setSearchParams] = useSearchParams();
     const orderId = searchParams.get('orderId');
@@ -36,15 +37,20 @@ export const BackOfficePage: React.FC = () => {
     const [openMobileSideBar, setOpenMobileSideBar] = useState(true);
     const [currentOrder, setCurrentOrder] = useState<IOrder | null>(null);
     const [message, setMessage] = useState<string | null>(null);
+    const [loadingStatus, setLoadingStatus] = useState<false | string>(false);
+    const [loadingOrders, setLoadingOrders] = useState(false);
 
     // get the orders from Database
     const getOrders = async (): Promise<IOrder[] | null> => {
 
         try {
+            setLoadingOrders(true);
 
             const ordersResponse = await fetch('.netlify/functions/get-orders');
 
             const orders = await ordersResponse.json();
+
+            setLoadingOrders(false);
 
             if (orders) {
                 return orders;
@@ -53,12 +59,51 @@ export const BackOfficePage: React.FC = () => {
             }
 
         } catch (err) {
+            setLoadingOrders(false);
             console.error(err);
             return null;
         }
     }
 
-    const handleOrderClick = (order: IOrder) => {
+    // update the order status "new" "open" "close"
+    const updateOrderStatus = async (order: IOrder, status: EOrderStatus) => {
+
+        try {
+            // trigger loader only to the line of the specific order
+            setLoadingStatus(order.id);
+
+            const updateStatusResponse = await fetch('.netlify/functions/update-order-status', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({reqId: order.id, status}),
+            });
+
+            const {newStatus} = await updateStatusResponse.json();
+
+            order.status = newStatus;
+
+            setLoadingStatus(false);
+
+            return order;
+
+        } catch (err) {
+            setLoadingStatus(false);
+            console.error(err);
+        }
+
+    }
+
+    // handle the user's choice as the user clicks on order in the sidebar
+    const handleOrderClick = async (order: IOrder) => {
+
+        // set the order status to "open" when the user accesses a new order for the first time.
+        if (order.status === EOrderStatus.new) {
+            setCurrentOrder(null); // clear the "order-details" window and display the loader instead
+            await updateOrderStatus(order, EOrderStatus.open);
+        }
+
         setCurrentOrder(order);
         setSearchParams(prev => {
             prev.set('orderId', order.id);
@@ -75,8 +120,19 @@ export const BackOfficePage: React.FC = () => {
                     setOrders(resultOrders);
 
                     const orderToSet = resultOrders.find(order => order.id === orderId);
-                    orderToSet &&
-                    setCurrentOrder(orderToSet);
+                    if (orderToSet) {
+
+                        // set the order status to "open" when the user accesses a new order for the first time.
+                        orderToSet.status === EOrderStatus.new ?
+
+                            updateOrderStatus(orderToSet, EOrderStatus.open)
+                                .then(updatedOrder => {
+                                    updatedOrder &&
+                                    setCurrentOrder(updatedOrder);
+                                })
+                            :
+                            setCurrentOrder(orderToSet);
+                    }
 
                     setOpenMobileSideBar(false);
 
@@ -88,7 +144,7 @@ export const BackOfficePage: React.FC = () => {
                     setMessage('משהו השתבש :(');
                 }
             });
-    }, [orderId]);
+    }, []);
 
     return (
         <div className="back-office-page">
@@ -100,6 +156,8 @@ export const BackOfficePage: React.FC = () => {
                     openMobileSideBar={openMobileSideBar}
                     handleOrderClick={handleOrderClick}
                     setOpenMobileSideBar={setOpenMobileSideBar}
+                    loadingStatus={loadingStatus}
+                    loadingOrders={loadingOrders}
                 />
             }
             {
@@ -108,13 +166,26 @@ export const BackOfficePage: React.FC = () => {
                 <IBackofficeSideBar
                     orders={orders}
                     handleOrderClick={handleOrderClick}
+                    loadingStatus={loadingStatus}
+                    loadingOrders={loadingOrders}
                 />
             }
 
             <div className="back-office-order-details-wrapper">
                 {
-                    currentOrder &&
-                    <BackOfficeOrderDetails order={currentOrder} setOpenOrderBar={setOpenMobileSideBar}/>
+                    !currentOrder && orderId ?
+                        <ThreeDots
+                            visible={true}
+                            height="70"
+                            width="70"
+                            color="#4fa94d"
+                            radius="9"
+                            ariaLabel="three-dots-loading"
+                        />
+                        :
+                        currentOrder &&
+                        <BackOfficeOrderDetails order={currentOrder} setOpenOrderBar={setOpenMobileSideBar}/>
+
                 }
                 {
                     message &&
