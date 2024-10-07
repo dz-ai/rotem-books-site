@@ -1,12 +1,12 @@
 import './paymentSuccessFailurePage.css';
 import React, {useEffect, useRef, useState} from "react";
 import {NavLink, useLocation} from "react-router-dom";
+import {useCart} from "../../context/cartContext.tsx";
+import {ISendMailEventBody} from "../../../netlify/functions/send-email.mjs";
 import {ColorRing} from 'react-loader-spinner'
 import {LuDownload} from "react-icons/lu";
-import {ISendMailEventBody} from "../../../netlify/functions/send-email.mjs";
-import {useCart} from "../../context/cartContext.tsx";
+import { MdOutlineMarkEmailRead } from "react-icons/md";
 
-// TODO test on a mobile screen
 function PaymentSuccessPage() {
 
     const cartContext = useCart();
@@ -180,7 +180,7 @@ function PaymentSuccessPage() {
     return (
         <div className="success-failure-page">
             <h2>ההזמנה הושלמה בהצלחה</h2>
-            <p>מס׳ ההזמנה: {requestId}</p>
+            <p className="order-id">מס׳ ההזמנה: {requestId}</p>
             {
                 receiptUrl &&
                 <NavLink className="reusable-control-btn" to={receiptUrl}>
@@ -188,6 +188,10 @@ function PaymentSuccessPage() {
                     <LuDownload/>
                 </NavLink>
             }
+            <p className="receipt-in-email-message">
+                ניתן למצוא את הקבלה גם במייל
+                <MdOutlineMarkEmailRead />
+            </p>
             {
                 !receiptUrl && !message &&
                 <>
