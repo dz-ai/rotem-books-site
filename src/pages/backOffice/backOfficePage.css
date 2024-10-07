@@ -11,11 +11,12 @@
 
 .back-office-sidebar-wrapper {
     display: flex;
-    flex: 1;
+    flex: 2;
 }
 
 .back-office-sidebar {
     width: 100%;
+    overflow: auto;
     background: white;
     border-left: 1px solid #ccc8c8;
     box-shadow: -1px 0 4px 0 #80808082;
@@ -78,7 +79,7 @@
 }
 
 .back-office-order-details-wrapper {
-    flex: 3;
+    flex: 4;
     overflow: auto;
 }
 
@@ -86,4 +87,10 @@
     margin-right: 10px;
     font-size: smaller;
     color: #b78849;
+}
+
+.back-office-page-message {
+    text-align: center;
+    color: red;
+    margin-top: 50%;
 }

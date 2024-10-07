@@ -5,7 +5,6 @@ import {IBackofficeSideBar} from "../../components/backOffice/backOfficeSideBar.
 import {ICartItem} from "../../context/cartContext.tsx";
 import {useSearchParams} from "react-router-dom";
 import {useMediaQuery} from "react-responsive";
-import {cloud, cricket, mouse} from "../../assets";
 
 
 interface IPayer {
@@ -26,55 +25,6 @@ export interface IOrder {
     date: number;
 }
 
-const orders: IOrder[] = [{
-    id: '123',
-    total: 20,
-    payer: {
-        name: 'david zim',
-        phone: '3927549875',
-        email: 'david@gmail.com',
-        address: 'my address is so and so'
-    },
-    cart: [{
-        id: '12334555999',
-        title: 'some title',
-        quantity: 1,
-        price: 20,
-        image: cloud
-    }],
-    status: EOrderStatus.new,
-    date: 1728121042583
-},
-    {
-        id: '3824768',
-        total: 40,
-        payer: {
-            name: 'avi',
-            phone: '498375',
-            email: 'avi@gmail.com',
-            address: 'my address is so and so'
-        },
-        cart: [
-            {
-                id: '495876',
-                title: 'other title',
-                quantity: 2,
-                price: 20,
-                image: cricket,
-            },
-            {
-                id: '349587',
-                title: 'ספר כלשהו',
-                quantity: 3,
-                price: 30,
-                image: mouse,
-            }
-        ],
-        status: EOrderStatus.new,
-        date: 1728121174507,
-    }
-];
-
 export const BackOfficePage: React.FC = () => {
 
     const isSmallScreen = useMediaQuery({query: '(max-width: 600px)'});
@@ -82,8 +32,31 @@ export const BackOfficePage: React.FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const orderId = searchParams.get('orderId');
 
+    const [orders, setOrders] = useState<IOrder[]>([]);
     const [openMobileSideBar, setOpenMobileSideBar] = useState(true);
     const [currentOrder, setCurrentOrder] = useState<IOrder | null>(null);
+    const [message, setMessage] = useState<string | null>(null);
+
+    // get the orders from Database
+    const getOrders = async (): Promise<IOrder[] | null> => {
+
+        try {
+
+            const ordersResponse = await fetch('.netlify/functions/get-orders');
+
+            const orders = await ordersResponse.json();
+
+            if (orders) {
+                return orders;
+            } else {
+                return null;
+            }
+
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
+    }
 
     const handleOrderClick = (order: IOrder) => {
         setCurrentOrder(order);
@@ -93,13 +66,28 @@ export const BackOfficePage: React.FC = () => {
         });
     }
 
+    // get the orders as the page is loading
     useEffect(() => {
-        if (orderId) {
-            const orderToSet = orders.find(order => order.id === orderId);
-            orderToSet &&
-            setCurrentOrder(orderToSet);
-            setOpenMobileSideBar(false);
-        }
+        getOrders()
+            .then(resultOrders => {
+                // set to specific order if there is an order ID
+                if (resultOrders && orderId) {
+                    setOrders(resultOrders);
+
+                    const orderToSet = resultOrders.find(order => order.id === orderId);
+                    orderToSet &&
+                    setCurrentOrder(orderToSet);
+
+                    setOpenMobileSideBar(false);
+
+                    // set the orders to display on the sidebar
+                } else if (resultOrders && !orderId) {
+                    setOrders(resultOrders);
+                } else {
+                    setOpenMobileSideBar(false);
+                    setMessage('משהו השתבש :(');
+                }
+            });
     }, [orderId]);
 
     return (
@@ -127,6 +115,10 @@ export const BackOfficePage: React.FC = () => {
                 {
                     currentOrder &&
                     <BackOfficeOrderDetails order={currentOrder} setOpenOrderBar={setOpenMobileSideBar}/>
+                }
+                {
+                    message &&
+                    <p className="back-office-page-message">{message}</p>
                 }
             </div>
         </div>
