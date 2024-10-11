@@ -3,6 +3,10 @@
     color: black;
 }
 
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
 .logo {
     width: 30px;
     height: auto;

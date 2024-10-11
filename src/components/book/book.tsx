@@ -18,7 +18,6 @@ interface BookProperties {
     quantityInCart: number | null;
 }
 
-// TODO on a mobile device as the user click on the book card it as blue background (some default behavior of the browser or so...)
 const Book: React.FC<BookProperties> = ({book, quantityInCart}) => {
     const cartContext = useCart();
 

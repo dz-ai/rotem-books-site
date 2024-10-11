@@ -8,13 +8,14 @@ interface QuantityInputProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const QuantityInput: React.FC<QuantityInputProps> = ({ quantity, onIncrease, onDecrease, onChange }) => {
+const QuantityInput: React.FC<QuantityInputProps> = ({quantity, onIncrease, onDecrease, onChange}) => {
     return (
         <div className="quantity-input">
             <button className="minus-btn" onClick={(e) => {
                 e.preventDefault();
                 onDecrease();
-            }} disabled={quantity <= 1}>-</button>
+            }} disabled={quantity <= 1}>-
+            </button>
             <input
                 type="number"
                 value={quantity}
@@ -24,7 +25,8 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ quantity, onIncrease, onD
             <button className="plus-btn" onClick={(e) => {
                 e.preventDefault();
                 onIncrease();
-            }}>+</button>
+            }}>+
+            </button>
         </div>
     );
 };
