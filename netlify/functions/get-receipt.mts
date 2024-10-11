@@ -45,7 +45,7 @@ const handler: Handler = async (event) => {
             const receipt = await receiptsCollection.findOne({transaction_id: transactionId});
 
             // if we find the receipt, we send the url that allow the user to download the receipt
-            if (receipt) results = receipt.url;
+            if (receipt) results = {receiptUrl: receipt.url, receiptId: receipt.id};
         }
 
         return {

@@ -14,10 +14,29 @@ export const handler: Handler = async (event) => {
     if (!process.env.MONGODB_COLLECTION_ORDERS) {
         return generateResponse(500, 'Server configuration error, env variable - MONGODB_COLLECTION_ORDERS not found');
     }
+    if (!process.env.MORNING_SANDBOX_URL) {
+        return generateResponse(500, 'Server configuration error, env variable - MORNING_SANDBOX_URL not found');
+    }
 
     try {
         // get the order id and the new status from the frontend
-        const {reqId, status} = JSON.parse(event.body);
+        const {reqId, receiptId, status} = JSON.parse(event.body);
+
+        if (status === 'close' && !receiptId) generateResponse(400, 'Bad request receipt id is missing');
+
+        if (status === 'close' && receiptId) {
+            const closeOrderResponse = await fetch(`${process.env.MORNING_SANDBOX_URL}/api/v1/documents/${receiptId}/close`, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer JWT`,
+                },
+            });
+
+            if (closeOrderResponse.status !== 200) {
+                return generateResponse(closeOrderResponse.status, 'Error closing order');
+            }
+        }
 
         // get the order collection from the database
         const database = (await mongoClientPromise).db(process.env.MONGODB_DATABASE);

@@ -1,40 +1,42 @@
 import './paymentSuccessFailurePage.css';
 import React, {useEffect, useRef, useState} from "react";
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, useSearchParams} from "react-router-dom";
 import {useCart} from "../../context/cartContext.tsx";
 import {ISendMailEventBody} from "../../../netlify/functions/send-email.mjs";
 import {ColorRing} from 'react-loader-spinner'
 import {LuDownload} from "react-icons/lu";
-import { MdOutlineMarkEmailRead } from "react-icons/md";
+import {MdOutlineMarkEmailRead} from "react-icons/md";
 
 function PaymentSuccessPage() {
 
     const cartContext = useCart();
 
-    const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const orderId = searchParams.get('requestId');
 
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    const [requestId, setRequestId] = useState<string | null>(null);
     const [receiptUrl, setReceiptUrl] = useState<string | null>(null);
+    const [receiptId, setReceiptId] = useState<string | null>(null);
     const [message, setMessage] = useState<boolean>(false);
 
     // fetch receipt url (that allow the user to download the receipt)
-    const getReceipt = async (reqId: string): Promise<void> => {
+    const getReceipt = async (): Promise<void> => {
         try {
             const getReceiptResponse = await fetch('/.netlify/functions/get-receipt', {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(reqId),
+                body: JSON.stringify(orderId),
             });
 
-            const receiptRulAddress = await getReceiptResponse.json();
+            const {receiptUrl, receiptId} = await getReceiptResponse.json();
+            setReceiptId(receiptId);
 
-            if (receiptRulAddress) {
-                setReceiptUrl(receiptRulAddress);
+            if (receiptUrl) {
+                setReceiptUrl(receiptUrl);
 
                 // stop the interval from keep calling getReceipt() fn
                 if (intervalRef.current) {
@@ -92,7 +94,7 @@ function PaymentSuccessPage() {
 
     // send the cart and client address via a cookie and update the order in the database
     // using its ID, which is equal to the request ID
-    const updateOrderDetails = async (requestId: string) => {
+    const updateOrderDetails = async (requestId: string, receiptId: string) => {
 
         try {
             const updateOrderResponse = await fetch('/.netlify/functions/add-missing-details-to-order', {
@@ -100,7 +102,7 @@ function PaymentSuccessPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(requestId),
+                body: JSON.stringify({requestId, receiptId}),
             });
 
             return await updateOrderResponse.json();
@@ -116,16 +118,10 @@ function PaymentSuccessPage() {
     useEffect(() => {
         if (!receiptUrl) {
 
-            // get the request id from the url (passed from the clearing terminal after a successful payment)
-            const params: URLSearchParams = new URLSearchParams(location.search);
-            const requestIdParam: string | null = params.get('requestId');
-
-            if (requestIdParam) {
-
-                setRequestId(requestIdParam);
+            if (orderId) {
 
                 intervalRef.current = setInterval(() => {
-                    getReceipt(requestIdParam).then();
+                    getReceipt().then();
                 }, 800);
             }
 
@@ -162,25 +158,30 @@ function PaymentSuccessPage() {
     // trigger Email sending and order details updating
     useEffect(() => {
 
-        // get the request id from the url (passed from the clearing terminal after a successful payment)
-        const params: URLSearchParams = new URLSearchParams(location.search);
-        const requestIdParam: string | null = params.get('requestId');
-
-        if (requestIdParam) {
-            triggerSendNotificationMail(requestIdParam).then(console.log);
-            updateOrderDetails(requestIdParam).then(() => {
-                cartContext.cleanCartCookie();
-            });
+        if (orderId) {
+            triggerSendNotificationMail(orderId).then(console.log);
         } else {
             console.error('requestId from url Params is missing')
         }
 
     }, []);
 
+    useEffect(() => {
+        if (!orderId) {
+            console.error('requestId from url Params is missing');
+        }
+
+        if (orderId && receiptId) {
+            updateOrderDetails(orderId, receiptId).then(() => {
+                cartContext.cleanCartCookie();
+            });
+        }
+    }, [receiptId !== null]);
+
     return (
         <div className="success-failure-page">
             <h2>ההזמנה הושלמה בהצלחה</h2>
-            <p className="order-id">מס׳ ההזמנה: {requestId}</p>
+            <p className="order-id">מס׳ ההזמנה: {orderId}</p>
             {
                 receiptUrl &&
                 <NavLink className="reusable-control-btn" to={receiptUrl}>
@@ -190,7 +191,7 @@ function PaymentSuccessPage() {
             }
             <p className="receipt-in-email-message">
                 ניתן למצוא את הקבלה גם במייל
-                <MdOutlineMarkEmailRead />
+                <MdOutlineMarkEmailRead/>
             </p>
             {
                 !receiptUrl && !message &&

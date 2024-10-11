@@ -5,6 +5,7 @@ import {IBackofficeSideBar} from "../../components/backOffice/backOfficeSideBar.
 import {ICartItem} from "../../context/cartContext.tsx";
 import {useSearchParams} from "react-router-dom";
 import {useMediaQuery} from "react-responsive";
+import {sortOrdersUtil} from "../../components/backOffice/util/sortOrdersUtil.ts";
 import {ThreeDots} from "react-loader-spinner";
 
 
@@ -19,6 +20,7 @@ export enum EOrderStatus {new = 'new', open = 'open', close = 'close'}
 
 export interface IOrder {
     id: string;
+    receiptId: string;
     total: number;
     payer: IPayer;
     cart: ICartItem[];
@@ -53,7 +55,7 @@ export const BackOfficePage: React.FC = () => {
             setLoadingOrders(false);
 
             if (orders) {
-                return orders;
+                return sortOrdersUtil(orders);
             } else {
                 return null;
             }
@@ -65,8 +67,8 @@ export const BackOfficePage: React.FC = () => {
         }
     }
 
-    // update the order status "new" "open" "close"
-    const updateOrderStatus = async (order: IOrder, status: EOrderStatus) => {
+    // update the order status "new" "open" "close" receipt id may be used for close or open order on "Morning" api
+    const updateOrderStatus = async (order: IOrder, status: EOrderStatus, receiptId?: string) => {
 
         try {
             // trigger loader only to the line of the specific order
@@ -77,14 +79,17 @@ export const BackOfficePage: React.FC = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({reqId: order.id, status}),
+                body: JSON.stringify({reqId: order.id, receiptId: receiptId || null, status}),
             });
 
             const {newStatus} = await updateStatusResponse.json();
 
-            order.status = newStatus;
+            if (newStatus) {
+                order.status = newStatus;
+            }
 
             setLoadingStatus(false);
+            sortOrdersUtil(orders);
 
             return order;
 
@@ -153,6 +158,7 @@ export const BackOfficePage: React.FC = () => {
                 isSmallScreen &&
                 <IBackofficeSideBar
                     orders={orders}
+                    currentOrderId={currentOrder?.id}
                     openMobileSideBar={openMobileSideBar}
                     handleOrderClick={handleOrderClick}
                     setOpenMobileSideBar={setOpenMobileSideBar}
@@ -165,6 +171,7 @@ export const BackOfficePage: React.FC = () => {
 
                 <IBackofficeSideBar
                     orders={orders}
+                    currentOrderId={currentOrder?.id}
                     handleOrderClick={handleOrderClick}
                     loadingStatus={loadingStatus}
                     loadingOrders={loadingOrders}
@@ -184,7 +191,11 @@ export const BackOfficePage: React.FC = () => {
                         />
                         :
                         currentOrder &&
-                        <BackOfficeOrderDetails order={currentOrder} setOpenOrderBar={setOpenMobileSideBar}/>
+                        <BackOfficeOrderDetails
+                            order={currentOrder}
+                            setOpenOrderBar={setOpenMobileSideBar}
+                            updateOrderStatus={updateOrderStatus}
+                        />
 
                 }
                 {

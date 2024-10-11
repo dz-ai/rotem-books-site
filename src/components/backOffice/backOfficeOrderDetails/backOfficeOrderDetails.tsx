@@ -1,25 +1,31 @@
 import React from "react";
 import './backOfficeOrderDetails.css'
-import {IOrder} from "../../../pages/backOffice/backOfficePage.tsx";
+import {EOrderStatus, IOrder} from "../../../pages/backOffice/backOfficePage.tsx";
 import {BackOfficeCartItem} from "../backOfficeCartItem.tsx";
-import {orderDate} from "../getOrderDateUtil.tsx";
+import {orderDate} from "../util/getOrderDateUtil.tsx";
 import {MdKeyboardDoubleArrowRight} from "react-icons/md";
-import {translateOrderStatus} from "../translateOrderStatus.ts";
+import {translateOrderStatusUtil} from "../util/translateOrderStatusUtil.ts";
 
 interface IBackOfficeOrderDetailsProps {
     order: IOrder;
     setOpenOrderBar: React.Dispatch<React.SetStateAction<boolean>>;
+    updateOrderStatus: (order: IOrder, status: EOrderStatus, receiptId?: string) => Promise<IOrder | undefined>;
 }
 
-export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({order, setOpenOrderBar}) => {
+export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
+                                                                                   order,
+                                                                                   setOpenOrderBar,
+                                                                                   updateOrderStatus
+                                                                               }) => {
+
     const {payer, cart, total, date} = order;
     const {name, address, email, phone} = payer;
 
-    const {status, color} = translateOrderStatus(order.status);
+    const {status, color} = translateOrderStatusUtil(order.status);
 
     return (
         <div className="back-office-order-details">
-            <button className="reusable-control-btn" onClick={() => setOpenOrderBar(true)}>
+            <button className="reusable-control-btn back-to-order-list" onClick={() => setOpenOrderBar(true)}>
                 <MdKeyboardDoubleArrowRight/>
                 לרשימת ההזמנות
             </button>
@@ -30,6 +36,13 @@ export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
                     {status}
                 </p>
                 {orderDate(date)}
+
+                <p
+                    className="back-to-new-status-btn"
+                    onClick={() => updateOrderStatus(order, EOrderStatus.new)}
+                >
+                    החזר לסטטוס ״חדשה״
+                </p>
             </div>
 
             <div className="back-office-order-details-client-details horizontal-line">
@@ -43,9 +56,12 @@ export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
                 <h2>פרטי הרכישה</h2>
                 <ul>
                     {
-                        cart.map(cartItem =>
-                            <BackOfficeCartItem key={cartItem.id} cartItem={cartItem}/>
-                        )
+                        cart ?
+                            cart.map(cartItem =>
+                                <BackOfficeCartItem key={cartItem.id} cartItem={cartItem}/>
+                            )
+                            :
+                            <p>פרטי ההזמנה חסרים :(</p>
                     }
                 </ul>
 
@@ -53,7 +69,11 @@ export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
             </div>
 
             <button className="reusable-control-btn">להורדה וצפיה בקבלה</button>
-            <button className="reusable-control-btn">להעברת ההזמנה לארכיון</button>
+            <button
+                className="reusable-control-btn"
+                onClick={() => updateOrderStatus(order, EOrderStatus.close, order.receiptId)}>
+                להעברת ההזמנה לארכיון
+            </button>
         </div>
     );
 }

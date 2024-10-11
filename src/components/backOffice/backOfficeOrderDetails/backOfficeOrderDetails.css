@@ -2,7 +2,7 @@
     padding: 15px;
 }
 
-.back-office-order-details .reusable-control-btn {
+.back-office-order-details .back-to-order-list {
     display: none;
 }
 
@@ -19,6 +19,23 @@
 
 .back-office-order-details-header h2 {
     margin-left: 15px;
+}
+
+.back-office-order-details-header .back-to-new-status-btn {
+    margin-right: auto;
+    border-radius: 3px;
+    padding: 5px;
+    background: aliceblue;
+    color: brown;
+}
+
+.back-office-order-details-header .back-to-new-status-btn:hover {
+    cursor: pointer;
+    background: #dcf3ff;
+}
+
+.back-office-order-details-header .back-to-new-status-btn:active {
+    background: #ccefff;
 }
 
 .back-office-order-details-client-details {

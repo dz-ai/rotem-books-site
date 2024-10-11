@@ -1,11 +1,11 @@
-import {EOrderStatus} from "../../pages/backOffice/backOfficePage.tsx";
+import {EOrderStatus} from "../../../pages/backOffice/backOfficePage.tsx";
 
 interface ITranslateOrderStatusReturnVal {
     status: string;
     color: string;
 }
 
-export const translateOrderStatus = (status: EOrderStatus): ITranslateOrderStatusReturnVal => {
+export const translateOrderStatusUtil = (status: EOrderStatus): ITranslateOrderStatusReturnVal => {
     let resultStatus = '';
     let resultColor = '';
 

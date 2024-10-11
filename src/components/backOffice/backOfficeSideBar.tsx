@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {IOrder} from "../../pages/backOffice/backOfficePage.tsx";
-import {orderDate} from "./getOrderDateUtil.tsx";
-import {translateOrderStatus} from "./translateOrderStatus.ts";
+import {orderDate} from "./util/getOrderDateUtil.tsx";
+import {translateOrderStatusUtil} from "./util/translateOrderStatusUtil.ts";
 import {ThreeDots} from "react-loader-spinner";
 
 interface IBackofficeSideBarProps {
     orders: IOrder[];
+    currentOrderId?: string;
     openMobileSideBar?: boolean;
     handleOrderClick: (order: IOrder) => void;
     setOpenMobileSideBar?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +16,7 @@ interface IBackofficeSideBarProps {
 
 export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                                                                           orders,
+                                                                          currentOrderId,
                                                                           openMobileSideBar,
                                                                           handleOrderClick,
                                                                           setOpenMobileSideBar,
@@ -62,9 +64,10 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                     <ul>
                         {
                             orders.map(order => {
-                                    const {status, color} = translateOrderStatus(order.status);
+                                    const {status, color} = translateOrderStatusUtil(order.status);
                                     return <li
                                         key={order.id}
+                                        className={currentOrderId === order.id ? "back-office-sidebar-current-order" : ""}
                                         onClick={() => {
                                             handleOrderClick(order);
                                             setOpenMobileSideBar &&

@@ -50,6 +50,7 @@
 .back-office-sidebar h3 {
     width: 100%;
     border-bottom: 1px solid #eee;
+    padding: 5px;
 }
 
 .orders-loading-wrapper {
@@ -71,12 +72,16 @@
 }
 
 .back-office-sidebar li:hover {
-    background: #cbcbcb;
+    background: #ededed;
     cursor: pointer;
 }
 
 .back-office-sidebar li:active {
     background: #aaaaaa;
+}
+
+.back-office-sidebar-current-order {
+    background: #cbcbcb;
 }
 
 .back-office-sidebar-order-status {

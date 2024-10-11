@@ -27,7 +27,7 @@ export const handler: Handler = async (event) => {
 
     try {
         // get the order id from the frontend (payment successful page)
-        const reqId: ClientDetails = JSON.parse(event.body);
+        const {requestId, receiptId} = JSON.parse(event.body);
 
         // the cookie hold address and cart values even after the redirect to payment form and back
         const cookies = cookie.parse(event.headers.cookie || '');
@@ -43,17 +43,18 @@ export const handler: Handler = async (event) => {
         const orderCollection = database.collection(process.env.MONGODB_COLLECTION_ORDERS as string);
 
         // get the order with the request ID
-        const order = await getOrder(orderCollection, reqId);
+        const order = await getOrder(orderCollection, requestId);
 
         if (order && cart && address) {
 
-            const filter = {id: reqId};
+            const filter = {id: requestId};
             const update = {
                 $set: {
                     cart,
                     payer: {...order.payer, address},
                     status: 'new',
                     date: Date.now(),
+                    receiptId: receiptId,
                 },
             };
 
