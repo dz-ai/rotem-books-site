@@ -12,7 +12,7 @@ const TalkBubblePopup: React.FC = () => {
     const [popupText, setPopupText] = useState<string>('');
     const [isMouseOverThePopup, setIsMouseOverThePopup] = useState<boolean>(false);
     const [animationClass, setAnimationClass] = useState<'fade-in' | 'fade-out'>('fade-in');
-    // TODO prevent open if we are already at the cart page
+
     // this effect opens the popup to 7 seconds
     // if there is a new message from the cart context about adding or removing items
     useEffect(() => {
@@ -61,12 +61,15 @@ const TalkBubblePopup: React.FC = () => {
                         <div className="talk-text">
                             {popupText}
                         </div>
-                        <div
-                            className="reusable-control-btn"
-                            onClick={() => navigate('/cart-page')}
-                        >
-                            למעבר לעגלה
-                        </div>
+                        {
+                            location.pathname !== '/cart-page' && cartContext.cart.length !== 0 &&
+                            <button
+                                className="reusable-control-btn"
+                                onClick={() => navigate('/cart-page')}
+                            >
+                                למעבר לעגלה
+                            </button>
+                        }
                     </div>
                 </div>
             }
