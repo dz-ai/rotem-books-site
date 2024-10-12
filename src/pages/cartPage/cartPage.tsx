@@ -19,8 +19,6 @@ const CartPage: React.FC = () => {
         cartContext.removeFromCart(id);
     };
 
-    const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
     return (
         <div className="cart-wrapper">
             <button className="reusable-control-btn" onClick={() => navigate('/')}>
@@ -57,10 +55,10 @@ const CartPage: React.FC = () => {
                         </li>
                     ))}
                 </ul>
-                <h2 className="total-price">סכ״ה: ₪{totalPrice}</h2>
+                <h2 className="total-price">סכ״ה: ₪{cartContext.totalPrice}</h2>
                 <button
                     className="reusable-control-btn"
-                    disabled={totalPrice === 0}
+                    disabled={cartContext.totalPrice === 0}
                     onClick={() => navigate('/client-details-page')}
                 >
                     לתשלום

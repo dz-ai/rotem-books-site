@@ -36,8 +36,6 @@ export interface IPaymentDetails {
     remarks: string;
 }
 
-// TODO add price
-//  and maybe reduce the search debounce time also would be nice to have submit order btn on the side of the page
 const ClientDetailsFormPage: React.FC = () => {
 
     const addressDetailsDefaultVal = {
@@ -194,7 +192,7 @@ const ClientDetailsFormPage: React.FC = () => {
 
         searchDebounceTimeoutIdRef.current = setTimeout(() => {
             handleSearchCB(searchValue).then();
-        }, 500);
+        }, 400);
     }
 
     function checkAddressDetails(): boolean {
@@ -211,8 +209,6 @@ const ClientDetailsFormPage: React.FC = () => {
                     חזרה לעגלה
                 </NavLink>
             </div>
-
-            <h2>נא להזין את הפרטים הבאים:</h2>
 
             <form onSubmit={handleSubmit}>
                 <div className="form-container">
@@ -321,6 +317,7 @@ const ClientDetailsFormPage: React.FC = () => {
                         </label>
                     </div>
                 </div>
+                <div className="client-details-total-price">סה״כ לתשלום: {cartContext.totalPrice} ₪</div>
                 <button className="reusable-control-btn" type="submit" disabled={addressSearchResults.length > 0}>
                     {
                         !loading &&

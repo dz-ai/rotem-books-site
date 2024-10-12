@@ -16,6 +16,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 15px;
 }
 
 .form-container {
@@ -67,6 +68,10 @@
     box-shadow: inset 0 0 3px #80808082;
 }
 
+.form-container input[type="tel"] {
+    text-align: end;
+}
+
 .form-container .address-input {
     margin-bottom: -1px;
 }
@@ -96,6 +101,11 @@
 .form-container ul li:hover {
     background: #419aff7d;
     cursor: pointer;
+}
+
+.client-details-total-price {
+    width: 100%;
+    font-weight: bold;
 }
 
 .client-details-page .error-message {

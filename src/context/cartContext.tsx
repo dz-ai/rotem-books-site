@@ -11,7 +11,8 @@ export interface ICartItem {
 
 interface CartContextType {
     cart: ICartItem[];
-    totalQuantityINCart: number;
+    totalQuantityInCart: number;
+    totalPrice: number;
     changesReporter: string[];
     addToCart: (item: ICartItem) => void;
     updateCartItem: (id: string, quantity: number) => void;
@@ -63,8 +64,6 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
         }));
     };
 
-    const totalQuantityINCart = cart.reduce((total, item) => total + item.quantity, 0);
-
     const cleanCartCookie = () => {
         setCart([]);
         Cookies.remove('cart');
@@ -88,12 +87,16 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
         }
     }, [cart]);
 
+    const totalQuantityInCart = cart.reduce((total, item) => total + item.quantity, 0);
+
+    const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
     return (
         <CartContext.Provider
             value={{
                 cart,
-                totalQuantityINCart,
+                totalQuantityInCart,
+                totalPrice,
                 changesReporter,
                 addToCart,
                 updateCartItem,

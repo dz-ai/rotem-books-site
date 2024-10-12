@@ -34,7 +34,7 @@ const SideNavBar = () => {
                     <li className="cart-icon" onClick={() => onNavBtnClicked('/cart-page')}>
                         עגלת הקניות
                         <GiShoppingCart/>
-                        <span>{cartContext.totalQuantityINCart}</span>
+                        <span>{cartContext.totalQuantityInCart}</span>
                     </li>
                     <li onClick={() => onNavBtnClicked('/about')}>אודות</li>
                     <li onClick={() => onNavBtnClicked('/contact-page')}>צור קשר</li>
