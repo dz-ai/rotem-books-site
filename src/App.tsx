@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import {IBook} from "./components/book/book.tsx";
-import {cloud, mouse, fish, rabbit, little, cricket} from "./assets";
 import Header from './components/header/header.tsx';
 import Footer from './components/footer/footer.tsx';
 import HomePage from './pages/homePage/homePage.tsx';
@@ -20,7 +19,7 @@ export const books: IBook[] = [
         id: 'ac93b430fd6353ff',
         title: 'הנמלה הצרצר והחורף הקר',
         price: 10,
-        coverImage: cricket,
+        coverImage: 'cricket.webp',
         illustratorName: 'איילת הוך',
         description: 'האהבה שלי למשלים, ליכולת שלהם לחצות תקופות וזמנים ' +
             'ולהיות רלוונטיים, הביאה אותי לכתוב את הסיפור על ' +
@@ -44,7 +43,7 @@ export const books: IBook[] = [
         id: '44-699cc34ecd9fd',
         title: 'הארנבת החרוצה והצב',
         price: 12,
-        coverImage: rabbit,
+        coverImage: 'rabbit.webp',
         illustratorName: 'אנטוניה ויקלמן',
         description: 'קוראים יקרים,\n' +
             '\n ' +
@@ -71,7 +70,7 @@ export const books: IBook[] = [
         id: 'fb1-3dd3e231e830 ',
         title: 'הדייג ודג הזהב',
         price: 12,
-        coverImage: fish,
+        coverImage: 'fish.webp',
         illustratorName: 'איילת הוך',
         description: 'במהלך עבודתי עם הילדים, סיפרתי רבות את הסיפור ' +
             '"הדייג ודג הזהב". בספר זה הוספתי פרטים והתאמתי ' +
@@ -91,7 +90,7 @@ export const books: IBook[] = [
         id: '5a7-4893d28dfcb3',
         title: 'העכברים ומנגינת הקסמים',
         price: 12,
-        coverImage: mouse,
+        coverImage: 'mouse.webp',
         illustratorName: 'רותם שם טוב',
         description: 'את הסיפור "החלילן מהמלין" פגשתי כשהייתי ילדה קטנה. הייתי ' +
             'מוקסמת מהסיפור אבל תמיד חשבתי לערוך אותו מחדש, לקשר אותו ' +
@@ -113,7 +112,7 @@ export const books: IBook[] = [
         id: 'e7c-129c43e9101c',
         title: 'עננית הרפתקנית',
         price: 15,
-        coverImage: cloud,
+        coverImage: 'cloud.webp',
         illustratorName: 'אנטוניה וינקלמן',
         description: 'הרפתקאות הן כיפיות, אך צריך גם לדעת לשים גבולות. למה?\n' +
             '\n' +
@@ -144,7 +143,7 @@ export const books: IBook[] = [
         id: '829-2023dfd73a33',
         title: 'כשהיינו קטנים',
         price: 15,
-        coverImage: little,
+        coverImage: 'little.webp',
         illustratorName: 'אנטוניה וינקלמן',
         description: 'האם יש דגים בתוך שלוליות ביום חורף על המדרכות?\n' +
             'האם זה יכול להיות?\n' +

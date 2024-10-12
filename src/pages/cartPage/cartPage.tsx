@@ -36,7 +36,7 @@ const CartPage: React.FC = () => {
                         <li key={item.id} className="cart-item">
 
                             <div className="cart-item-book-detail-container">
-                                <img src={item.image} alt={item.title}/>
+                                <img src={`${import.meta.env.VITE_IMAGEKIT_URL}/${item.image}`} alt={item.title}/>
                                 <span>{item.title}</span>
 
                                 <div className="cart-item-price">

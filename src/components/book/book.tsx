@@ -27,7 +27,7 @@ const Book: React.FC<BookProperties> = ({book, quantityInCart}) => {
 
     return (
         <div className="book">
-            <img src={book.coverImage} alt={book.title}/>
+            <img src={`${import.meta.env.VITE_IMAGEKIT_URL}/${book.coverImage}`} loading="lazy" alt={book.title}/>
             <h3>{book.title}</h3>
             <p>₪{book.price}</p>
             <div className="add-to-cart-container">

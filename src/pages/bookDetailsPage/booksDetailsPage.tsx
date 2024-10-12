@@ -69,7 +69,7 @@ const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
 
             <div className="bookDetail">
                 <div className="book-details-columns left">
-                    <img src={book.coverImage} alt={`${book.title} cover`} className="coverImage"/>
+                    <img src={`${import.meta.env.VITE_IMAGEKIT_URL}/${book.coverImage}`} alt={`${book.title} cover`} className="coverImage"/>
                     <p><strong> מחיר: ₪{book.price}</strong></p>
                 </div>
 

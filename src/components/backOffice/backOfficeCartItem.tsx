@@ -12,7 +12,7 @@ export const BackOfficeCartItem: React.FC<IBackOfficeCartItemProps> = ({cartItem
         <div className="back-office-order-cart-item horizontal-line">
             <h4>שם הספר: {title}</h4>
             <div className="back-office-order-cart-item-details">
-                <img src={image} alt={`עמוד הכריכה ${title}`}/>
+                <img src={`${import.meta.env.VITE_IMAGEKIT_URL}/${image}`} alt={`עמוד הכריכה ${title}`}/>
                 <p className="back-office-order-cart-item-details-quantity"> כמות: {quantity} ספרים</p>
                 <p>סה״כ לפריט: {quantity * price} ₪</p>
             </div>
