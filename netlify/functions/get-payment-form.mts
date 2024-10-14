@@ -5,10 +5,15 @@ import {IAddress, IClientDetails, IPaymentDetails} from "../../src/pages/clientD
 // get a credit card payment from "morning API (חשבונית ירוקה)
 const handler: Handler = async (event) => {
 
+    const dev = process.env.DEV === 'true';
+
     const apiKey = process.env.MORNING_API_KEY;
     const secret = process.env.MORNING_SECRET;
     const authVals = {id: `${apiKey}`, secret: `${secret}`};
-    const pluginId = process.env.PLUGIN_ID;
+    const pluginId = process.env.MORNING_PLUGIN_ID;
+    const morningApiUrl = process.env.MORNING_URL;
+
+    const urlToUse = dev ? 'https://rotem-books-test-env.netlify.app' : 'https://www.rotems-books.store';
 
     try {
         if (!event.body) {
@@ -27,8 +32,8 @@ const handler: Handler = async (event) => {
         const createAddressString = `רחוב ${street} ${houseNum} ${apartmentNum !== '' ? 'דירה ' + apartmentNum : ''}`;
         const {name, phone, emails}: IClientDetails = client;
 
-        const getTokenUrl = 'https://sandbox.d.greeninvoice.co.il/api/v1/account/token'
-        const getPaymentFormUrl = 'https://sandbox.d.greeninvoice.co.il/api/v1/payments/form'
+        const getTokenUrl = `${morningApiUrl}/account/token`;
+        const getPaymentFormUrl = `${morningApiUrl}/payments/form`;
 
         const orderDetails = {
             description: "קבלה עבור רכישה באתר ״הספרים של רותם״",
@@ -52,9 +57,9 @@ const handler: Handler = async (event) => {
             },
             income, /* the items */
             remarks,
-            successUrl: "https://rotems-books-site.netlify.app/payment-success-page",
-            failureUrl: "https://rotems-books-site.netlify.app/payment-failure-page",
-            notifyUrl: "https://rotems-books-site.netlify.app/.netlify/functions/save-receipt-after-payment-success",
+            successUrl: `${urlToUse}/payment-success-page`,
+            failureUrl: `${urlToUse}/payment-failure-page`,
+            notifyUrl: `${urlToUse}/.netlify/functions/save-receipt-after-payment-success`,
         };
 
         // connect to the "morning" user account and get JWT token
@@ -109,7 +114,6 @@ const handler: Handler = async (event) => {
 export {handler};
 
 function saveClientAddressInCookie(clientAddress: string): string {
-    console.log(clientAddress);
     return cookie.serialize('address', JSON.stringify(clientAddress), {
         httpOnly: true,
         secure: true,
