@@ -5,6 +5,8 @@ import {mongoClientPromise} from "../../netlify-functions-util/mongoDB-connectio
 // TODO add JWT token
 export const handler: Handler = async (event) => {
 
+    const morningApiUrl = process.env.MORNING_URL;
+
     if (event.httpMethod !== 'POST') {
         return generateResponse(405, 'Method Not Allowed');
     }
@@ -14,7 +16,7 @@ export const handler: Handler = async (event) => {
     if (!process.env.MONGODB_COLLECTION_ORDERS) {
         return generateResponse(500, 'Server configuration error, env variable - MONGODB_COLLECTION_ORDERS not found');
     }
-    if (!process.env.MORNING_SANDBOX_URL) {
+    if (!morningApiUrl) {
         return generateResponse(500, 'Server configuration error, env variable - MORNING_SANDBOX_URL not found');
     }
 
@@ -25,7 +27,7 @@ export const handler: Handler = async (event) => {
         if (status === 'close' && !receiptId) generateResponse(400, 'Bad request receipt id is missing');
 
         if (status === 'close' && receiptId) {
-            const closeOrderResponse = await fetch(`${process.env.MORNING_SANDBOX_URL}/api/v1/documents/${receiptId}/close`, {
+            const closeOrderResponse = await fetch(`${morningApiUrl}/documents/${receiptId}/close`, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
