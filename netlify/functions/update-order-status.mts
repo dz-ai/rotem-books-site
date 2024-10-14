@@ -17,7 +17,7 @@ export const handler: Handler = async (event) => {
     if (!process.env.MORNING_SANDBOX_URL) {
         return generateResponse(500, 'Server configuration error, env variable - MORNING_SANDBOX_URL not found');
     }
-
+    console.log('test');
     try {
         // get the order id and the new status from the frontend
         const {reqId, receiptId, status} = JSON.parse(event.body);
