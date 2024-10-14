@@ -32,7 +32,13 @@ function PaymentSuccessPage() {
                 body: JSON.stringify(orderId),
             });
 
-            const {receiptUrl, receiptId} = await getReceiptResponse.json();
+            const getReceiptResult = await getReceiptResponse.json();
+
+            // prevent "destruction of null Error"
+            if (!getReceiptResult) return;
+
+            const {receiptUrl, receiptId} = getReceiptResult;
+
             setReceiptId(receiptId);
 
             if (receiptUrl) {
@@ -121,7 +127,7 @@ function PaymentSuccessPage() {
             if (orderId) {
 
                 intervalRef.current = setInterval(() => {
-                    getReceipt().then();
+                    getReceipt().then().catch(console.log);
                 }, 800);
             }
 
@@ -134,13 +140,21 @@ function PaymentSuccessPage() {
         };
     }, [receiptUrl]);
 
-    // this effect clears the interval that calls the getReceipt function after 20 seconds, stopping further attempts to fetch the receipt.
+    // this effect clears the interval that calls the getReceipt function after 60 seconds,
+    // stopping further attempts to fetch the receipt.
     // instead, it displays a message instructing the user to check their email for the receipt.
     useEffect(() => {
 
         timeoutRef.current = setTimeout(() => {
             if (intervalRef.current) {
                 clearInterval(intervalRef.current);
+            }
+
+            // update the Database even if we are missing the receipt url
+            if (!receiptUrl && orderId) {
+                updateOrderDetails(orderId, '')
+                    .then(() => cartContext.cleanCartCookie())
+                    .catch(console.log);
             }
 
             !receiptUrl &&
@@ -159,7 +173,7 @@ function PaymentSuccessPage() {
     useEffect(() => {
 
         if (orderId) {
-            triggerSendNotificationMail(orderId).then(console.log);
+            triggerSendNotificationMail(orderId).then(console.log).catch(console.log);
         } else {
             console.error('requestId from url Params is missing')
         }
@@ -172,9 +186,11 @@ function PaymentSuccessPage() {
         }
 
         if (orderId && receiptId) {
-            updateOrderDetails(orderId, receiptId).then(() => {
-                cartContext.cleanCartCookie();
-            });
+            updateOrderDetails(orderId, receiptId)
+                .then(() => {
+                    cartContext.cleanCartCookie();
+                })
+                .catch(console.log);
         }
     }, [receiptId !== null]);
 
