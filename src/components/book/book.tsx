@@ -62,6 +62,8 @@ const Book: React.FC<BookProperties> = ({book, quantityInCart, coverTypeInCart})
             setCoverType(coverTypeInUrl);
         } else if (coverTypeInCart) {
             setCoverType(coverTypeInCart);
+        } else {
+            setCoverType(book.coverType[0]);
         }
 
         // set the price according to the cover-type and the quantity
