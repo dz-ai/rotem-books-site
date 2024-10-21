@@ -3,3 +3,7 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.book-list a {
+    margin: 15px;
+}

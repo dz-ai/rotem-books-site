@@ -1,12 +1,11 @@
 .book {
-    height: 420px;
+    height: 100%;
     width: 290px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     border: 1px solid #ddd;
-    margin: 1em;
     padding: 1em;
     text-align: center;
     border-radius: 7px;
@@ -38,6 +37,14 @@
     margin: 0;
 }
 
+.book .cover-type:first-child {
+    margin-left: 10px;
+}
+
+.book input[type="radio"], .cover-type:hover {
+    cursor: pointer;
+}
+
 .book-add-remove-from-cart-controllers {
     display: flex;
     align-items: center;
@@ -51,10 +58,6 @@
 .book-add-remove-from-cart-controllers svg:hover {
     padding: 0;
 }
-
-/*.add-to-cart-text {*/
-/*    color: teal;*/
-/*}*/
 
 .add-to-cart-text:hover {
     color: #00d3d3;

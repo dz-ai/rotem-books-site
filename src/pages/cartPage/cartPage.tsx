@@ -5,6 +5,8 @@ import {useNavigate} from "react-router-dom";
 import {useCart} from "../../context/cartContext.tsx";
 import {MdKeyboardDoubleArrowRight} from "react-icons/md";
 import {MdKeyboardDoubleArrowLeft} from "react-icons/md";
+import {coverType} from "../../components/book/book.tsx";
+import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
 
 const CartPage: React.FC = () => {
     const navigate = useNavigate();
@@ -21,9 +23,9 @@ const CartPage: React.FC = () => {
 
     return (
         <div className="cart-wrapper">
-            <button className="reusable-control-btn" onClick={() => navigate('/')}>
+            <button className="reusable-control-btn" onClick={() => window.history.back()}>
                 <MdKeyboardDoubleArrowRight/>
-                חזרה לתפריט הראשי
+                חזרה לדף הקודם
             </button>
             <div className="cart-container">
                 <div className="cart-header">
@@ -35,11 +37,18 @@ const CartPage: React.FC = () => {
 
                             <div className="cart-item-book-detail-container">
                                 <img src={`${import.meta.env.VITE_IMAGEKIT_URL}/${item.image}`} alt={item.title}/>
-                                <span>{item.title}</span>
+                                <div className="book-title-and-cover-type">
+                                    <div className="cart-item-title">{item.title}</div>
+                                    <div>{item.coverType === 'hard-cover' ? 'כריכה קשה' : 'כריכה רכה'}</div>
+                                </div>
 
                                 <div className="cart-item-price">
-                                    <span>₪{item.price}</span>
-                                    <span>סכ״ה: ₪{item.price * item.quantity}</span>
+                                    <span>מחיר ליח׳: ₪{item.coverType === 'hard-cover' ? ECoverTypeHard.basicPrise : ECoverTypeSoft.basicPrise}</span>
+                                    <span>סכ״ה: ₪{item.price}</span>
+                                    {
+                                        item.quantity > 1 &&
+                                        <span className="quantity-discount">כולל הנחת כמות</span>
+                                    }
                                 </div>
                             </div>
 

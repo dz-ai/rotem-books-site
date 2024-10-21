@@ -1,21 +1,30 @@
 import React, {useEffect, useRef} from 'react';
 import './bookDetailsPage.css';
-import {useNavigate, useParams} from 'react-router-dom';
-import {IBook} from '../../components/book/book.tsx';
+import {useNavigate, useParams, useSearchParams} from 'react-router-dom';
+import {coverType, IBook} from '../../components/book/book.tsx';
 import {useCart} from "../../context/cartContext.tsx";
 import {useInterSectionObserver} from "../../hooks/useIntersectionObserver.ts";
 import {MdKeyboardDoubleArrowRight} from "react-icons/md";
+import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
 
 interface IBtnSectionTemplateProps {
-    book: IBook
+    book: IBook;
+    bookCoverType: coverType;
 }
 
-const BtnSectionTemplate: React.FC<IBtnSectionTemplateProps> = ({book}) => {
+const BtnSectionTemplate: React.FC<IBtnSectionTemplateProps> = ({book, bookCoverType}) => {
     const cartContext = useCart();
     const navigate = useNavigate();
 
     const addToCart = () => {
-        cartContext.addToCart({id: book.id, title: book.title, price: book.price, image: book.coverImage, quantity: 1})
+        cartContext.addToCart({
+            id: book.id,
+            title: book.title,
+            price: book.price,
+            coverType: bookCoverType,
+            image: book.coverImage,
+            quantity: 1
+        });
     }
 
     const buyNow = () => {
@@ -27,9 +36,9 @@ const BtnSectionTemplate: React.FC<IBtnSectionTemplateProps> = ({book}) => {
 
     return (
         <div className="book-details-btn-section">
-            <button className="reusable-control-btn" onClick={() => navigate('/')}>
+            <button className="reusable-control-btn" onClick={() => window.history.back()}>
                 <MdKeyboardDoubleArrowRight/>
-                חזרה לתפריט הראשי
+                חזרה לדף הקודם
             </button>
             <button className="reusable-control-btn" onClick={addToCart}>הוסף לעגלה</button>
             <button className="reusable-control-btn" onClick={buyNow}>לרכישה</button>
@@ -42,6 +51,10 @@ interface IBookDetailPageProps {
 }
 
 const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const coverType = searchParams.get('cover-type') as coverType;
+
     const upperBtnSectionRef = useRef<null>(null);
     const isElementOnTheScreen = useInterSectionObserver(upperBtnSectionRef);
 
@@ -63,14 +76,23 @@ const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
         <div className="book-details-container">
 
             <span ref={upperBtnSectionRef}>
-                <BtnSectionTemplate book={book}/>
+                <BtnSectionTemplate book={book} bookCoverType={coverType}/>
             </span>
             <h2>{book.title}</h2>
+            <span>{coverType === 'hard-cover' ? 'כריכה קשה' : 'כריכה רכה'}</span>
 
             <div className="bookDetail">
                 <div className="book-details-columns left">
-                    <img src={`${import.meta.env.VITE_IMAGEKIT_URL}/${book.coverImage}`} alt={`${book.title} cover`} className="coverImage"/>
-                    <p><strong> מחיר: ₪{book.price}</strong></p>
+                    <img
+                        src={`${import.meta.env.VITE_IMAGEKIT_URL}/${book.coverImage}`}
+                        alt={`${book.title} cover`}
+                        className="coverImage"
+                    />
+                    <p>
+                        <strong>
+                            מחיר: ₪{coverType === 'hard-cover' ? ECoverTypeHard.basicPrise : ECoverTypeSoft.basicPrise}
+                        </strong>
+                    </p>
                 </div>
 
                 <div className="book-details-columns right">
@@ -84,7 +106,7 @@ const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
             </div>
             {
                 !isElementOnTheScreen &&
-                <BtnSectionTemplate book={book}/>
+                <BtnSectionTemplate book={book} bookCoverType={coverType}/>
             }
         </div>
     );

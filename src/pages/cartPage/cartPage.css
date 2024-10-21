@@ -71,9 +71,13 @@
     border-bottom: none;
 }
 
-.cart-item span {
+.cart-item-title {
+    font-weight: bolder;
+}
+
+.cart-item .book-title-and-cover-type {
     flex: 1;
-    text-align: center;
+    text-align: right;
     margin: 0 5px;
 }
 
@@ -83,6 +87,12 @@
     justify-content: end;
     align-items: start;
     border-right: 1px solid;
+    padding-right: 10px;
+}
+
+.quantity-discount {
+    font-size: smaller;
+    color: #4c7dfe;
 }
 
 .cart-item input {

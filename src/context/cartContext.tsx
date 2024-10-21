@@ -1,5 +1,7 @@
 import React, {createContext, useContext, useState, ReactNode, useEffect} from 'react';
 import Cookies from 'js-cookie';
+import {coverType} from "../components/book/book.tsx";
+import {determinePrice} from "../components/book/determineBookPriceUtil.ts";
 
 export interface ICartItem {
     id: string;
@@ -7,6 +9,7 @@ export interface ICartItem {
     quantity: number;
     price: number;
     image: string;
+    coverType: coverType;
 }
 
 interface CartContextType {
@@ -16,6 +19,7 @@ interface CartContextType {
     changesReporter: string[];
     addToCart: (item: ICartItem) => void;
     updateCartItem: (id: string, quantity: number) => void;
+    updateCoverType: (id: string, coverType: coverType) => void;
     removeFromCart: (id: string) => void;
     cleanCartCookie: () => void;
 }
@@ -25,7 +29,17 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({children}: { children: ReactNode }) => {
     const [firstLoad, setFirstLoad] = useState(true);
     const [cart, setCart] = useState<ICartItem[]>([]);
+    const [totalPrice, setTotalPrice] = useState<number>(0);
     const [changesReporter, setChangesReporter] = useState<string[]>(['']);
+
+    const updateCoverType = (id: string, coverType: coverType) => {
+        const itemInCartIndex = cart.findIndex(item => item.id === id);
+        const item = cart[itemInCartIndex];
+
+        cart[itemInCartIndex] = {...item, coverType, price: determinePrice(coverType, item?.quantity || 1)};
+        updateTotalPrice();
+        setCart([...cart]);
+    }
 
     const updateCartItem = (id: string, quantity: number) => {
         setCart((prevCart) =>
@@ -35,7 +49,7 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
                             setChangesReporter([`${item.title} הוסר מהעגלה`])
                             :
                             setChangesReporter([`${item.title} נוסף לעגלה`]);
-                        return {...item, quantity: Math.max(1, quantity)};
+                        return {...item, quantity: Math.max(1, quantity), price: determinePrice(item.coverType, quantity)};
                     } else {
                         return item;
                     }
@@ -46,11 +60,13 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
 
     const addToCart = (item: ICartItem) => {
         const itemInCart: ICartItem | undefined = cart.find(cartItem => cartItem.id === item.id);
+
         if (itemInCart) {
             updateCartItem(item.id, itemInCart.quantity += 1);
             setChangesReporter([`${itemInCart.title} נוסף לעגלה`]);
         } else {
-            setCart((prevCart) => [...prevCart, item]);
+            const itemWithUpdatedPrice = {...item, price: determinePrice(item.coverType, item.quantity)}
+            setCart((prevCart) => [...prevCart, itemWithUpdatedPrice]);
             setChangesReporter([`${item.title} נוסף לעגלה`]);
         }
     };
@@ -87,9 +103,16 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
         }
     }, [cart]);
 
-    const totalQuantityInCart = cart.reduce((total, item) => total + item.quantity, 0);
+    useEffect(() => {
+        updateTotalPrice();
+    }, [cart]);
 
-    const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    function updateTotalPrice() {
+        const calculateTotalPrice = cart.reduce((total, item) => total + item.price, 0);
+        setTotalPrice(calculateTotalPrice);
+    }
+
+    const totalQuantityInCart = cart.reduce((total, item) => total + item.quantity, 0);
 
     return (
         <CartContext.Provider
@@ -100,6 +123,7 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
                 changesReporter,
                 addToCart,
                 updateCartItem,
+                updateCoverType,
                 removeFromCart,
                 cleanCartCookie
             }}>

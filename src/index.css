@@ -21,13 +21,14 @@ ul {
     list-style: none;
 }
 
+/*#ffc700*/
 .reusable-control-btn {
     height: 35px;
     width: fit-content;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #ffc700;
+    background: #9bb5ff;
     font-size: 17px;
     border: none;
     border-radius: 20px;
@@ -40,12 +41,14 @@ ul {
     margin-left: 5px;
 }
 
+/*#ffd640*/
 .reusable-control-btn:hover {
-    background: #ffd640;
+    background: #d8fbff;
 }
 
+/*#ffde6f*/
 .reusable-control-btn:active {
-    background: #ffde6f;
+    background: #c5e3e6;
 }
 
 .reusable-control-btn:focus-visible {
