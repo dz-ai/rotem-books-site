@@ -5,6 +5,10 @@
     transform: translate(-50%, -50%);
 }
 
+.popup-container:hover {
+    cursor: default;
+}
+
 .talk-bubble {
     position: absolute;
     top: 40px;

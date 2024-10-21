@@ -61,9 +61,9 @@ const Header: React.FC = () => {
                             >
                                 עגלת הקניות
                                 <GiShoppingCart/>
-                                <CartPopup/>
                                 <span>{cartContext.totalQuantityInCart}</span>
                             </NavLink>
+                            <CartPopup/>
                         </li>
                         <li>
                             <NavLink to="/">

@@ -193,7 +193,6 @@ export const books: IBook[] = [
     },
 ];
 
-// TODO the router push for some reason tow times to /cart-page so the user have to click twice on the "back-button"
 const App: React.FC = () => {
     return (
         <Router>
