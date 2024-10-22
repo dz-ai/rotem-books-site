@@ -36,7 +36,7 @@ const handler: Handler = async (event) => {
         const getPaymentFormUrl = `${morningApiUrl}/payments/form`;
 
         const orderDetails = {
-            description: "קבלה עבור רכישה באתר ״הספרים של רותם״",
+            description: "test",
             type: 400,
             lang: 'he',
             currency: 'ILS',
@@ -55,7 +55,15 @@ const handler: Handler = async (event) => {
                 phone,
                 add: true
             },
-            income, /* the items */
+            income: [
+                {
+                    description: "test",
+                    quantity: 1,
+                    price: 1,
+                    currency: "ILS",
+                    "vatType": 0
+                }
+            ], /* the items */
             remarks,
             successUrl: `${urlToUse}/payment-success-page`,
             failureUrl: `${urlToUse}/payment-failure-page`,
