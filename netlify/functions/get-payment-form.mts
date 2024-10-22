@@ -41,7 +41,7 @@ const handler: Handler = async (event) => {
             lang: 'he',
             currency: 'ILS',
             vatType: 0,
-            amount,
+            amount: 1,
             maxPayments: 1,
             pluginId: pluginId,
             group: 100,
