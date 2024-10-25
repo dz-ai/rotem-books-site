@@ -27,7 +27,7 @@ const handler: Handler = async (event) => {
         }
 
         // get all the user and the payment details to create valid orderDetails Object that will be sent with the get payment form query
-        const {amount, client, income, remarks}: IPaymentDetails = JSON.parse(event.body);
+        const {amount, client, income}: IPaymentDetails = JSON.parse(event.body);
         const {city, street, houseNum, apartmentNum, zipCode}: IAddress = client.address;
         const createAddressString = `רחוב ${street} ${houseNum} ${apartmentNum !== '' ? 'דירה ' + apartmentNum : ''}`;
         const {name, phone, emails}: IClientDetails = client;
@@ -36,12 +36,12 @@ const handler: Handler = async (event) => {
         const getPaymentFormUrl = `${morningApiUrl}/payments/form`;
 
         const orderDetails = {
-            description: "test",
+            description: `קניה באתר הספרים של רותם (${emails[0]})`,
             type: 400,
             lang: 'he',
             currency: 'ILS',
             vatType: 0,
-            amount: 1,
+            amount: /*amount*/1,
             maxPayments: 1,
             pluginId: pluginId,
             group: 100,
@@ -55,7 +55,7 @@ const handler: Handler = async (event) => {
                 phone,
                 add: true
             },
-            income: [
+            income: /*income*/[
                 {
                     description: "test",
                     quantity: 1,
@@ -64,7 +64,6 @@ const handler: Handler = async (event) => {
                     "vatType": 0
                 }
             ], /* the items */
-            remarks,
             successUrl: `${urlToUse}/payment-success-page`,
             failureUrl: `${urlToUse}/payment-failure-page`,
             notifyUrl: `${urlToUse}/.netlify/functions/save-receipt-after-payment-success`,
@@ -94,11 +93,12 @@ const handler: Handler = async (event) => {
         const paymentFormData = await paymentFormResponse.json();
 
         // save the client address as a cookie to be used later after the payment complete
-        const serializedAddressInCookie: string = saveClientAddressInCookie(`${createAddressString} ${city}`);
+        const clientDetails = ({name, email: emails[0]});
+        const serializedClientDetailsInCookie: string = saveClientDetailsInCookie(clientDetails);
 
         // return the form url to the client
         const headers: Record<string, string> = {
-            'Set-Cookie': serializedAddressInCookie,
+            'Set-Cookie': serializedClientDetailsInCookie,
             'Content-Type': 'application/json',
         };
 
@@ -121,8 +121,8 @@ const handler: Handler = async (event) => {
 
 export {handler};
 
-function saveClientAddressInCookie(clientAddress: string): string {
-    return cookie.serialize('address', JSON.stringify(clientAddress), {
+function saveClientDetailsInCookie(clientDetails: { name: string, email: string }): string {
+    return cookie.serialize('clientDetails', JSON.stringify(clientDetails), {
         httpOnly: true,
         secure: true,
         sameSite: 'strict',

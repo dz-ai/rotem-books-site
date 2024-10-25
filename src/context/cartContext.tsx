@@ -26,6 +26,8 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+// TODO what happen when 2 different books chose, it should also calculate to reduce the price.
+// TODO what if I want to buy the same book 1 in soft and 1 in hard cover?
 export const CartProvider = ({children}: { children: ReactNode }) => {
     const [firstLoad, setFirstLoad] = useState(true);
     const [cart, setCart] = useState<ICartItem[]>([]);
