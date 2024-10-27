@@ -21,6 +21,10 @@
     margin-left: 15px;
 }
 
+.back-office-order-details-header-date {
+    color: green;
+}
+
 .back-office-order-details-header .back-to-new-status-btn {
     margin-right: auto;
     border-radius: 3px;
