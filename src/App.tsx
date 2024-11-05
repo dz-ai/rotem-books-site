@@ -16,15 +16,13 @@ import {BackOfficePage} from "./pages/backOffice/backOfficePage.tsx";
 
 export enum ECoverTypeHard {
     basicPrise = 70,
-    towBooksPrise = 120,
     discountPrise = 60,
 }
 
 export enum ECoverTypeSoft {
     basicPrise = 40,
-    towBooksPrise = 70,
-    threeBooksPrise = 90,
-    fourBooksPrise = 100,
+    towBooksPrise = 35,
+    threeBooksPrise = 30,
     discountPrise = 25,
 }
 

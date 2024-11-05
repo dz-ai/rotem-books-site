@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import './book.css';
 import QuantityInput from "../../componentsReusable/quantityInput.tsx";
-import {useCart} from "../../context/cartContext.tsx";
-import {GoTrash} from "react-icons/go";
+import {Link} from 'react-router-dom';
+import {ICartItem, useCart} from "../../context/cartContext.tsx";
+import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
 import {determinePrice} from "./determineBookPriceUtil.ts";
-import {Link, useSearchParams} from 'react-router-dom';
+import Cookies from 'js-cookie';
+import {GoTrash} from "react-icons/go";
 
 export type coverType = 'soft-cover' | 'hard-cover';
 
 export interface IBook {
-    id: string
+    id: string;
     title: string;
     price: number;
     coverImage: string;
@@ -19,66 +21,97 @@ export interface IBook {
 }
 
 // if the user not adds yet any book to cart we then will use "book: IBook"
-// but if the book exists in the cart, we want to use relevant information about quantity and cover-type from the cart.
 interface BookProperties {
     book: IBook;
-    quantityInCart: number | null;
-    coverTypeInCart: coverType | null;
 }
 
 // represent the book-card on the homepage
-const Book: React.FC<BookProperties> = ({book, quantityInCart, coverTypeInCart}) => {
+const Book: React.FC<BookProperties> = ({book}) => {
     const cartContext = useCart();
 
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    const [coverType, setCoverType] = useState<coverType>(coverTypeInCart || book.coverType[0]);
+    const [coverType, setCoverType] = useState<coverType>(book.coverType[0]);
     const [bookPrice, setBookPrice] = useState(book.price);
+    const [quantityInCart, setQuantityInCart] = useState<null | number>(null);
+    const [firstLoad, setFirstLoad] = useState(true);
 
     // toggle between a soft and hard cover type
-    const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCoverTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.stopPropagation(); // prevent the click to activate the book-card onClick={} (so-called event propagation)
 
         const cover: coverType = e.target.value as coverType;
 
         setCoverType(cover);
-        cartContext.updateCoverType(book.id, cover);
 
-        setSearchParams(prev => {
-            prev.set(book.id, cover);
-            return prev;
-        });
+        const bookInCart = isBookInCart(cover);
+        bookInCart ? setQuantityInCart(bookInCart.quantity) : setQuantityInCart(null);
+
+        updatePrice(cover);
+
+        // set Cookie to save the cover-type choice.
+        Cookies.set(book.id, cover, {expires: 7});
     }
 
+    // update the quantity of book that already exists in the cart.
     const updateQuantity = (id: string, quantity: number) => {
-        cartContext.updateCartItem(id, quantity);
+        setQuantityInCart(quantity);
+        cartContext.updateCartItem(id, quantity, coverType);
     };
 
-    // get and update the price and the cover type as the page load or the quantity/cover-type changed
-    const coverTypeInUrl = searchParams.get(book.id) as coverType;
-    useEffect(() => {
+    // -- UTIL FUNCTIONS -- //
+    function isBookInCart(coverType?: coverType): ICartItem | null {
+        let bookInCart = null;
+        if (coverType) bookInCart = cartContext.cart.find(item => item.id === book.id && item.coverType === coverType) || null;
+        if (!coverType) bookInCart = cartContext.cart.find(item => item.id === book.id) || null;
 
-        if (coverTypeInUrl) {
-            setCoverType(coverTypeInUrl);
-        } else if (coverTypeInCart) {
-            setCoverType(coverTypeInCart);
-        } else {
-            setCoverType(book.coverType[0]);
+        return bookInCart;
+    }
+
+    function isBookInCookie(): coverType | null {
+        return Cookies.get(book.id) as coverType | null || null;
+    }
+
+    function updatePrice(coverType: coverType): void {
+        const price: ECoverTypeHard | ECoverTypeSoft = determinePrice(coverType, cartContext.totalQuantityInCart);
+        setBookPrice(price * (quantityInCart ? quantityInCart : 1));
+    }
+
+    // -- EFFECTS -- //
+
+    // on page load, check if the book is in the cart and if it is in cart, update the UI to show the quantity.
+    // if the book is not in the cart, we update its price and check if the user chooses already a cover-type.
+    useEffect(() => {
+        const bookInCart = isBookInCart();
+
+        if (firstLoad && bookInCart) {
+            setCoverType(bookInCart.coverType);
+            setQuantityInCart(bookInCart.quantity);
+            setFirstLoad(false);
+
+        } else if (firstLoad && !bookInCart) {
+            const bookCoverInCookie = isBookInCookie();
+            updatePrice(bookCoverInCookie || coverType);
+
+            bookCoverInCookie &&
+            setCoverType(bookCoverInCookie);
         }
 
-        // set the price according to the cover-type and the quantity
-        const price = determinePrice(coverType, quantityInCart);
-        setBookPrice(price);
+    }, [cartContext.cart, firstLoad]);
 
-    }, [quantityInCart, coverTypeInCart, coverTypeInUrl, coverType]);
+    // update the price of the book according to the quantity in the cart
+    useEffect(() => {
+        updatePrice(coverType);
+    }, [cartContext.totalQuantityInCart]);
 
     return (
         <Link
-            key={book.coverImage}
+            key={book.id + coverType}
             to={`/book-details/${encodeURIComponent(book.id)}?cover-type=${coverType || book.coverType[0]}`}
         >
             <div className="book">
-                <img src={`${import.meta.env.VITE_IMAGEKIT_URL}/${book.coverImage}`} loading="lazy" alt={book.title}/>
+                <img src={`${import.meta.env.VITE_IMAGEKIT_URL}/${book.coverImage}`}
+                     loading="lazy"
+                     alt={book.title}
+                />
                 <h3>{book.title}</h3>
                 {
                     book.coverType.length > 1 ?
@@ -88,7 +121,8 @@ const Book: React.FC<BookProperties> = ({book, quantityInCart, coverTypeInCart})
                                     type="radio"
                                     value={'hard-cover'}
                                     checked={coverType === 'hard-cover'}
-                                    onChange={handleRadioChange}/>
+                                    onChange={handleCoverTypeChange}
+                                />
                                 כריכה קשה
                             </label>
                             <label className="cover-type">
@@ -96,7 +130,8 @@ const Book: React.FC<BookProperties> = ({book, quantityInCart, coverTypeInCart})
                                     type="radio"
                                     value={'soft-cover'}
                                     checked={coverType === 'soft-cover'}
-                                    onChange={handleRadioChange}/>
+                                    onChange={handleCoverTypeChange}
+                                />
                                 כריכה רכה
                             </label>
                         </div>
@@ -109,6 +144,8 @@ const Book: React.FC<BookProperties> = ({book, quantityInCart, coverTypeInCart})
                         !quantityInCart &&
                         <button className="reusable-control-btn" onClick={(e) => {
                             e.preventDefault();
+                            setQuantityInCart(1);
+
                             cartContext.addToCart({
                                 id: book.id,
                                 title: book.title,
@@ -126,7 +163,8 @@ const Book: React.FC<BookProperties> = ({book, quantityInCart, coverTypeInCart})
                         <div className="book-add-remove-from-cart-controllers">
                             <GoTrash onClick={(e) => {
                                 e.preventDefault();
-                                cartContext.removeFromCart(book.id);
+                                cartContext.removeFromCart(book.id, coverType);
+                                setQuantityInCart(null);
                             }}/>
                             <QuantityInput
                                 quantity={quantityInCart}

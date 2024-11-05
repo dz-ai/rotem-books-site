@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './cartPopup.css';
 import {useLocation, useNavigate} from "react-router-dom";
 import {useCart} from "../../context/cartContext.tsx";
@@ -7,6 +7,8 @@ const TalkBubblePopup: React.FC = () => {
     const cartContext = useCart();
     const navigate = useNavigate();
     const location = useLocation();
+    const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
+
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [popupText, setPopupText] = useState<string>('');
@@ -20,9 +22,8 @@ const TalkBubblePopup: React.FC = () => {
             setPopupText(cartContext.changesReporter[0]);
 
             // set timeout to close the popup after 7 seconds
-            let timeOut: number | NodeJS.Timeout;
             if (!isMouseOverThePopup) {
-                timeOut = setTimeout(async () => {
+                timeoutIdRef.current = setTimeout(async () => {
                     setAnimationClass('fade-out');
                     await new Promise((res) => setTimeout(res, 500));
 
@@ -35,7 +36,8 @@ const TalkBubblePopup: React.FC = () => {
 
             // clear time out if the effect recalled before the time is over
             return () => {
-                timeOut && clearTimeout(timeOut);
+                timeoutIdRef.current && clearTimeout(timeoutIdRef.current);
+                setIsOpen(false);
             };
         }
 
@@ -56,6 +58,7 @@ const TalkBubblePopup: React.FC = () => {
                     className={`popup-container ${animationClass}`}
                     onMouseEnter={() => setIsMouseOverThePopup(true)}
                     onMouseLeave={() => setIsMouseOverThePopup(false)}
+                    onClick={e => e.stopPropagation()}
                 >
                     <div className="talk-bubble">
                         <div className="talk-text">

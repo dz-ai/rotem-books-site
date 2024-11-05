@@ -6,19 +6,18 @@ import {useCart} from "../../context/cartContext.tsx";
 import {MdKeyboardDoubleArrowRight} from "react-icons/md";
 import {MdKeyboardDoubleArrowLeft} from "react-icons/md";
 import {coverType} from "../../components/book/book.tsx";
-import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
 
 const CartPage: React.FC = () => {
     const navigate = useNavigate();
     const cartContext = useCart();
     const cartItems = cartContext.cart;
 
-    const updateQuantity = (id: string, quantity: number) => {
-        cartContext.updateCartItem(id, quantity);
+    const updateQuantity = (id: string, quantity: number, coverType: coverType) => {
+        cartContext.updateCartItem(id, quantity, coverType);
     };
 
-    const removeItem = (id: string) => {
-        cartContext.removeFromCart(id);
+    const removeItem = (id: string, coverType: coverType) => {
+        cartContext.removeFromCart(id, coverType);
     };
 
     return (
@@ -33,7 +32,7 @@ const CartPage: React.FC = () => {
                 </div>
                 <ul className="cart-list">
                     {cartItems.map((item) => (
-                        <li key={item.id} className="cart-item">
+                        <li key={item.id + item.coverType} className="cart-item">
 
                             <div className="cart-item-book-detail-container">
                                 <img src={`${import.meta.env.VITE_IMAGEKIT_URL}/${item.image}`} alt={item.title}/>
@@ -43,10 +42,10 @@ const CartPage: React.FC = () => {
                                 </div>
 
                                 <div className="cart-item-price">
-                                    <span>מחיר ליח׳: ₪{item.coverType === 'hard-cover' ? ECoverTypeHard.basicPrise : ECoverTypeSoft.basicPrise}</span>
-                                    <span>סכ״ה: ₪{item.price}</span>
+                                    <span>מחיר ליח׳: ₪{item.price}</span>
+                                    <span>סכ״ה: ₪{item.price * item.quantity}</span>
                                     {
-                                        item.quantity > 1 &&
+                                        cartContext.totalQuantityInCart > 1 &&
                                         <span className="quantity-discount">כולל הנחת כמות</span>
                                     }
                                 </div>
@@ -55,11 +54,13 @@ const CartPage: React.FC = () => {
                             <div className="cart-item-buttons-container">
                                 <QuantityInput
                                     quantity={item.quantity}
-                                    onIncrease={() => updateQuantity(item.id, item.quantity + 1)}
-                                    onDecrease={() => updateQuantity(item.id, item.quantity - 1)}
-                                    onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
+                                    onIncrease={() => updateQuantity(item.id, item.quantity + 1, item.coverType)}
+                                    onDecrease={() => updateQuantity(item.id, item.quantity - 1, item.coverType)}
+                                    onChange={(e) => updateQuantity(item.id, parseInt(e.target.value), item.coverType)}
                                 />
-                                <button className="remove-btn" onClick={() => removeItem(item.id)}>הסר מהעגלה</button>
+                                <button className="remove-btn" onClick={() => removeItem(item.id, item.coverType)}>
+                                    הסר מהעגלה
+                                </button>
                             </div>
                         </li>
                     ))}

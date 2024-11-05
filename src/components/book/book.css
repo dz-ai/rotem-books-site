@@ -1,5 +1,6 @@
 .book {
     height: 100%;
+    min-height: 430px;
     width: 290px;
     display: flex;
     flex-direction: column;
