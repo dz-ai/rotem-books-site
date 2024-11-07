@@ -10,7 +10,8 @@ export const useInterSectionObserver: UseIntersectionObserver = (ref) => {
                 setIsInViewPort(entry[0].isIntersecting);
             },
             {
-                rootMargin: '60px', // the entry (the observed el) will be observed as soon as it will be out of view port 60px
+                rootMargin: '60px', // the entry (the observed el)
+                // will be observed as soon as it is out-of-view port 60 px.
             });
 
         ref.current !== null && observer.observe(ref.current);

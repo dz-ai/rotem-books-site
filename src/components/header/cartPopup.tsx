@@ -9,7 +9,6 @@ const TalkBubblePopup: React.FC = () => {
     const location = useLocation();
     const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
 
-
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [popupText, setPopupText] = useState<string>('');
     const [isMouseOverThePopup, setIsMouseOverThePopup] = useState<boolean>(false);
@@ -29,7 +28,7 @@ const TalkBubblePopup: React.FC = () => {
 
                     setIsOpen(false);
                     setAnimationClass('fade-in');
-                }, 7000);
+                }, 5000);
             }
 
             setIsOpen(true);
@@ -46,6 +45,10 @@ const TalkBubblePopup: React.FC = () => {
     // clos the popup as the user navigates to cart page
     useEffect(() => {
         if (location.pathname === '/cart-page') {
+            setIsMouseOverThePopup(prevState => {
+                prevState = false;
+                return prevState;
+            });
             setIsOpen(false);
         }
     }, [location.pathname]);

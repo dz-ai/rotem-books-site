@@ -23,7 +23,7 @@
 .talk-bubble::after {
     content: '';
     position: absolute;
-    top: -20px;
+    top: -18px;
     left: 50%;
     transform: translateX(-50%);
     border-width: 0 20px 20px 20px;
