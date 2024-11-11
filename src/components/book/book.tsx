@@ -42,9 +42,11 @@ const Book: React.FC<BookProperties> = ({book}) => {
 
         setCoverType(cover);
 
+        // update book quantity
         const bookInCart = isBookInCart(cover);
         bookInCart ? setQuantityInCart(bookInCart.quantity) : setQuantityInCart(null);
 
+        // update price
         updatePrice(cover);
 
         // set Cookie to save the cover-type choice.
@@ -77,8 +79,12 @@ const Book: React.FC<BookProperties> = ({book}) => {
 
     // -- EFFECTS -- //
 
-    // on page load, check if the book is in the cart and if it is in cart, update the UI to show the quantity.
-    // if the book is not in the cart, we update its price and check if the user chooses already a cover-type.
+    // update the price of the book according to the quantity in the cart
+    useEffect(() => {
+        updatePrice(coverType);
+    }, [cartContext.totalQuantityInCart, quantityInCart]);
+
+    // on LOAD check if book in cart and update book cover and price.
     useEffect(() => {
         const bookInCart = isBookInCart();
 
@@ -87,20 +93,17 @@ const Book: React.FC<BookProperties> = ({book}) => {
             setQuantityInCart(bookInCart.quantity);
             setFirstLoad(false);
 
+            // if not in cart update according to the cookie
         } else if (firstLoad && !bookInCart) {
             const bookCoverInCookie = isBookInCookie();
-            updatePrice(bookCoverInCookie || coverType);
 
-            bookCoverInCookie &&
-            setCoverType(bookCoverInCookie);
+            if (bookCoverInCookie) {
+                setCoverType(bookCoverInCookie);
+                updatePrice(bookCoverInCookie);
+            }
         }
 
     }, [cartContext.cart, firstLoad]);
-
-    // update the price of the book according to the quantity in the cart
-    useEffect(() => {
-        updatePrice(coverType);
-    }, [cartContext.totalQuantityInCart]);
 
     return (
         <Link
