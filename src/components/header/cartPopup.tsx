@@ -14,13 +14,15 @@ const TalkBubblePopup: React.FC = () => {
     const [isMouseOverThePopup, setIsMouseOverThePopup] = useState<boolean>(false);
     const [animationClass, setAnimationClass] = useState<'fade-in' | 'fade-out'>('fade-in');
 
-    // this effect opens the popup to 7 seconds
-    // if there is a new message from the cart context about adding or removing items
-    useEffect(() => {
+    // set open popup to true and set time out to close the popup after 5 seconds if the mouse is not over the popup
+    const openPopup = (isMouseOverThePopup: boolean): void => {
+
+        timeoutIdRef.current && clearTimeout(timeoutIdRef.current);
+
         if (cartContext.changesReporter[0] !== '') {
             setPopupText(cartContext.changesReporter[0]);
 
-            // set timeout to close the popup after 7 seconds
+            // set timeout to close the popup after 5 seconds
             if (!isMouseOverThePopup) {
                 timeoutIdRef.current = setTimeout(async () => {
                     setAnimationClass('fade-out');
@@ -32,23 +34,25 @@ const TalkBubblePopup: React.FC = () => {
             }
 
             setIsOpen(true);
-
-            // clear time out if the effect recalled before the time is over
-            return () => {
-                timeoutIdRef.current && clearTimeout(timeoutIdRef.current);
-                setIsOpen(false);
-            };
         }
+    }
 
-    }, [cartContext.changesReporter, isMouseOverThePopup]);
+    // opens if there is a new message from the cart context about adding or removing items
+    useEffect(() => {
+        openPopup(isMouseOverThePopup);
+
+        return () => {
+            timeoutIdRef.current && clearTimeout(timeoutIdRef.current);
+            setIsOpen(false);
+        }
+    }, [cartContext.changesReporter]);
 
     // clos the popup as the user navigates to cart page
     useEffect(() => {
         if (location.pathname === '/cart-page') {
-            setIsMouseOverThePopup(prevState => {
-                prevState = false;
-                return prevState;
-            });
+
+            // as the popup suddenly close the isMouseOver val stay, true therefor it must be set to false manually.
+            setIsMouseOverThePopup(false);
             setIsOpen(false);
         }
     }, [location.pathname]);
@@ -59,8 +63,14 @@ const TalkBubblePopup: React.FC = () => {
                 isOpen &&
                 <div
                     className={`popup-container ${animationClass}`}
-                    onMouseEnter={() => setIsMouseOverThePopup(true)}
-                    onMouseLeave={() => setIsMouseOverThePopup(false)}
+                    onMouseEnter={() => {
+                        setIsMouseOverThePopup(true);
+                        openPopup(true);
+                    }}
+                    onMouseLeave={() => {
+                        setIsMouseOverThePopup(false);
+                        openPopup(false);
+                    }}
                     onClick={e => e.stopPropagation()}
                 >
                     <div className="talk-bubble">
