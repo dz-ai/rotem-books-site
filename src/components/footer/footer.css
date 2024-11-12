@@ -5,10 +5,6 @@ footer {
     text-align: center;
 }
 
-footer p {
-    margin: 0;
-}
-
 .credit-links {
     color: #4e4e4e;
 }
@@ -19,4 +15,21 @@ footer p {
 
 footer .social-media-links {
     margin: 15px 0;
+}
+
+.tel-to-call {
+    white-space: nowrap;
+    color: #4c7dfe;
+}
+
+.tel-to-call:hover {
+    color: #00d3d3;
+}
+
+.more-content-link {
+    color: #6a6a6a;
+}
+
+.more-content-link:hover {
+    color: #00d3d3;
 }

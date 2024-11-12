@@ -60,6 +60,7 @@ function ContactPage() {
                     </button>
                 </form>
             </div>
+            <a href="tel:050-648-166" className="tel-to-call">טלפון: 050-648-166</a>
             <SocialMediaLinks iconsSize={40}/>
         </div>
     );
