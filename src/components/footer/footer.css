@@ -8,3 +8,15 @@ footer {
 footer p {
     margin: 0;
 }
+
+.credit-links {
+    color: #4e4e4e;
+}
+
+.credit-links:hover {
+    color: #4c7dfe;
+}
+
+footer .social-media-links {
+    margin: 15px 0;
+}

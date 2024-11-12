@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './book.css';
-import QuantityInput from "../../componentsReusable/quantityInput.tsx";
+import QuantityInput from "../../componentsReusable/quantityInput/quantityInput.tsx";
 import {Link} from 'react-router-dom';
 import {ICartItem, useCart} from "../../context/cartContext.tsx";
 import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";

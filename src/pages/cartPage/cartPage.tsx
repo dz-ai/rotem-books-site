@@ -1,6 +1,6 @@
 import React from 'react';
 import './cartPage.css';
-import QuantityInput from "../../componentsReusable/quantityInput.tsx";
+import QuantityInput from "../../componentsReusable/quantityInput/quantityInput.tsx";
 import {useNavigate} from "react-router-dom";
 import {useCart} from "../../context/cartContext.tsx";
 import {MdKeyboardDoubleArrowRight} from "react-icons/md";

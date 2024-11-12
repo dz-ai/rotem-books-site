@@ -1,0 +1,65 @@
+.contact-page {
+    padding: 20px;
+}
+
+.contact-page-container {
+    width: 80%;
+    margin: auto;
+}
+
+@media (max-width: 450px) {
+    .contact-page-container {
+        width: 100%;
+    }
+}
+
+.contact-page-text {
+    text-align: justify;
+}
+
+.contact-page form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 50px;
+}
+
+.contact-page-client-details {
+    width: 220px;
+    margin-bottom: 20px;
+}
+
+.contact-page input {
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    outline: none;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.contact-page input[type="tel"] {
+    text-align: end;
+}
+
+.contact-page .text-area {
+    width: 100%;
+}
+
+.contact-page textarea {
+    width: 100%;
+    height: 100px;
+}
+
+.contact-page button svg {
+    margin-right: 5px;
+}
+
+.social-media-links {
+    margin-bottom: 50px;
+}
