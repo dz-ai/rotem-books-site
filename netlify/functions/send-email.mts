@@ -51,7 +51,7 @@ const handler: Handler = async function (event) {
             subject,
             parameters: {
                 url: process.env.URL,
-                requestId: parameters.requestId
+                requestId: parameters.requestId,
             },
         }
 
