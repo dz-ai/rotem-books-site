@@ -33,7 +33,6 @@ export interface IPaymentDetails {
     amount: number;
     client: IClientDetails;
     income: TPaymentDetailsItem[];
-    remarks: string;
 }
 
 const ClientDetailsFormPage: React.FC = () => {
@@ -75,15 +74,16 @@ const ClientDetailsFormPage: React.FC = () => {
         // prepare the payment details that should be sent to create the payment form in the server
         // TOTAL PRICE
         const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
         // PRODUCTS DETAILS
         const income: TPaymentDetailsItem[] = cartItems.map(book => {
-            return {description: book.title, quantity: book.quantity, price: book.price, currency: 'ILS', vatType: 0};
+            return {
+                description: `${book.title} ${book.coverType === 'hard-cover' ? 'כריכה קשה' : 'כריכה רכה'}`,
+                quantity: book.quantity,
+                price: book.price,
+                currency: 'ILS',
+                vatType: 0
+            };
         });
-
-        // TEXT TO SHOW ON THE RECEPTION
-        let remarksTextContent = 'פירוט הקניה: \n';
-        cartItems.forEach(book => remarksTextContent += `${book.title} ${book.quantity} יח׳ מחיר לפריט: ${book.price} ש״ח סה״כ שורה: ${book.price * book.quantity} \n`);
 
         // CLIENT ADDRESS AND DETAILS
         const client: IClientDetails = {
@@ -98,7 +98,6 @@ const ClientDetailsFormPage: React.FC = () => {
             amount: totalPrice,
             client,
             income,
-            remarks: remarksTextContent,
         }
 
         if (name && email && checkAddressDetails() && phone && totalPrice && income.length >= 0) {

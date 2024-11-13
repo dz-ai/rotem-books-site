@@ -31,7 +31,7 @@ const SideNavBar = () => {
                 </button>
                 <ul>
                     <li onClick={() => onNavBtnClicked('/')}>דף הבית</li>
-                    <li onClick={() => onNavBtnClicked('/pricing')}>מחיון</li>
+                    <li onClick={() => onNavBtnClicked('/pricing')}>מחירון</li>
                     <li className="cart-icon" onClick={() => onNavBtnClicked('/cart-page')}>
                         עגלת הקניות
                         <GiShoppingCart/>

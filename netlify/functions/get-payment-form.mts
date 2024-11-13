@@ -41,7 +41,7 @@ const handler: Handler = async (event) => {
             lang: 'he',
             currency: 'ILS',
             vatType: 0,
-            amount: /*amount*/1,
+            amount,
             maxPayments: 1,
             pluginId: pluginId,
             group: 100,
@@ -55,15 +55,7 @@ const handler: Handler = async (event) => {
                 phone,
                 add: true
             },
-            income: /*income*/[
-                {
-                    description: "test",
-                    quantity: 1,
-                    price: 1,
-                    currency: "ILS",
-                    "vatType": 0
-                }
-            ], /* the items */
+            income,/* the items */
             successUrl: `${urlToUse}/payment-success-page`,
             failureUrl: `${urlToUse}/payment-failure-page`,
             notifyUrl: `${urlToUse}/.netlify/functions/save-receipt-after-payment-success`,
