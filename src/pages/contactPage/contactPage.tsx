@@ -138,7 +138,7 @@ function ContactPage() {
                     <button className="reusable-control-btn" onClick={() => setEmailSentMessage(null)}>חזרה</button>
                 </div>
             }
-            <a href="tel:050-648-166" className="tel-to-call">טלפון: 050-648-166</a>
+            <a href="tel:050-648-1668" className="tel-to-call">טלפון: 050-648-1668</a>
             <SocialMediaLinks iconsSize={40}/>
         </div>
     );

@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
             </div>
             <p>
                 חוגי דרמה שעת סיפור ימי הולדת&nbsp;&nbsp;
-                <a href="tel:050-648-166" className="tel-to-call">טלפון: 050-648-166</a>
+                <a href="tel:050-648-1668" className="tel-to-call">טלפון: 050-648-1668</a>
             </p>
             <a className="more-content-link" href="https://www.rotemshemtov.com/" target="_blank">
                 לתוכן נוסף: www.rotemshemtov.com
