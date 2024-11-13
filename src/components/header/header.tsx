@@ -42,6 +42,12 @@ const Header: React.FC = () => {
                             </NavLink>
                         </li>
                         <li>
+                            <NavLink to="/pricing"
+                                     className={({isActive}) => isActive ? 'active-nav-link nav-link' : 'nav-link'}>
+                                מחירון
+                            </NavLink>
+                        </li>
+                        <li>
                             <NavLink to="/about"
                                      className={({isActive}) => isActive ? 'active-nav-link nav-link' : 'nav-link'}>
                                 אודות

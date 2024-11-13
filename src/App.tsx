@@ -13,6 +13,7 @@ import ClientDetailsFormPage from "./pages/clientDetailsPage/clientDetailsPage.t
 import PaymentSuccessPage from "./pages/paymentSuccessFailure/paymentSuccessPage.tsx";
 import PaymentFailurePage from "./pages/paymentSuccessFailure/paymentFailurePage.tsx";
 import {BackOfficePage} from "./pages/backOffice/backOfficePage.tsx";
+import {PricingPage} from "./pages/pricingPage/pricingPage.tsx";
 
 export enum ECoverTypeHard {
     basicPrise = 70,
@@ -202,6 +203,7 @@ const App: React.FC = () => {
                         <Route path="/book-details/:id" element={<BookDetailPage books={books}/>}/>
                         <Route path="/cart-page" element={<CartPage/>}/>
                         <Route path="/about" element={<AboutPage/>}/>
+                        <Route path="/pricing" element={<PricingPage/>}/>
                         <Route path="/contact-page" element={<ContactPage/>}/>
                         <Route path="/client-details-page" element={<ClientDetailsFormPage/>}/>
                         <Route path="/payment-success-page" element={<PaymentSuccessPage/>}/>
