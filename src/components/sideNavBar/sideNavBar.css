@@ -83,3 +83,21 @@
 .nav li:active {
     background: #4e4e4e;
 }
+
+.side-bar-background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    visibility: hidden;
+    background: rgba(106, 106, 106, 0.4);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.5s ease-in-out, visibility 1s ease-in-out;
+}
+
+.side-bar-background.nav-open {
+    visibility: visible;
+    opacity: 1;
+}
