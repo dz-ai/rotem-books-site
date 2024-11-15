@@ -61,7 +61,7 @@ const SideNavBar = () => {
                     <li onClick={() => onNavBtnClicked('/contact-page')}>צור קשר</li>
                 </ul>
             </nav>
-            <div className={`side-bar-background ${isOpen ? 'nav-open' : ''}`} onClick={toggleNav}></div>
+            <div className={`side-bar-background ${isOpen ? 'nav-open' : ''}`} onClick={() => setIsOpen(false)}></div>
             <NavLink to="/">
                 <img className="logo" src={logo} alt="לוגו קיפוד עם גיטרה"/>
             </NavLink>
