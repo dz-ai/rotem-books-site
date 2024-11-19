@@ -55,7 +55,7 @@ function ContactPage() {
                 !emailSentMessage &&
                 <div className="contact-page-container">
                     <p className="contact-page-text">
-                        נתקלתם בבעיה בעת הרכישה באתר, רוצים להזמין פעילות לילדים (תאתרון בובות, חוגי דרמה, שעת סיפור,
+                        נתקלתם בבעיה בעת הרכישה באתר, רוצים להזמין פעילות לילדים (תאטרון בובות, חוגי דרמה, שעת סיפור,
                         ימי הולדת) או סתם בא לכם להשאיר תגובה, מוזמנים לכתוב לי ואני אשתדל לענות בהקדם.
                         🙂
                     </p>
