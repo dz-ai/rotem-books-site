@@ -17,18 +17,18 @@ const SideNavBar = () => {
     };
 
     const onNavBtnClicked = (path: string): void => {
-        navigate(path);
+        if (location.pathname !== path) {
+            navigate(path);
+        }
         setIsOpen(!isOpen);
     }
 
-    // add listener to back/forward browser button to close the sidebar
-    // as the user click on them but without to navigate back or forward.
+    // add listener to back/forward browser button to close the sidebar as the user click on them
     useEffect(() => {
 
         const handleBackButton = () => {
 
             if (isOpen) {
-                navigate(location.pathname);
                 setIsOpen(false);
             }
         };
