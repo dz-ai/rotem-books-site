@@ -81,7 +81,10 @@ const SideNavBar = () => {
                     {
                         generalContext.isLoggedIn && isAdminOpen &&
                         <li className="admin-dropdown">
-                            <AdminDropdown onOptionClicked={() => setIsAdminOpen(false)}/>
+                            <AdminDropdown onOptionClicked={() => {
+                                setIsAdminOpen(false);
+                                setIsOpen(false);
+                            }}/>
                         </li>
                     }
                 </ul>
