@@ -42,7 +42,13 @@ export const SocialMediaLinks = ({iconsSize}: Props) => {
             {
                 logoArray.map(logo =>
                     <a key={logo.src} href={logo.link} target="_blank">
-                        <img src={logo.src} alt={logo.alt} width={iconsSize} height={iconsSize}/>
+                        <img
+                            src={logo.src}
+                            alt={logo.alt}
+                            width={iconsSize}
+                            height={iconsSize}
+                            loading="lazy"
+                        />
                     </a>
                 )
             }
