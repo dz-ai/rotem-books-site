@@ -1,5 +1,8 @@
 // generate response helper function
 export const generateResponse = (statusCode: number, message: string) => {
+    statusCode !== 200 &&
+    console.error(statusCode, message);
+
     return {
         statusCode,
         body: JSON.stringify({message}),

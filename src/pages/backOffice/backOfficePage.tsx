@@ -26,7 +26,7 @@ export interface IOrder {
     date: number;
 }
 
-export const BackOfficePage: React.FC = () => {
+const BackOfficePage: React.FC = () => {
 
     // const isSmallScreen = useMediaQuery({query: '(max-width: 700px)'});
 
@@ -117,3 +117,5 @@ export const BackOfficePage: React.FC = () => {
         </div>
     );
 }
+
+export default BackOfficePage;

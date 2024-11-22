@@ -1,0 +1,84 @@
+/* -------------------- */
+/* STYLE FOR THE HEADER */
+/* -------------------- */
+
+header .admin-btn {
+    position: relative;
+    user-select: none;
+}
+
+header .admin-btn svg {
+    margin-left: 5px;
+}
+
+header .admin-btn ul {
+    height: fit-content;
+    width: 200px;
+    position: absolute;
+    top: 45px;
+    left: -10px;
+    display: flex;
+    flex-direction: column;
+    background: #d8d8d8;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px 1px #808080a3;
+}
+
+header .admin-btn ul li {
+    min-height: 48px;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    background: #f2f2ffe6;
+    margin-bottom: 1px;
+    line-height: 48px; /* center the text vertically */
+}
+
+header .admin-btn ul li a {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header .admin-btn ul li:hover {
+    background: white;
+}
+
+header .admin-btn ul li:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+header .admin-btn ul li:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* --------------------- */
+/* STYLE FOR THE SIDEBAR */
+/* --------------------- */
+
+
+.side-bar-container .admin-dropdown {
+    padding: 0;
+    user-select: none;
+}
+
+.side-bar-container .admin-dropdown ul {
+    margin: 0;
+}
+
+.side-bar-container .admin-dropdown ul li a {
+    color: white;
+}
+
+.side-bar-container .admin-btn {
+    justify-content: space-between;
+}
+
+.side-bar-container .admin-btn-text {
+    user-select: none;
+    flex-grow: 1;
+}

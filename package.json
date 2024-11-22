@@ -18,9 +18,11 @@
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^8.4.0",
     "@typescript-eslint/parser": "^8.4.0",
+    "bcryptjs": "^2.4.3",
     "cookie": "^0.6.0",
     "imagekit-javascript": "^3.0.2",
     "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.9.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -31,8 +33,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/cookie": "^0.6.0",
     "@types/js-cookie": "^3.0.6",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.5.5",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
@@ -45,5 +49,6 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
-  }
+  },
+  "packageManager": "yarn@4.2.2+sha512.c44e283c54e02de9d1da8687025b030078c1b9648d2895a65aab8e64225bfb7becba87e1809fc0b4b6778bbd47a1e2ab6ac647de4c5e383a53a7c17db6c3ff4b"
 }

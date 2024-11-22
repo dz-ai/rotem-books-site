@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import {IBook} from "./components/book/book.tsx";
@@ -12,8 +12,11 @@ import ContactPage from "./pages/contactPage/contactPage.tsx";
 import ClientDetailsFormPage from "./pages/clientDetailsPage/clientDetailsPage.tsx";
 import PaymentSuccessPage from "./pages/paymentSuccessFailure/paymentSuccessPage.tsx";
 import PaymentFailurePage from "./pages/paymentSuccessFailure/paymentFailurePage.tsx";
-import {BackOfficePage} from "./pages/backOffice/backOfficePage.tsx";
-import {PricingPage} from "./pages/pricingPage/pricingPage.tsx";
+import BackOfficePage from "./pages/backOffice/backOfficePage.tsx";
+import PricingPage from "./pages/pricingPage/pricingPage.tsx";
+import LoginPage from "./pages/loginPage/loginPage.tsx";
+import PrivateRoute from "./components/protected-route/protectedRoute.tsx";
+import {useGeneralStateContext} from "./context/generalStateContext.tsx";
 
 export enum ECoverTypeHard {
     basicPrise = 70,
@@ -193,6 +196,13 @@ export const books: IBook[] = [
 ];
 
 const App: React.FC = () => {
+
+    const generalContext = useGeneralStateContext();
+
+    useEffect(() => {
+        generalContext.checkAuthentication().then();
+    }, []);
+
     return (
         <Router>
             <div className="app">
@@ -208,7 +218,10 @@ const App: React.FC = () => {
                         <Route path="/client-details-page" element={<ClientDetailsFormPage/>}/>
                         <Route path="/payment-success-page" element={<PaymentSuccessPage/>}/>
                         <Route path="/payment-failure-page" element={<PaymentFailurePage/>}/>
-                        <Route path="/back-office-page" element={<BackOfficePage/>}/>
+                        <Route element={<PrivateRoute/>}>
+                            <Route path="/back-office-page" element={<BackOfficePage/>}/>
+                        </Route>
+                        <Route path="/login-page" element={<LoginPage/>}/>
                     </Routes>
                     <Footer/>
                 </main>

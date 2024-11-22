@@ -4,13 +4,20 @@ import {NavLink, useLocation, useNavigate} from 'react-router-dom';
 import {logo} from '../../assets';
 import {useCart} from "../../context/cartContext.tsx";
 import {GiShoppingCart} from "react-icons/gi";
+import {RiArrowDownWideFill} from "react-icons/ri";
+import {RiArrowUpWideFill} from "react-icons/ri";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
+import AdminDropdown from "./adminDropdown.tsx";
 
 const SideNavBar = () => {
     const cartContext = useCart();
+    const generalContext = useGeneralStateContext();
+
     const navigate = useNavigate();
     const location = useLocation();
 
     const [isOpen, setIsOpen] = useState(false);
+    const [isAdminOpen, setIsAdminOpen] = useState(false);
 
     const toggleNav = () => {
         setIsOpen(!isOpen);
@@ -59,6 +66,24 @@ const SideNavBar = () => {
                     </li>
                     <li onClick={() => onNavBtnClicked('/about')}>אודות</li>
                     <li onClick={() => onNavBtnClicked('/contact-page')}>צור קשר</li>
+                    {
+                        generalContext.isLoggedIn &&
+                        <li className="admin-btn" onClick={() => setIsAdminOpen(!isAdminOpen)}>
+                            {
+                                !isAdminOpen ?
+                                    <RiArrowDownWideFill/>
+                                    :
+                                    <RiArrowUpWideFill/>
+                            }
+                            <span className="admin-btn-text">Admin</span>
+                        </li>
+                    }
+                    {
+                        generalContext.isLoggedIn && isAdminOpen &&
+                        <li className="admin-dropdown">
+                            <AdminDropdown onOptionClicked={() => setIsAdminOpen(false)}/>
+                        </li>
+                    }
                 </ul>
             </nav>
             <div className={`side-bar-background ${isOpen ? 'nav-open' : ''}`} onClick={() => setIsOpen(false)}></div>

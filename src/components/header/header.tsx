@@ -1,17 +1,30 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import './header.css';
 import SideNavBar from "../sideNavBar/sideNavBar.tsx";
+import AdminDropdown from "../sideNavBar/adminDropdown.tsx";
+import CartPopup from "./cartPopup.tsx";
 import {useMediaQuery} from "react-responsive";
 import {NavLink, useNavigate} from 'react-router-dom';
 import {useCart} from "../../context/cartContext.tsx";
-import {GiShoppingCart} from "react-icons/gi";
-import CartPopup from "./cartPopup.tsx";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
+import {useOutClick} from "../../hooks/useOutClick.ts";
 import {logo} from "../../assets";
+import {GiShoppingCart} from "react-icons/gi";
+import {RiArrowDownWideFill, RiArrowUpWideFill} from "react-icons/ri";
 
 const Header: React.FC = () => {
     const cartContext = useCart();
+    const generalContext = useGeneralStateContext();
+
     const navigate = useNavigate();
     const isSmallScreen = useMediaQuery({query: '(max-width: 800px)'});
+
+    const [isAdminOpen, setIsAdminOpen] = useState<boolean | string>(false);
+
+    // admin dropdown out click
+    const adminDropdownRef = useRef(null);
+    const [preventOutClick, setPreventOutClick] = useState(false);
+    useOutClick(adminDropdownRef, setIsAdminOpen, preventOutClick);
 
     return (
         <header>
@@ -80,6 +93,30 @@ const Header: React.FC = () => {
                                 />
                             </NavLink>
                         </li>
+                        {
+                            generalContext.isLoggedIn &&
+                            <li className="admin-btn" ref={adminDropdownRef}
+                                onClick={() => setIsAdminOpen(!isAdminOpen)}>
+
+                                <span className="admin-btn-text">
+                                    {
+                                        !isAdminOpen ?
+                                            <RiArrowDownWideFill onClick={async () => {
+                                                setPreventOutClick(true);
+                                                await new Promise(resolve => setTimeout(resolve));
+                                                setPreventOutClick(false);
+                                            }}/>
+                                            :
+                                            <RiArrowUpWideFill/>
+                                    }
+                                    Admin
+                                </span>
+                                {
+                                    isAdminOpen &&
+                                    <AdminDropdown onOptionClicked={() => setIsAdminOpen(false)}/>
+                                }
+                            </li>
+                        }
                     </ul>
                 </nav>
             }

@@ -1,7 +1,7 @@
 import "./pricingPage.css";
 import {logo} from "../../assets";
 
-export const PricingPage = () => {
+const PricingPage = () => {
     return (
         <div className="pricing-page">
             <table>
@@ -56,3 +56,5 @@ export const PricingPage = () => {
         </div>
     );
 };
+
+export default PricingPage;

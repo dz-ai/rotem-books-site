@@ -46,7 +46,7 @@
 .cart-item-buttons-container {
     flex: 1;
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: end;
 }
 
