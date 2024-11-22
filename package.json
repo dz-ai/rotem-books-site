@@ -19,7 +19,7 @@
     "@typescript-eslint/eslint-plugin": "^8.4.0",
     "@typescript-eslint/parser": "^8.4.0",
     "bcryptjs": "^2.4.3",
-    "cookie": "^0.6.0",
+    "cookie": "^0.7.0",
     "imagekit-javascript": "^3.0.2",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
