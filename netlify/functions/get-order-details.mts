@@ -19,6 +19,8 @@ interface IGetOrderResultsClient {
 }
 
 export interface IGetOrderResults {
+    id: string;
+    status: number;
     documentDate: string;
     client: IGetOrderResultsClient
     income: IIncomeItem[]; // cart (items)
@@ -54,6 +56,8 @@ const handler: Handler = async (event) => {
 
         // SUCCESS HANDLING //
         const results: IGetOrderResults = {
+            id: getOrderResults.id,
+            status: getOrderResults.status,
             client: getOrderResults.client,
             documentDate: getOrderResults.documentDate,
             income: getOrderResults.income,

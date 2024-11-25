@@ -1,45 +1,54 @@
 import React, {useEffect, useState} from "react";
 import './backOfficePage.css'
 import {BackOfficeOrderDetails} from "../../components/backOffice/backOfficeOrderDetails/backOfficeOrderDetails.tsx";
-import {ICartItem} from "../../context/cartContext.tsx";
 import {useSearchParams} from "react-router-dom";
 import {ThreeDots} from "react-loader-spinner";
 import {IGetOrderResults} from "../../../netlify/functions/get-order-details.mjs";
-
-
-interface IPayer {
-    name: string;
-    phone: string;
-    email: string;
-    address: string;
-}
-
-export enum EOrderStatus {new = 'new', open = 'open', close = 'close'}
-
-export interface IOrder {
-    id: string;
-    receiptId: string;
-    total: number;
-    payer: IPayer;
-    cart: ICartItem[];
-    status: EOrderStatus;
-    date: number;
-}
+import {TOrderItem} from "../../../netlify/functions/get-orders.mjs";
+import {IBackofficeSideBar} from "../../components/backOffice/backOfficeSideBar.tsx";
+import {useMediaQuery} from "react-responsive";
 
 const BackOfficePage: React.FC = () => {
 
-    // const isSmallScreen = useMediaQuery({query: '(max-width: 700px)'});
+    const isSmallScreen = useMediaQuery({query: '(max-width: 700px)'});
 
     const [searchParams, setSearchParams] = useSearchParams();
     const orderId = searchParams.get('orderId');
 
-    // const [openMobileSideBar, setOpenMobileSideBar] = useState(true);
+    const [openMobileSideBar, setOpenMobileSideBar] = useState(true);
     const [currentOrder, setCurrentOrder] = useState<IGetOrderResults | null>(null);
     const [message, setMessage] = useState<string | null>(null);
+    const [orders, setOrders] = useState<TOrderItem[]>([]);
+    const [loadingOrders, setLoadingOrders] = useState(false);
+
+    // fetch orders (name date and status) from MORNING API.
+    const getOrders = async () => {
+        try {
+            setLoadingOrders(true);
+            const getOrdersResponse = await fetch('/.netlify/functions/get-orders');
+
+            setLoadingOrders(false);
+
+            if (getOrdersResponse.status !== 200) {
+                setMessage('משהו השתבש :(');
+                console.error(getOrdersResponse.status, 'get orders: something went wrong');
+                return;
+            }
+
+            const getOrdersResults = await getOrdersResponse.json();
+            setOrders(getOrdersResults);
+
+        } catch (err) {
+            console.error(err);
+            setLoadingOrders(false);
+            setMessage('משהו השתבש');
+        }
+    }
 
     // fetch the order details from "morning API" use of the order id.
     const getOrderDetails = async () => {
         try {
+            setCurrentOrder(null);
             const getOrderResponse = await fetch('/.netlify/functions/get-order-details', {
                 method: 'post',
                 headers: {
@@ -64,34 +73,28 @@ const BackOfficePage: React.FC = () => {
     }
 
     useEffect(() => {
-        getOrderDetails().then();
+        if (orderId) {
+            getOrderDetails().then();
+        }
+        if (orders.length === 0) {
+            getOrders().then();
+        }
+
     }, [orderId]);
 
     return (
         <div className="back-office-page">
 
-            {
-                // isSmallScreen &&
-                // <IBackofficeSideBar
-                //     orders={orders}
-                //     currentOrderId={currentOrder?.id}
-                //     openMobileSideBar={openMobileSideBar}
-                //     handleOrderClick={handleOrderClick}
-                //     setOpenMobileSideBar={setOpenMobileSideBar}
-                //     loadingStatus={loadingStatus}
-                //     loadingOrders={loadingOrders}
-                // />
-            }
-            {
-                // !isSmallScreen &&
-                // <IBackofficeSideBar
-                //     orders={orders}
-                //     currentOrderId={currentOrder?.id}
-                //     handleOrderClick={handleOrderClick}
-                //     loadingStatus={loadingStatus}
-                //     loadingOrders={loadingOrders}
-                // />
-            }
+            <IBackofficeSideBar
+                isSmallScreen={isSmallScreen}
+                orders={orders}
+                currentOrderId={currentOrder?.id}
+                openMobileSideBar={openMobileSideBar}
+                handleOrderClick={(id) => setSearchParams({orderId: id})}
+                setOpenMobileSideBar={setOpenMobileSideBar}
+                loadingOrders={loadingOrders}
+                message={message}
+            />
 
             <div className="back-office-order-details-wrapper">
                 {
@@ -106,7 +109,11 @@ const BackOfficePage: React.FC = () => {
                         />
                         :
                         currentOrder &&
-                        <BackOfficeOrderDetails order={currentOrder}/>
+                        <BackOfficeOrderDetails
+                            order={currentOrder}
+                            setOpenOrderBar={setOpenMobileSideBar}
+                            isSmallScreen={isSmallScreen}
+                        />
 
                 }
                 {

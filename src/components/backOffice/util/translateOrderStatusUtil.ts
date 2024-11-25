@@ -1,26 +1,29 @@
-import {EOrderStatus} from "../../../pages/backOffice/backOfficePage.tsx";
-
 interface ITranslateOrderStatusReturnVal {
     status: string;
     color: string;
 }
 
-export const translateOrderStatusUtil = (status: EOrderStatus): ITranslateOrderStatusReturnVal => {
+export const translateOrderStatusUtil = (status: number): ITranslateOrderStatusReturnVal => {
     let resultStatus = '';
     let resultColor = '';
 
     switch (status) {
-        case EOrderStatus.new:
-            resultStatus = 'חדשה';
-            resultColor = 'red';
-            break
-        case EOrderStatus.open:
+        case 0:
             resultStatus = 'פתוחה';
-            resultColor = 'green';
+            resultColor = 'violet';
             break
-        case EOrderStatus.close:
+        case 2 || 1:
             resultStatus = 'סגורה';
             resultColor = 'gray';
+            break
+        case 4:
+            resultStatus = 'מבוטלת';
+            resultColor = 'orange';
+            break
+        case 3:
+            resultStatus = 'מסמך מבטל';
+            resultColor = 'yellow';
+
     }
 
     return {

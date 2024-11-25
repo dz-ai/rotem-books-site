@@ -1,43 +1,57 @@
 import {Handler} from "@netlify/functions";
 import {generateResponse} from "../../netlify-functions-util/validateRequest.ts";
-import {mongoClientPromise} from "../../netlify-functions-util/mongoDB-connection.ts";
+import {getMorningToken} from "./after-payment-success/get-morning-token.mjs";
 
-// TODO add JWT token
+export type TOrderItem = {
+    id: string,
+    documentDate: string,
+    client: { name: string },
+    status: number
+};
+
+// GET ORDERS FROM MORNING API //
 export const handler: Handler = async (event) => {
 
-    if (event.httpMethod !== 'GET') {
-        return generateResponse(405, 'Method Not Allowed');
-    }
-    if (!process.env.MONGODB_COLLECTION_ORDERS) {
-        return generateResponse(500, 'Server configuration error, env variable - MONGODB_COLLECTION_ORDERS not found');
-    }
+    if (event.httpMethod !== 'GET') return generateResponse(405, 'Method Not Allowed');
 
     try {
+        const token: string | null = await getMorningToken();
+        if (!token) return generateResponse(401, 'token is missing');
 
-        // get the order collection from the database
-        const database = (await mongoClientPromise).db(process.env.MONGODB_DATABASE);
-        const orderCollection = database.collection(process.env.MONGODB_COLLECTION_ORDERS as string);
+        // TODO make fromDate to dynamic var (count maybe 2 month back)
+        const documentsSearchParams = {
+            type: [400],
+            description: 'קניה באתר הספרים של רותם',
+            fromDate: '2024-11-13',
+        };
 
-        // get the whole "Order" list from the collection
-        const orders = await orderCollection.find({}).toArray();
+        const response = await fetch(`${process.env.MORNING_URL}/documents/search`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify(documentsSearchParams),
+        });
 
-        let results = null;
+        if (response.status !== 200) return generateResponse(response.status, response.statusText);
 
-        if (orders) {
-            results = orders;
-        } else {
-            return generateResponse(500, 'fail to get "Orders" from Database');
-        }
+        const results = await response.json();
+
+        const resultsArray: TOrderItem[] = results.items.map((item: TOrderItem) => {
+            return {id: item.id, documentDate: item.documentDate, client: item.client, status: item.status}
+        });
 
         return {
             statusCode: 200,
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(results),
+            body: JSON.stringify(resultsArray),
         };
 
     } catch (err) {
+        console.error(err);
         return generateResponse(500, `Internal server Error ${err}`);
     }
 }

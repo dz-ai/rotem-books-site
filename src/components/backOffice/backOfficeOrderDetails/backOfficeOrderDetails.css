@@ -2,16 +2,6 @@
     padding: 15px;
 }
 
-.back-office-order-details .back-to-order-list {
-    display: none;
-}
-
-@media (max-width: 600px) {
-    .back-office-order-details .reusable-control-btn {
-        display: inline-flex;
-    }
-}
-
 .back-office-order-details-header {
     display: flex;
     align-items: center;

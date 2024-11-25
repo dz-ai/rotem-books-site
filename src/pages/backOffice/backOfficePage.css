@@ -1,6 +1,7 @@
 .back-office-page {
     width: 100%;
     height: 100%;
+    min-height: 100vh;
     position: relative;
     display: flex;
 }
@@ -10,6 +11,7 @@
 }
 
 .back-office-sidebar-wrapper {
+    max-width: 350px;
     display: flex;
     flex: 2;
 }
@@ -63,7 +65,7 @@
 .back-office-sidebar li {
     display: flex;
     align-items: center;
-    padding: 5px 15px 5px 0;
+    padding: 5px 15px;
 }
 
 .back-office-sidebar li p {
@@ -76,12 +78,8 @@
     cursor: pointer;
 }
 
-.back-office-sidebar li:active {
-    background: #aaaaaa;
-}
-
 .back-office-sidebar-current-order {
-    background: #cbcbcb;
+    background: #e1e1e1;
 }
 
 .back-office-sidebar-order-status {
@@ -91,20 +89,39 @@
     font-size: smaller;
 }
 
-.red {
-    color: red;
+.order-status {
+    margin-right: 10px;
 }
 
-.green {
-    color: green;
+.violet {
+    color: violet;
+}
+
+.orange {
+    color: orange;
 }
 
 .gray {
     color: gray;
 }
 
+.yellow {
+    color: yellow;
+}
+
 .back-office-sidebar-client-name {
     margin-right: 15px;
+    max-width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.back-office-sidebar-date {
+    font-size: smaller;
+    margin-right: 5px;
+    padding-top: 3px;
+    color: cadetblue;
 }
 
 .back-office-order-details-wrapper {
