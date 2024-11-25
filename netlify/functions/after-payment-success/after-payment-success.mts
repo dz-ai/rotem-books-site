@@ -3,6 +3,7 @@ import cookie from "cookie";
 import {getReceipt} from "./get-receipt.mjs";
 import {sendEmail} from "./send-email.mjs";
 import {getMorningToken} from "./get-morning-token.mjs";
+import {generateResponse} from "../../../netlify-functions-util/validateRequest.ts";
 
 // after a successful payment, email the site owner and get the receipt to allow the client to download it immediately.
 const handler: Handler = async (event) => {
@@ -23,7 +24,8 @@ const handler: Handler = async (event) => {
         // --- GET RECEIPT AND RECEIPT ID --- //
         type TReceiptResult = null | { receiptUrl: string, receiptId: string };
 
-        const token = await getMorningToken();
+        const token: string | null = await getMorningToken();
+        if (!token) return generateResponse(401, 'token is missing');
 
         let receiptResult: TReceiptResult = null;
 

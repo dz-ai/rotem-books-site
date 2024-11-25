@@ -1,11 +1,9 @@
-import {generateResponse} from "../../../netlify-functions-util/validateRequest.ts";
-
 // get token that allow access to "Morning API"
-export async function getMorningToken() {
+export async function getMorningToken(): Promise<string | null> {
 
-    if (!process.env.MORNING_API_KEY) return generateResponse(500, 'Morning API key is missing');
-    if (!process.env.MORNING_SECRET) return generateResponse(500, 'Morning secret is missing');
-    if (!process.env.MORNING_URL) return generateResponse(500, 'Morning Url is missing');
+    if (!process.env.MORNING_API_KEY) console.error('Morning API key is missing');
+    if (!process.env.MORNING_SECRET) console.error('Morning secret is missing');
+    if (!process.env.MORNING_URL) console.error('Morning Url is missing');
 
     const authVals = {id: `${process.env.MORNING_API_KEY}`, secret: `${process.env.MORNING_SECRET}`};
 
@@ -32,6 +30,6 @@ export async function getMorningToken() {
 
     } catch (err) {
         console.error(err);
-        return err;
+        return null;
     }
 }

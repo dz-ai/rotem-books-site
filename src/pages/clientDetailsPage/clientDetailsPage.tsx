@@ -77,7 +77,7 @@ const ClientDetailsFormPage: React.FC = () => {
         // PRODUCTS DETAILS
         const income: TPaymentDetailsItem[] = cartItems.map(book => {
             return {
-                description: `${book.title} ${book.coverType === 'hard-cover' ? 'כריכה קשה' : 'כריכה רכה'}`,
+                description: `${book.title} / ${book.coverType === 'hard-cover' ? 'כריכה קשה' : 'כריכה רכה'}`,
                 quantity: book.quantity,
                 price: book.price,
                 currency: 'ILS',

@@ -1,27 +1,28 @@
 import React, {useEffect, useState} from "react";
-import {IOrder} from "../../pages/backOffice/backOfficePage.tsx";
-import {orderDate} from "./util/getOrderDateUtil.tsx";
 import {translateOrderStatusUtil} from "./util/translateOrderStatusUtil.ts";
 import {ThreeDots} from "react-loader-spinner";
+import {TOrderItem} from "../../../netlify/functions/get-orders.mjs";
 
 interface IBackofficeSideBarProps {
-    orders: IOrder[];
+    isSmallScreen: boolean;
+    orders: TOrderItem[];
     currentOrderId?: string;
     openMobileSideBar?: boolean;
-    handleOrderClick: (order: IOrder) => void;
+    handleOrderClick: (orderId: string) => void;
     setOpenMobileSideBar?: React.Dispatch<React.SetStateAction<boolean>>;
-    loadingStatus: false | string;
     loadingOrders: boolean;
+    message: null | string;
 }
 
 export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
+                                                                          isSmallScreen,
                                                                           orders,
                                                                           currentOrderId,
                                                                           openMobileSideBar,
                                                                           handleOrderClick,
                                                                           setOpenMobileSideBar,
-                                                                          loadingStatus,
-                                                                          loadingOrders
+                                                                          loadingOrders,
+                                                                          message
                                                                       }) => {
 
     const [classname, setClassname] = useState<string>('back-office-sidebar-wrapper');
@@ -32,14 +33,14 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
     // determine if the class name is suited for wide screen or mobile
     useEffect(() => {
 
-        // if "openMobileSideBar" is not undefined, it means that we are on mobile screen
-        if (openMobileSideBar !== undefined) {
+        // set mobile style if small screen
+        if (isSmallScreen) {
             openMobileSideBar ? setClassname(sideBarOpen) : setClassname(sideBarClose);
         } else {
             setClassname('back-office-sidebar-wrapper');
         }
 
-    }, [openMobileSideBar]);
+    }, [isSmallScreen, openMobileSideBar]);
 
     return (
         <div className={classname}>
@@ -65,43 +66,31 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                         {
                             orders.map(order => {
                                     const {status, color} = translateOrderStatusUtil(order.status);
+                                    const date: string[] = order.documentDate.split('-');
+
                                     return <li
                                         key={order.id}
                                         className={currentOrderId === order.id ? "back-office-sidebar-current-order" : ""}
                                         onClick={() => {
-                                            handleOrderClick(order);
+                                            handleOrderClick(order.id);
                                             setOpenMobileSideBar &&
                                             setOpenMobileSideBar(false);
                                         }}
                                     >
-
                                         <div className="back-office-sidebar-order-status">
-                                            {
-                                                loadingStatus && loadingStatus === order.id ?
-                                                    <ThreeDots
-                                                        visible={true}
-                                                        height="18"
-                                                        width="18"
-                                                        color="#008000ab"
-                                                        radius="9"
-                                                        ariaLabel="three-dots-loading"
-                                                    />
-                                                    :
-                                                    <p className={color}>
-                                                        {status}
-                                                    </p>
-                                            }
+                                            <p className={color}>{status}</p>
                                         </div>
-                                        <p className="back-office-sidebar-client-name">
-                                            {order.payer.name}
-                                        </p>
-
-                                        {orderDate(order.date)}
+                                        <p className="back-office-sidebar-client-name">{order.client.name}</p>
+                                        <p className="back-office-sidebar-date">{date[2]}/{date[1]}/{date[0]}</p>
                                     </li>
                                 }
                             )
                         }
                     </ul>
+                }
+                {
+                    !loadingOrders && message &&
+                    <p className="back-office-page-message">{message}</p>
                 }
             </div>
         </div>
