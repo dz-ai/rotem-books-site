@@ -1,7 +1,8 @@
 import {tokenResponseCreator} from "../../netlify-functions-util/tokenResponseCreator.ts";
+import {Handler} from "@netlify/functions";
 
 // LOGOUT HANDLER //
-exports.handler = async () => {
+const handler: Handler = async () => {
     try {
         return tokenResponseCreator('', 0, 200, 'Logged out');
     } catch (err) {
@@ -9,3 +10,5 @@ exports.handler = async () => {
         return tokenResponseCreator('', 0, 500, 'logout: something went wrong');
     }
 };
+
+export {handler};

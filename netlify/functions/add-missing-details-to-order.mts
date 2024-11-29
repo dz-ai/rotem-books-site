@@ -13,7 +13,7 @@ interface ClientDetails {
 }
 
 // add address and cart values to order
-export const handler: Handler = async (event) => {
+const handler: Handler = async (event) => {
 
     if (event.httpMethod !== 'POST') {
         return generateResponse(405, 'Method Not Allowed');
@@ -100,3 +100,5 @@ function getOrder(orderCollection: Collection, reqId: ClientDetails): Promise<Wi
         }, 15 * 1000);
     });
 }
+
+export {handler};

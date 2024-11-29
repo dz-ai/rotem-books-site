@@ -1,4 +1,4 @@
-import {Handler} from "@netlify/functions";
+import {Handler, HandlerEvent} from "@netlify/functions";
 import {generateResponse} from "../../netlify-functions-util/validateRequest.ts";
 import {getMorningToken} from "./after-payment-success/get-morning-token.mjs";
 
@@ -10,7 +10,7 @@ export type TOrderItem = {
 };
 
 // GET ORDERS FROM MORNING API //
-export const handler: Handler = async (event) => {
+const handler: Handler = async (event: HandlerEvent) => {
 
     if (event.httpMethod !== 'GET') return generateResponse(405, 'Method Not Allowed');
 
@@ -22,7 +22,7 @@ export const handler: Handler = async (event) => {
         const documentsSearchParams = {
             type: [400],
             description: 'קניה באתר הספרים של רותם',
-            fromDate: '2024-11-13',
+            // fromDate: '2024-11-13',
         };
 
         const response = await fetch(`${process.env.MORNING_URL}/documents/search`, {
@@ -55,3 +55,5 @@ export const handler: Handler = async (event) => {
         return generateResponse(500, `Internal server Error ${err}`);
     }
 }
+
+export {handler};

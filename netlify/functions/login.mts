@@ -1,12 +1,11 @@
-import {HandlerEvent} from "@netlify/functions";
+import {Handler, HandlerEvent} from "@netlify/functions";
 import {generateResponse} from "../../netlify-functions-util/validateRequest.ts";
 import {comparePassword} from "../../netlify-functions-util/checkPassword.ts";
 import {generateToken} from "../../netlify-functions-util/tokenUtil.ts";
-import cookie from "cookie";
 import {tokenResponseCreator} from "../../netlify-functions-util/tokenResponseCreator.ts";
 
 // LOGIN HANDLER //
-exports.handler = async (event: HandlerEvent) => {
+const handler: Handler = async (event: HandlerEvent) => {
 
     try {
         if (event.httpMethod !== 'POST') return generateResponse(405, 'Method Not Allowed');
@@ -42,3 +41,5 @@ exports.handler = async (event: HandlerEvent) => {
         return tokenResponseCreator('', 0, 500, 'login: something went wrong');
     }
 }
+
+export {handler};
