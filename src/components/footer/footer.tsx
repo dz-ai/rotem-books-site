@@ -1,6 +1,7 @@
 import React from 'react';
 import './footer.css';
 import {SocialMediaLinks} from "../../componentsReusable/socialMediaLinks/socialMediaLinks.tsx";
+import {NavLink} from "react-router-dom";
 
 const Footer: React.FC = () => {
     return (
@@ -16,6 +17,7 @@ const Footer: React.FC = () => {
             <a className="more-content-link" href="https://www.rotemshemtov.com/" target="_blank">
                 לתוכן נוסף: www.rotemshemtov.com
             </a>
+            <NavLink to={'/policy-page'} className="site-policy-link">לתקנון האתר</NavLink>
             <p>&copy; כל הזכויות שמורות</p>
             <a className="credit-links"
                href="https://www.iconfinder.com/"

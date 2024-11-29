@@ -30,6 +30,11 @@ footer .social-media-links {
     color: #6a6a6a;
 }
 
+footer .site-policy-link {
+    display: block;
+    margin-top: 10px;
+}
+
 .more-content-link:hover {
     color: #00d3d3;
 }

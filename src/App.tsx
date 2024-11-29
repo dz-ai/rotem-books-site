@@ -16,6 +16,7 @@ import BackOfficePage from "./pages/backOffice/backOfficePage.tsx";
 import PricingPage from "./pages/pricingPage/pricingPage.tsx";
 import LoginPage from "./pages/loginPage/loginPage.tsx";
 import PrivateRoute from "./components/protected-route/protectedRoute.tsx";
+import PolicyPage from "./pages/policyPage/policyPage.tsx";
 import {useGeneralStateContext} from "./context/generalStateContext.tsx";
 
 export enum ECoverTypeHard {
@@ -196,6 +197,7 @@ export const books: IBook[] = [
 ];
 
 // TODO make the pages to 100hv
+// TODO create loader component
 const App: React.FC = () => {
 
     const generalContext = useGeneralStateContext();
@@ -215,6 +217,7 @@ const App: React.FC = () => {
                         <Route path="/cart-page" element={<CartPage/>}/>
                         <Route path="/about" element={<AboutPage/>}/>
                         <Route path="/pricing" element={<PricingPage/>}/>
+                        <Route path="/policy-page" element={<PolicyPage/>}/>
                         <Route path="/contact-page" element={<ContactPage/>}/>
                         <Route path="/client-details-page" element={<ClientDetailsFormPage/>}/>
                         <Route path="/payment-success-page" element={<PaymentSuccessPage/>}/>
