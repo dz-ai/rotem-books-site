@@ -108,6 +108,25 @@
     font-weight: bold;
 }
 
+.policy-agreement {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: aliceblue;
+    margin: 15px 0;
+    padding: 15px;
+}
+
+.policy-agreement-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.policy-agreement-checkbox input {
+    margin: 0 0 0 5px;
+}
+
 .client-details-page .error-message {
     border: 1px solid #ff000061;
     padding: 7px;

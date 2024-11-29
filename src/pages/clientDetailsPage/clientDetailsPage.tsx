@@ -57,6 +57,7 @@ const ClientDetailsFormPage: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [policyAgreement, setPolicyAgreement] = useState(false);
 
     const [showMessage, setShowMessage] = useState<null | string>(null);
     const [loading, setLoading] = useState(false);
@@ -72,6 +73,7 @@ const ClientDetailsFormPage: React.FC = () => {
         scrollToSubmitBtn();
 
         // prepare the payment details that should be sent to create the payment form in the server
+
         // TOTAL PRICE
         const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
         // PRODUCTS DETAILS
@@ -100,7 +102,7 @@ const ClientDetailsFormPage: React.FC = () => {
             income,
         }
 
-        if (name && email && checkAddressDetails() && phone && totalPrice && income.length >= 0) {
+        if (name && email && checkAddressDetails() && phone && totalPrice && income.length > 0 && policyAgreement) {
 
             try {
                 // fetching the payment form (credit card form details) from "Morning API"
@@ -123,7 +125,7 @@ const ClientDetailsFormPage: React.FC = () => {
                     setShowMessage(paymentForm.errorMessage);
                 }
             } catch (err) {
-                console.log(err);
+                console.error(err);
                 setLoading(false);
                 setShowMessage('משהו השתבש :(');
             }
@@ -145,7 +147,7 @@ const ClientDetailsFormPage: React.FC = () => {
 
             setAddressSearchResults(addresses);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
 
@@ -317,6 +319,20 @@ const ClientDetailsFormPage: React.FC = () => {
                     </div>
                 </div>
                 <div className="client-details-total-price">סה״כ לתשלום: {cartContext.totalPrice} ₪</div>
+                <div className="policy-agreement">
+                    <p>שרות המשלוחים מוגבל כרגע לאזור ירושלים בלבד זמן אספקת המשלוח הוא עד 5 ימי עסקים</p>
+                    <label className="policy-agreement-checkbox">
+                        <input
+                            type="checkbox"
+                            required
+                            checked={policyAgreement}
+                            onChange={() => setPolicyAgreement(!policyAgreement)}
+                        />
+                        קראתי ואני מסכים לתקנון האתר
+                    </label>
+                    <NavLink to={'/policy-page'}>תקנון האתר</NavLink>
+                </div>
+
                 <button className="reusable-control-btn" type="submit" disabled={addressSearchResults.length > 0}>
                     {
                         !loading &&
