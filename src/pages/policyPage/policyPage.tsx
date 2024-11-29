@@ -1,13 +1,21 @@
 import "./policyPage.css";
+import {useEffect} from "react";
 
 const PolicyPage = () => {
+
+        useEffect(() => {
+                const mainElement = document.querySelector('main');
+                mainElement &&
+                mainElement.scrollTo(0, 0);
+        }, []);
+
     return (
         <div className="site-policy-page">
             <h2>תקנון אתר "הספרים של רותם"</h2>
 
             <h3>מבוא:</h3>
             <p>
-                <strong>ברוכים הבאים לאתר "הספרים של רותם", פלטפורמה לרכישת ספרים במשלוחים באזור ירושלים בלבד.
+                <strong>ברוכים הבאים לאתר "הספרים של רותם", פלטפורמה לרכישת ספרים במשלוחים באזור ירושלים בלבד.<br/>
                     גלישה ושימוש באתר מהווים הסכמה לתקנון זה, על כן יש לקרוא אותו בקפידה.</strong>
             </p>
             <br/>
