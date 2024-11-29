@@ -10,12 +10,16 @@ interface IBackOfficeOrderDetailsProps {
     order: IGetOrderResults;
     isSmallScreen: boolean;
     setOpenOrderBar: React.Dispatch<React.SetStateAction<boolean>>;
+    setMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string } | null>>;
+    closeOrder: (orderId: string) => Promise<null | number>;
 }
 
 export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
                                                                                    order,
                                                                                    isSmallScreen,
-                                                                                   setOpenOrderBar
+                                                                                   setOpenOrderBar,
+                                                                                   setMessage,
+                                                                                   closeOrder,
                                                                                }) => {
 
     const {client, income, url, amountLocal, documentDate} = order;
@@ -64,8 +68,16 @@ export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
             </div>
 
             <NavLink to={url.origin} className="reusable-control-btn">להורדה וצפיה בקבלה</NavLink>
-            <button className="reusable-control-btn">
-                להעברת ההזמנה לארכיון
+            <button
+                className="reusable-control-btn"
+                onClick={async () => {
+                    order.status === 0 ?
+                        order.status = await closeOrder(order.id) || order.status
+                        :
+                        setMessage({message: `לא ניתן לסגור הזמנה בסטטוס ${status}`, color: 'green'});
+                }}
+            >
+                {order.status === 0 ? 'להעברת ההזמנה לארכיון' : `ההזמנה ${status}`}
             </button>
         </div>
     );

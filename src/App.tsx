@@ -195,6 +195,7 @@ export const books: IBook[] = [
     },
 ];
 
+// TODO make the pages to 100hv
 const App: React.FC = () => {
 
     const generalContext = useGeneralStateContext();

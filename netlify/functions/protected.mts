@@ -1,11 +1,11 @@
-import {HandlerEvent} from "@netlify/functions";
+import {Handler, HandlerEvent} from "@netlify/functions";
 import {generateResponse} from "../../netlify-functions-util/validateRequest.ts";
 import {verifyToken} from "../../netlify-functions-util/tokenUtil.ts";
 import {JwtPayload} from "jsonwebtoken";
 import cookie from "cookie";
 
 // VERIFY TOKEN HANDLER //
-exports.handler = async (event: HandlerEvent) => {
+const handler: Handler = async (event: HandlerEvent) => {
 
     try {
         const cookies = cookie.parse(event.headers.cookie || '');
@@ -26,3 +26,5 @@ exports.handler = async (event: HandlerEvent) => {
         return generateResponse(500, 'Verify Token handler internal server error: ' + err);
     }
 };
+
+export {handler};

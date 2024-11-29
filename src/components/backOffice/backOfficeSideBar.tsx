@@ -11,7 +11,6 @@ interface IBackofficeSideBarProps {
     handleOrderClick: (orderId: string) => void;
     setOpenMobileSideBar?: React.Dispatch<React.SetStateAction<boolean>>;
     loadingOrders: boolean;
-    message: null | string;
 }
 
 export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
@@ -22,7 +21,6 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                                                                           handleOrderClick,
                                                                           setOpenMobileSideBar,
                                                                           loadingOrders,
-                                                                          message
                                                                       }) => {
 
     const [classname, setClassname] = useState<string>('back-office-sidebar-wrapper');
@@ -61,7 +59,7 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                     </div>
                 }
                 {
-                    !loadingOrders &&
+                    !loadingOrders && orders.length > 0 &&
                     <ul>
                         {
                             orders.map(order => {
@@ -80,7 +78,8 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                                         <div className="back-office-sidebar-order-status">
                                             <p className={color}>{status}</p>
                                         </div>
-                                        <p className="back-office-sidebar-client-name">{order.client.name}</p>
+                                        <p className="back-office-sidebar-client-name"
+                                           title={order.client.name}>{order.client.name}</p>
                                         <p className="back-office-sidebar-date">{date[2]}/{date[1]}/{date[0]}</p>
                                     </li>
                                 }
@@ -89,8 +88,8 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                     </ul>
                 }
                 {
-                    !loadingOrders && message &&
-                    <p className="back-office-page-message">{message}</p>
+                    !loadingOrders && orders.length === 0 &&
+                    <p className="back-office-sidebar-message green">אין כרגע הזמנות להציג</p>
                 }
             </div>
         </div>

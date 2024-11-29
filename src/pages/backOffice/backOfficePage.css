@@ -109,6 +109,14 @@
     color: yellow;
 }
 
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
 .back-office-sidebar-client-name {
     margin-right: 15px;
     max-width: 60%;
@@ -145,7 +153,20 @@
 }
 
 .back-office-page-message {
-    text-align: center;
-    color: red;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
     margin-top: 50%;
+    padding: 10px 20px;
+    background: #e5e5e5;
+    border: 1px solid;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 99;
+}
+
+.back-office-sidebar-message {
+    margin: auto;
+    width: fit-content;
 }
