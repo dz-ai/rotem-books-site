@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import './backOfficeOrderDetails.css'
 import {BackOfficeCartItem} from "../backOfficeCartItem.tsx";
 import {IGetOrderResults} from "../../../../netlify/functions/get-order-details.mjs";
 import {NavLink} from "react-router-dom";
 import {translateOrderStatusUtil} from "../util/translateOrderStatusUtil.ts";
 import {MdKeyboardDoubleArrowRight} from "react-icons/md";
+import {ThreeDots} from "react-loader-spinner";
 
 interface IBackOfficeOrderDetailsProps {
     order: IGetOrderResults;
@@ -27,6 +28,8 @@ export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
 
     const {status, color} = translateOrderStatusUtil(order.status);
     const date: string[] = documentDate.split('-');
+
+    const [loadingClose, setLoadingClose] = useState(false);
 
     return (
         <div className="back-office-order-details">
@@ -67,18 +70,36 @@ export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
                 <p className="back-office-order-details-total">סה״כ לתשלום: {amountLocal}</p>
             </div>
 
-            <NavLink to={url.origin} className="reusable-control-btn">להורדה וצפיה בקבלה</NavLink>
-            <button
-                className="reusable-control-btn"
-                onClick={async () => {
-                    order.status === 0 ?
-                        order.status = await closeOrder(order.id) || order.status
-                        :
-                        setMessage({message: `לא ניתן לסגור הזמנה בסטטוס ${status}`, color: 'green'});
-                }}
-            >
-                {order.status === 0 ? 'להעברת ההזמנה לארכיון' : `ההזמנה ${status}`}
-            </button>
+            <div className={'back-office-order-details-receipt-close-order-bts'}>
+                <NavLink to={url.origin} className="reusable-control-btn">להורדה וצפיה בקבלה</NavLink>
+                <button
+                    className="reusable-control-btn"
+                    onClick={async () => {
+                        if (order.status === 0) {
+                            setLoadingClose(true);
+                            order.status = await closeOrder(order.id) || order.status
+                        } else {
+                            setMessage({message: `לא ניתן לסגור הזמנה בסטטוס ${status}`, color: 'green'});
+                        }
+                        setLoadingClose(false);
+                    }}
+                >
+                    {
+                        loadingClose ?
+                            <ThreeDots
+                                visible={true}
+                                height="35"
+                                width="35"
+                                color="#4fa94d"
+                                radius="9"
+                                ariaLabel="three-dots-loading"
+                            />
+                            :
+                            !loadingClose &&
+                            order.status === 0 ? 'להעברת ההזמנה לארכיון' : `ההזמנה ${status}`
+                    }
+                </button>
+            </div>
         </div>
     );
 }
