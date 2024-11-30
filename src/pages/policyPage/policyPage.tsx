@@ -1,14 +1,6 @@
 import "./policyPage.css";
-import {useEffect} from "react";
 
 const PolicyPage = () => {
-
-        useEffect(() => {
-                const mainElement = document.querySelector('main');
-                mainElement &&
-                mainElement.scrollTo(0, 0);
-        }, []);
-
     return (
         <div className="site-policy-page">
             <h2>תקנון אתר "הספרים של רותם"</h2>

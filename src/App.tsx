@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {Route, Routes, useLocation} from 'react-router-dom';
 import {IBook} from "./components/book/book.tsx";
 import Header from './components/header/header.tsx';
 import Footer from './components/footer/footer.tsx';
@@ -206,31 +206,37 @@ const App: React.FC = () => {
         generalContext.checkAuthentication().then();
     }, []);
 
+    const location = useLocation();
+
+    useEffect(() => {
+        const mainElement = document.querySelector('#root');
+        mainElement &&
+        mainElement.scrollTo({top: 0, behavior: 'smooth'});
+    }, [location.pathname]);
+
     return (
-        <Router>
-            <div className="app">
-                <Header/>
-                <main>
-                    <Routes>
-                        <Route path="/" element={<HomePage/>} index/>
-                        <Route path="/book-details/:id" element={<BookDetailPage books={books}/>}/>
-                        <Route path="/cart-page" element={<CartPage/>}/>
-                        <Route path="/about" element={<AboutPage/>}/>
-                        <Route path="/pricing" element={<PricingPage/>}/>
-                        <Route path="/policy-page" element={<PolicyPage/>}/>
-                        <Route path="/contact-page" element={<ContactPage/>}/>
-                        <Route path="/client-details-page" element={<ClientDetailsFormPage/>}/>
-                        <Route path="/payment-success-page" element={<PaymentSuccessPage/>}/>
-                        <Route path="/payment-failure-page" element={<PaymentFailurePage/>}/>
-                        <Route element={<PrivateRoute/>}>
-                            <Route path="/back-office-page" element={<BackOfficePage/>}/>
-                        </Route>
-                        <Route path="/login-page" element={<LoginPage/>}/>
-                    </Routes>
-                </main>
-                <Footer/>
-            </div>
-        </Router>
+        <div className="app">
+            <Header/>
+            <main>
+                <Routes>
+                    <Route path="/" element={<HomePage/>} index/>
+                    <Route path="/book-details/:id" element={<BookDetailPage books={books}/>}/>
+                    <Route path="/cart-page" element={<CartPage/>}/>
+                    <Route path="/about" element={<AboutPage/>}/>
+                    <Route path="/pricing" element={<PricingPage/>}/>
+                    <Route path="/policy-page" element={<PolicyPage/>}/>
+                    <Route path="/contact-page" element={<ContactPage/>}/>
+                    <Route path="/client-details-page" element={<ClientDetailsFormPage/>}/>
+                    <Route path="/payment-success-page" element={<PaymentSuccessPage/>}/>
+                    <Route path="/payment-failure-page" element={<PaymentFailurePage/>}/>
+                    <Route element={<PrivateRoute/>}>
+                        <Route path="/back-office-page" element={<BackOfficePage/>}/>
+                    </Route>
+                    <Route path="/login-page" element={<LoginPage/>}/>
+                </Routes>
+            </main>
+            <Footer/>
+        </div>
     );
 }
 
