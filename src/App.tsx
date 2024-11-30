@@ -227,8 +227,8 @@ const App: React.FC = () => {
                         </Route>
                         <Route path="/login-page" element={<LoginPage/>}/>
                     </Routes>
-                    <Footer/>
                 </main>
+                <Footer/>
             </div>
         </Router>
     );

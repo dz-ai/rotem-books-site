@@ -8,6 +8,7 @@ html {
 
 #root {
     height: 100%;
+    overflow: auto;
 }
 
 body {
@@ -19,17 +20,16 @@ body {
 }
 
 .app {
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .app main {
+    min-height: 100vh;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: auto;
     margin-top: 50px;
 }
