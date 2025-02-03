@@ -38,7 +38,7 @@
 }
 
 .about-me-container .end-text {
-    margin-left: auto;
+    width: 100%;
     margin-bottom: 0;
     margin-top: 10px;
 }

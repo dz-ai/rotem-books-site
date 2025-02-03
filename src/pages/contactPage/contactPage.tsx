@@ -4,8 +4,12 @@ import {SocialMediaLinks} from "../../componentsReusable/socialMediaLinks/social
 import {ISendMailClientSupportPayLoad} from "../../../netlify/functions/send-email-client-support.mjs";
 import {ThreeDots} from "react-loader-spinner";
 import {GrSend} from "react-icons/gr";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 
 function ContactPage() {
+
+    const generalContext = useGeneralStateContext();
+
     const [name, setName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
     const [email, setEmail] = useState<string>('');
@@ -35,16 +39,21 @@ function ContactPage() {
             const emailSendResults = await emailSendResponse.json();
 
             if (emailSendResults.status === 200) {
-                setEmailSentMessage('ההודעה נשלחה בהצלחה!');
+                setEmailSentMessage(
+                    generalContext.t('contactPage.emailSentSuccess')
+                );
             } else {
                 console.error(emailSendResults.message);
-                setEmailSentMessage('משהו השתבש :(');
+                setEmailSentMessage(generalContext.t('contactPage.emailSentError')
+                );
             }
             setLoading(false);
 
         } catch (err) {
             console.error(err);
-            setEmailSentMessage('משהו השתבש :(');
+            setEmailSentMessage(
+                generalContext.t('contactPage.emailSentError')
+            );
             setLoading(false);
         }
     }
@@ -54,66 +63,64 @@ function ContactPage() {
             {
                 !emailSentMessage &&
                 <div className="contact-page-container">
-                    <p className="contact-page-text">
-                        נתקלתם בבעיה בעת הרכישה באתר, רוצים להזמין פעילות לילדים (תאטרון בובות, חוגי דרמה, שעת סיפור,
-                        ימי הולדת) או סתם בא לכם להשאיר תגובה, מוזמנים לכתוב לי ואני אשתדל לענות בהקדם.
-                        🙂
-                    </p>
+                    <p className="contact-page-text">{generalContext.t('contactPage.contactPageText')}</p>
                     <form onSubmit={handleSubmit}>
                         <div className="contact-page-client-details">
                             <label>
-                                שם:
+                                {generalContext.t('contactPage.nameLabel')}
                                 <input
                                     type="text"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     required
-                                    placeholder="שם ושם משפחה"
+                                    placeholder={generalContext.t('contactPage.namePlaceholder')}
                                     autoComplete="name"
                                 />
                             </label>
                             <label>
-                                טלפון:
+                                {generalContext.t('contactPage.phoneLabel')}
                                 <input
+                                    className={generalContext.language === 'he' ? "he" : ""}
                                     type="tel"
                                     value={phone}
                                     required
                                     onChange={(e) => setPhone(e.target.value)}
-                                    placeholder="נא להזין מספר טלפון"
+                                    placeholder={generalContext.t('contactPage.phonePlaceholder')}
                                     autoComplete="tel"
-                                /> </label>
+                                />
+                            </label>
                             <label>
-                                אימייל:
+                                {generalContext.t('contactPage.emailLabel')}
                                 <input
                                     type="email"
                                     value={email}
                                     required
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="נא להזין כתובת אי-מייל"
+                                    placeholder={generalContext.t('contactPage.emailPlaceholder')}
                                     autoComplete="email"
                                 />
                             </label>
                             <label>
-                                נושא הפניה:
+                                {generalContext.t('contactPage.subjectLabel')}
                                 <input
                                     value={subject}
                                     required
                                     onChange={(e) => setSubject(e.target.value)}
-                                    placeholder="נא להזין את נושא הפניה"
+                                    placeholder={generalContext.t('contactPage.subjectPlaceholder')}
                                 />
                             </label>
                         </div>
                         <label className="text-area">
                             <textarea
                                 required
-                                placeholder="תוכן ההודעה..."
+                                placeholder={generalContext.t('contactPage.messagePlaceholder')}
                                 onChange={(e) => setContent(e.target.value)}
                             ></textarea>
                         </label>
                         {
                             !loading &&
                             <button type="submit" className="reusable-control-btn">
-                                שלח
+                                {generalContext.t('contactPage.submitButton')}
                                 <GrSend/>
                             </button>
                         }
@@ -135,10 +142,13 @@ function ContactPage() {
                 emailSentMessage &&
                 <div className="sent-message">
                     <p>{emailSentMessage}</p>
-                    <button className="reusable-control-btn" onClick={() => setEmailSentMessage(null)}>חזרה</button>
+                    <button className="reusable-control-btn" onClick={() => setEmailSentMessage(null)}>
+                        {generalContext.t('contactPage.backButton')}
+                    </button>
                 </div>
             }
-            <a href="tel:050-648-1668" className="tel-to-call">טלפון: 050-648-1668</a>
+            <a href="tel:050-648-1668"
+               className="tel-to-call">{generalContext.t('contactPage.phoneLink')} 050-648-1668</a>
             <SocialMediaLinks iconsSize={40}/>
         </div>
     );

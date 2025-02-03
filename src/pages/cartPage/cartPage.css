@@ -40,7 +40,9 @@
     width: 100%;
     flex: 1;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: start;
+    margin-bottom: 10px;
 }
 
 .cart-item-buttons-container {
@@ -55,16 +57,12 @@
         flex-direction: column;
         align-items: start;
     }
-
-    .cart-item .quantity-input {
-        margin-right: 0;
-    }
 }
 
 .cart-item img {
     width: 85px;
     height: auto;
-    margin-left: 5px;
+    padding-top: 10px;
 }
 
 .cart-item:last-child {
@@ -76,17 +74,20 @@
 }
 
 .cart-item .book-title-and-cover-type {
+    min-width: 130px;
     flex: 1;
-    text-align: right;
-    margin: 0 5px;
+    padding-top: 10px;
+    margin: 0 10px;
 }
 
 .cart-item-price {
+    min-width: 150px;
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: end;
     align-items: start;
-    border-right: 1px solid;
+    padding-top: 10px;
     padding-right: 10px;
 }
 
@@ -106,6 +107,7 @@
     color: white;
     border: none;
     border-radius: 3px;
+    margin: 0 10px;
     padding: 5px 10px;
     cursor: pointer;
 }

@@ -1,0 +1,137 @@
+{
+  "home": {
+    "title": "הספרים של רותם"
+  },
+  "header": {
+    "homeBtn": "דף הבית",
+    "pricingBtn": "מחירון",
+    "aboutBtn": "אודות",
+    "contactBtn": "צור קשר",
+    "cartBtn": "עגלת הקניות"
+  },
+  "footer": {
+    "socialMediaLinks": "SocialMediaLinks iconsSize={20}",
+    "publisher": "הוצאת אורן ספרים 🌲 התיאטרון של רותם",
+    "activities": "חוגי דרמה שעת סיפור ימי הולדת",
+    "phone": "טלפון: 050-648-1668",
+    "moreContent": "לתוכן נוסף: www.rotemshemtov.com",
+    "sitePolicy": "לתקנון האתר",
+    "allRightsReserved": "© כל הזכויות שמורות",
+    "creditLinks": "\"social medias icons by \"Icon-Finder"
+  },
+  "cart": {
+    "cartHeader": "עגלת הקניות",
+    "itemDetails": "פרטי הפריט",
+    "pricePerUnit": "מחיר ליח׳",
+    "totalPrice": "סכ״ה",
+    "quantityDiscount": "כולל הנחת כמות",
+    "removeFromCart": "הסר מהעגלה",
+    "checkout": "לתשלום"
+  },
+  "cartPopup": {
+    "goToCart": "למעבר לעגלה",
+    "removedFromCart": "הוסר מהעגלה",
+    "addedToCart": "נוסף לעגלה"
+  },
+  "clientDetailsPage": {
+    "backToCart": "חזרה לעגלה",
+    "clientDetails": "פרטי הלקוח",
+    "name": "שם",
+    "namePlaceholder": "שם ושם משפחה",
+    "email": "אי-מייל",
+    "emailPlaceholder": "נא להזין כתובת אי-מייל למשלוח קבלה",
+    "phone": "טלפון",
+    "phonePlaceholder": "נא להזין מספר טלפון",
+    "shippingAddress": "כתובת למשלוח",
+    "addressPlaceholder": "נא להזין כתובת מגורים למשלוח",
+    "houseNumber": "מספר הבית",
+    "houseNumberPlaceholder": "נא להזין את מספר הבית",
+    "apartmentNumber": "מספר הדירה",
+    "apartmentNumberPlaceholder": "נא להזין מספר דירה (אם קיים)",
+    "zipCode": "מיקוד",
+    "zipCodePlaceholder": "נא להזין מיקוד",
+    "totalPrice": "סה״כ לתשלום",
+    "deliveryNotice": "שרות המשלוחים מוגבל כרגע לאזור ירושלים בלבד זמן אספקת המשלוח הוא עד 5 ימי עסקים",
+    "policyAgreement": "קראתי ואני מסכים לתקנון האתר",
+    "policyPage": "תקנון האתר",
+    "submit": "למלוי פרטי אשראי ותשלום",
+    "loadingMessage": "loading",
+    "errorMessage": "showMessage"
+  },
+  "bookDetailsPage": {
+    "name": "רותם שם טוב",
+    "illustrations": "איורים"
+  },
+  "pricingPage": {
+    "hardcoverPrices": "מחירי כריכה קשה",
+    "softcoverPrices": "מחירי כריכה רכה",
+    "quantity": "כמות",
+    "price": "מחיר לספר",
+    "moreThen": "ומעלה"
+  },
+  "aboutPage": {
+    "alt": "המחברת עם בובת התיאטרון",
+    "mainText": "שלום, שמי רותם. אני מספרת סיפורים מקצועית וזוהי חנות הספרים פרי עטי המבוססים בחלקם על משלי עם ובחלקם על סיפורים מקוריים שלי. תמיד אהבתי לקרוא ספרים, היום כולנו מוצפים בגירויים ממסכים ואני מוצאת את עולם הספרים וסיפורי הילדים כמקום אליו אני יכולה למצוא ולקבל השראה מדברים שקורים לנו בחיים. יותר מכל, האהבה שלי למשלים, ליכולת שלהם לחצות גבולות וזמנים ולהיות רלוונטיים, הביאה אותי לכתוב את הספרים שמוצגים לכם כאן, בצורה מותאמת לתקופתנו עם מסרים חשובים שעדיין אקטואליים לזמננו. מקווה שפה בספרים שמוצגים לכם כאן תוכלו גם אתם לצלול פנימה ולמלא את עולמכם בסיפורים מעולמות המשלים וסיפורי הילדים.",
+    "endText1": "מאחלת לכם קריאה מהנה,",
+    "endText2": "רותם שם טוב (וגם יונתן בעלי)."
+  },
+  "contactPage": {
+    "contactPageText": "נתקלתם בבעיה בעת הרכישה באתר, רוצים להזמין פעילות לילדים (תאטרון בובות, חוגי דרמה, שעת סיפור, ימי הולדת) או סתם בא לכם להשאיר תגובה, מוזמנים לכתוב לי ואני אשתדל לענות בהקדם. 🙂",
+    "nameLabel": "שם:",
+    "namePlaceholder": "שם ושם משפחה",
+    "phoneLabel": "טלפון:",
+    "phonePlaceholder": "נא להזין מספר טלפון",
+    "emailLabel": "אימייל:",
+    "emailPlaceholder": "נא להזין כתובת אי-מייל",
+    "subjectLabel": "נושא הפניה:",
+    "subjectPlaceholder": "נא להזין את נושא הפניה",
+    "messagePlaceholder": "תוכן ההודעה...",
+    "submitButton": "שלח",
+    "backButton": "חזרה",
+    "phoneLink": "טלפון: 050-648-1668",
+    "emailSentSuccess": "ההודעה נשלחה בהצלחה!",
+    "emailSentError": "משהו השתבש :("
+  },
+  "loginPage": {
+    "title": "הרשמה",
+    "emailLabel": "אימייל:",
+    "passwordLabel": "סיסמא:",
+    "submitButton": "שלח",
+    "emailPasswordRequiredError": "יש להזין אימייל וסיסמא",
+    "loginSuccess": "התחברת בהצלחה!",
+    "loginError": "משהו השתבש",
+    "serverError": "לא ניתן להתחבר לשרת"
+  },
+  "backOfficePage": {
+    "orders": "הזמנות",
+    "ordersLoading": "ההזמנות בטעינה",
+    "noOrders": "אין כרגע הזמנות להציג"
+  },
+  "backOfficeOrderDetails": {
+    "order_list": "לרשימת ההזמנות",
+    "client_details": "פרטי הלקוח",
+    "address": "כתובת",
+    "zip": "מיקוד",
+    "phone": "טלפון",
+    "email": "אימייל",
+    "purchase_details": "פרטי הרכישה",
+    "missing_order_details": "פרטי ההזמנה חסרים :(",
+    "total_payment": "סה״כ לתשלום",
+    "download_receipt": "להורדה וצפיה בקבלה",
+    "the_order_status": "ההזמנה",
+    "archive_order": "להעברת ההזמנה לארכיון",
+    "cannot_close_order": "לא ניתן לסגור הזמנה בסטטוס",
+    "book_name": "שם הספר",
+    "quantity": "כמות",
+    "books": "ספרים",
+    "total_item_price": "סה״כ לפריט"
+  },
+  "shared": {
+    "softcover": "כריכה רכה",
+    "hardcover": "כריכה קשה",
+    "add_to_cart": "הוסף לעגלה",
+    "buyNow": "לרכישה",
+    "backToPreviousPage": "חזרה לדף הקודם",
+    "logoAlt": "לוגו קיפוד עם גיטרה"
+  }
+}

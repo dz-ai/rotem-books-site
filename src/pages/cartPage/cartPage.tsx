@@ -3,13 +3,14 @@ import './cartPage.css';
 import QuantityInput from "../../componentsReusable/quantityInput/quantityInput.tsx";
 import {useNavigate} from "react-router-dom";
 import {useCart} from "../../context/cartContext.tsx";
-import {MdKeyboardDoubleArrowRight} from "react-icons/md";
-import {MdKeyboardDoubleArrowLeft} from "react-icons/md";
 import {coverType} from "../../components/book/book.tsx";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
+import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
 
 const CartPage: React.FC = () => {
     const navigate = useNavigate();
     const cartContext = useCart();
+    const generalContext = useGeneralStateContext();
     const cartItems = cartContext.cart;
 
     const updateQuantity = (id: string, quantity: number, coverType: coverType) => {
@@ -23,12 +24,12 @@ const CartPage: React.FC = () => {
     return (
         <div className="cart-wrapper">
             <button className="reusable-control-btn" onClick={() => window.history.back()}>
-                <MdKeyboardDoubleArrowRight/>
-                חזרה לדף הקודם
+                <ArrowIcon arrowDirection={'R'}/>
+                {generalContext.t('shared.backToPreviousPage')}
             </button>
             <div className="cart-container">
                 <div className="cart-header">
-                    <h1>עגלת הקניות</h1>
+                    <h1>{generalContext.t('cart.cartHeader')}</h1>
                 </div>
                 <ul className="cart-list">
                     {cartItems.map((item) => (
@@ -38,15 +39,16 @@ const CartPage: React.FC = () => {
                                 <img src={`${import.meta.env.VITE_IMAGEKIT_URL}/${item.image}`} alt={item.title}/>
                                 <div className="book-title-and-cover-type">
                                     <div className="cart-item-title">{item.title}</div>
-                                    <div>{item.coverType === 'hard-cover' ? 'כריכה קשה' : 'כריכה רכה'}</div>
+                                    <div>{item.coverType === 'hard-cover' ? generalContext.t('shared.hardcover') : generalContext.t('shared.softcover')}</div>
                                 </div>
 
                                 <div className="cart-item-price">
-                                    <span>מחיר ליח׳: ₪{item.price}</span>
-                                    <span>סכ״ה: ₪{item.price * item.quantity}</span>
+                                    <span>{generalContext.t('cart.pricePerUnit')}: ₪{item.price}</span>
+                                    <span>{generalContext.t('cart.totalPrice')}: ₪{item.price * item.quantity}</span>
                                     {
                                         cartContext.totalQuantityInCart > 1 &&
-                                        <span className="quantity-discount">כולל הנחת כמות</span>
+                                        <span
+                                            className="quantity-discount">{generalContext.t('cart.quantityDiscount')}</span>
                                     }
                                 </div>
                             </div>
@@ -59,20 +61,20 @@ const CartPage: React.FC = () => {
                                     onChange={(e) => updateQuantity(item.id, parseInt(e.target.value), item.coverType)}
                                 />
                                 <button className="remove-btn" onClick={() => removeItem(item.id, item.coverType)}>
-                                    הסר מהעגלה
+                                    {generalContext.t('cart.removeFromCart')}
                                 </button>
                             </div>
                         </li>
                     ))}
                 </ul>
-                <h2 className="total-price">סכ״ה: ₪{cartContext.totalPrice}</h2>
+                <h2 className="total-price">{generalContext.t('cart.totalPrice')}: ₪{cartContext.totalPrice}</h2>
                 <button
                     className="reusable-control-btn"
                     disabled={cartContext.totalPrice === 0}
                     onClick={() => navigate('/client-details-page')}
                 >
-                    לתשלום
-                    <MdKeyboardDoubleArrowLeft/>
+                    {generalContext.t('cart.checkout')}
+                    <ArrowIcon arrowDirection={'L'}/>
                 </button>
             </div>
         </div>

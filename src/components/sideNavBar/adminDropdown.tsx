@@ -11,7 +11,10 @@ const AdminDropdown: React.FC<IAdminDropdown> = ({onOptionClicked}) => {
     const generalContext = useGeneralStateContext();
 
     return (
-        <ul onClick={() => onOptionClicked()}>
+        <ul
+            className={generalContext.language === 'he' ? "he admin-dropdown-container" : "admin-dropdown-container"}
+            onClick={() => onOptionClicked()}
+        >
             <li>
                 <NavLink to={'/back-office-page'}>Back Office</NavLink>
             </li>

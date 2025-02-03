@@ -8,20 +8,24 @@ header .admin-btn {
 }
 
 header .admin-btn svg {
-    margin-left: 5px;
+    margin: 0 5px;
 }
 
-header .admin-btn ul {
+header .admin-btn .admin-dropdown-container {
     height: fit-content;
     width: 200px;
     position: absolute;
     top: 45px;
-    left: -10px;
+    right: -10px;
     display: flex;
     flex-direction: column;
     background: #d8d8d8;
     border-radius: 5px;
     box-shadow: 2px 2px 3px 1px #808080a3;
+}
+
+header .admin-btn .admin-dropdown-container.he {
+    right: -125px;
 }
 
 header .admin-btn ul li {

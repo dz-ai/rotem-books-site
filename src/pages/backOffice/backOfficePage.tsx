@@ -8,12 +8,15 @@ import {TOrderItem} from "../../../netlify/functions/get-orders.mjs";
 import {IBackofficeSideBar} from "../../components/backOffice/backOfficeSideBar.tsx";
 import {useMediaQuery} from "react-responsive";
 import {BackOfficeMessage} from "../../components/backOffice/util/backOfficeMessage.tsx";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 
 const BackOfficePage: React.FC = () => {
 
     const isSmallScreen = useMediaQuery({query: '(max-width: 700px)'});
 
     const timOutRef = useRef(null);
+
+    const generalContext = useGeneralStateContext();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const orderId = searchParams.get('orderId');
@@ -23,6 +26,7 @@ const BackOfficePage: React.FC = () => {
     const [openMobileSideBar, setOpenMobileSideBar] = useState(true);
     const [message, setMessage] = useState<{ message: string, color: string } | null>(null);
     const [loadingOrders, setLoadingOrders] = useState(false);
+    const [firstLoad, setFirstLoad] = useState(true);
 
     // fetch orders (name date and status) from MORNING API.
     const getOrders = async () => {
@@ -127,6 +131,59 @@ const BackOfficePage: React.FC = () => {
             return null;
         }
     }
+
+    const translate = async (names: string[]): Promise<void> => {
+
+        try {
+            const response = await fetch('/.netlify/functions/get-translation', {
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    translationRequest: names,
+                    translationFor: 'names',
+                    lang: generalContext.language
+                }),
+            });
+
+            if (response.status === 200) {
+                const translatedNames = await response.json();
+                console.log(translatedNames.length)
+                const translatedOrders: TOrderItem[] = orders.map((order, index) => {
+                    const client = {...order.client, name: translatedNames[index] || order.client.name}
+                    return {...order, client};
+                });
+
+                orders.length > 0 ?
+                    setOrders(translatedOrders)
+                    :
+                    console.error('names translation failed');
+            } else {
+                console.error('names translation failed');
+            }
+        } catch (err) {
+            console.error('names translation failed: ', err);
+        }
+
+    }
+
+    useEffect(() => {
+
+        if (orders.length > 0) {
+
+            let names: string[] = orders.map(order => order.client.name);
+
+            if (generalContext.language !== 'he') {
+                // translate(names).then();
+            }
+            if (generalContext.language === 'he' && !firstLoad) {
+                // translate(names).then();
+            }
+        }
+
+    }, [generalContext.language]);
+
 
     useEffect(() => {
         if (orderId) {

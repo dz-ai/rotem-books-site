@@ -43,7 +43,7 @@
     border-radius: 4px;
 }
 
-.contact-page input[type="tel"] {
+.contact-page input[type="tel"].he {
     text-align: end;
 }
 

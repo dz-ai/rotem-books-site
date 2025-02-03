@@ -7,6 +7,7 @@ import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
 import {determinePrice} from "./determineBookPriceUtil.ts";
 import Cookies from 'js-cookie';
 import {GoTrash} from "react-icons/go";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 
 export type coverType = 'soft-cover' | 'hard-cover';
 
@@ -28,6 +29,8 @@ interface BookProperties {
 // represent the book-card on the homepage
 const Book: React.FC<BookProperties> = ({book}) => {
     const cartContext = useCart();
+    const generalContext = useGeneralStateContext();
+
 
     const [coverType, setCoverType] = useState<coverType>(book.coverType[0]);
     const [bookPrice, setBookPrice] = useState(book.price);
@@ -118,7 +121,10 @@ const Book: React.FC<BookProperties> = ({book}) => {
                 <h3>{book.title}</h3>
                 {
                     book.coverType.length > 1 ?
-                        <div onClick={(e) => e.stopPropagation()}>
+                        <div
+                            className="cover-type-container"
+                            onClick={(e) => e.stopPropagation()}
+                        >
                             <label className="cover-type">
                                 <input
                                     type="radio"
@@ -126,7 +132,7 @@ const Book: React.FC<BookProperties> = ({book}) => {
                                     checked={coverType === 'hard-cover'}
                                     onChange={handleCoverTypeChange}
                                 />
-                                כריכה קשה
+                                {generalContext.t('shared.hardcover')}
                             </label>
                             <label className="cover-type">
                                 <input
@@ -135,11 +141,11 @@ const Book: React.FC<BookProperties> = ({book}) => {
                                     checked={coverType === 'soft-cover'}
                                     onChange={handleCoverTypeChange}
                                 />
-                                כריכה רכה
+                                {generalContext.t('shared.softcover')}
                             </label>
                         </div>
                         :
-                        <p>כריכה רכה</p>
+                        <p>{generalContext.t('shared.softcover')}</p>
                 }
                 <p>₪{bookPrice}</p>
                 <div className="add-to-cart-container">
@@ -158,7 +164,7 @@ const Book: React.FC<BookProperties> = ({book}) => {
                                 quantity: 1,
                             });
                         }}>
-                            הוסף לעגלה
+                            {generalContext.t('shared.add_to_cart')}
                         </button>
                     }
                     {

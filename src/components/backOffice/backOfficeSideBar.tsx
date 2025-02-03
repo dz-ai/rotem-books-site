@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {translateOrderStatusUtil} from "./util/translateOrderStatusUtil.ts";
 import {ThreeDots} from "react-loader-spinner";
 import {TOrderItem} from "../../../netlify/functions/get-orders.mjs";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 
 interface IBackofficeSideBarProps {
     isSmallScreen: boolean;
@@ -23,12 +24,14 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                                                                           loadingOrders,
                                                                       }) => {
 
+    const generalContext = useGeneralStateContext();
+
     const [classname, setClassname] = useState<string>('back-office-sidebar-wrapper');
 
     const sideBarOpen = "bo-sidebar-mobile bo-sidebar-mobile-open";
     const sideBarClose = "bo-sidebar-mobile";
 
-    // determine if the class name is suited for wide screen or mobile
+    // determine whether the class name is suited for wide screen or mobile
     useEffect(() => {
 
         // set mobile style if small screen
@@ -42,12 +45,12 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
 
     return (
         <div className={classname}>
-            <div className="back-office-sidebar">
-                <h3>הזמנות</h3>
+            <div className={generalContext.language === 'he' ? "back-office-sidebar he" : "back-office-sidebar"}>
+                <h3>{generalContext.t('backOfficePage.orders')}</h3>
                 {
                     loadingOrders &&
                     <div className="orders-loading-wrapper">
-                        <p>הזמנות בטעינה</p>
+                        <p>{generalContext.t('backOfficePage.ordersLoading')}</p>
                         <ThreeDots
                             visible={true}
                             height="35"
@@ -63,7 +66,7 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                     <ul>
                         {
                             orders.map(order => {
-                                    const {status, color} = translateOrderStatusUtil(order.status);
+                                    const {status, color} = translateOrderStatusUtil(order.status, generalContext.language);
                                     const date: string[] = order.documentDate.split('-');
 
                                     return <li
@@ -78,8 +81,12 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                                         <div className="back-office-sidebar-order-status">
                                             <p className={color}>{status}</p>
                                         </div>
-                                        <p className="back-office-sidebar-client-name"
-                                           title={order.client.name}>{order.client.name}</p>
+                                        <p
+                                            className="back-office-sidebar-client-name"
+                                            title={order.client.name}
+                                        >
+                                            {order.client.name}
+                                        </p>
                                         <p className="back-office-sidebar-date">{date[2]}/{date[1]}/{date[0]}</p>
                                     </li>
                                 }
@@ -89,7 +96,7 @@ export const IBackofficeSideBar: React.FC<IBackofficeSideBarProps> = ({
                 }
                 {
                     !loadingOrders && orders.length === 0 &&
-                    <p className="back-office-sidebar-message green">אין כרגע הזמנות להציג</p>
+                    <p className="back-office-sidebar-message green">{generalContext.t('backOfficePage.noOrders')}</p>
                 }
             </div>
         </div>

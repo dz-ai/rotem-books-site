@@ -2,8 +2,12 @@ import React, {useEffect, useRef, useState} from 'react';
 import './cartPopup.css';
 import {useLocation, useNavigate} from "react-router-dom";
 import {useCart} from "../../context/cartContext.tsx";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 
 const TalkBubblePopup: React.FC = () => {
+
+    const generalContext = useGeneralStateContext();
+
     const cartContext = useCart();
     const navigate = useNavigate();
     const location = useLocation();
@@ -83,7 +87,7 @@ const TalkBubblePopup: React.FC = () => {
                                 className="reusable-control-btn"
                                 onClick={() => navigate('/cart-page')}
                             >
-                                למעבר לעגלה
+                                {generalContext.t('cartPopup.goToCart')}
                             </button>
                         }
                     </div>

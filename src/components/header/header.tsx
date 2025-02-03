@@ -6,7 +6,7 @@ import CartPopup from "./cartPopup.tsx";
 import {useMediaQuery} from "react-responsive";
 import {NavLink, useNavigate} from 'react-router-dom';
 import {useCart} from "../../context/cartContext.tsx";
-import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
+import {language, useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import {useOutClick} from "../../hooks/useOutClick.ts";
 import {logo} from "../../assets";
 import {GiShoppingCart} from "react-icons/gi";
@@ -32,13 +32,30 @@ const Header: React.FC = () => {
                 isSmallScreen &&
                 <>
                     <nav>
-                        <ul>
+                        <ul className={generalContext.language === 'he' ? "mobile-nav he-language" : "mobile-nav"}>
                             <li><SideNavBar/></li>
+                            <NavLink to="/">
+                                <img className="logo" src={logo} alt={generalContext.t('shared.logoAlt')}/>
+                            </NavLink>
                             <li className="cart-icon" onClick={() => navigate('/cart-page')}>
-                                עגלת הקניות
+                                {generalContext.t('header.cartBtn')}
                                 <GiShoppingCart/>
                                 <CartPopup/>
                                 <span>{cartContext.totalQuantityInCart}</span>
+                            </li>
+                            <li className="language-selection">
+                                <select
+                                    value={generalContext.language}
+                                    onChange={(e) => {
+                                        const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;
+                                        val &&
+                                        generalContext.setLanguage(val);
+                                    }}
+                                >
+                                    <option value="he">he</option>
+                                    <option value="en">en</option>
+                                    <option value="de">de</option>
+                                </select>
                             </li>
                         </ul>
                     </nav>
@@ -51,34 +68,45 @@ const Header: React.FC = () => {
                         <li>
                             <NavLink to="/"
                                      className={({isActive}) => isActive ? 'active-nav-link nav-link' : 'nav-link'}>
-                                דף הבית
+                                {generalContext.t('header.homeBtn')}
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/pricing"
                                      className={({isActive}) => isActive ? 'active-nav-link nav-link' : 'nav-link'}>
-                                מחירון
+                                {generalContext.t('header.pricingBtn')}
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/about"
                                      className={({isActive}) => isActive ? 'active-nav-link nav-link' : 'nav-link'}>
-                                אודות
+                                {generalContext.t('header.aboutBtn')}
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/contact-page"
                                      className={({isActive}) => isActive ? 'active-nav-link nav-link' : 'nav-link'}>
-                                צור קשר
+                                {generalContext.t('header.contactBtn')}
                             </NavLink>
                         </li>
                     </ul>
                     <ul>
+                        <li className="language-selection">
+                            <select onChange={(e) => {
+                                const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;
+                                val &&
+                                generalContext.setLanguage(val);
+                            }}>
+                                <option value="he">he</option>
+                                <option value="en">en</option>
+                                <option value="de">de</option>
+                            </select>
+                        </li>
                         <li>
                             <NavLink to="/cart-page"
                                      className={({isActive}) => isActive ? 'cart-icon active-nav-link nav-link' : 'cart-icon nav-link'}
                             >
-                                עגלת הקניות
+                                {generalContext.t('header.cartBtn')}
                                 <GiShoppingCart/>
                                 <span>{cartContext.totalQuantityInCart}</span>
                             </NavLink>
@@ -89,7 +117,7 @@ const Header: React.FC = () => {
                                 <img
                                     className="logo"
                                     src={logo}
-                                    alt="לוגו קיפוד עם גיטרה"
+                                    alt={generalContext.t('shared.logoAlt')}
                                 />
                             </NavLink>
                         </li>

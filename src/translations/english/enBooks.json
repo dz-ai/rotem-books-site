@@ -1,0 +1,73 @@
+{
+  "books": [
+    {
+      "id": "44-699cc34ecd9fd",
+      "title": "The Hardworking Rabbit and the Tortoise",
+      "price": "EcoverTypeHard.basicPrise",
+      "coverImage": "rabbit.webp",
+      "coverType": [
+        "hard-cover",
+        "soft-cover"
+      ],
+      "illustratorName": "Antonia Winkelmann",
+      "description": "Dear readers,\n\nMy name is Rotem Shem Tov. I grew up in central Israel in the 1980s, during a time when there were many fields around the area where I lived. There, I got the inspiration for this book: I saw many rabbits running near my house and also quite a few turtles walking slowly in the groves. I loved observing the animals and tried to understand what motivates them.\n\nWhen I grew up, I traveled to the Far East. There, I met people who, on one hand, live in the moment and enjoy it, but on the other hand, don’t always worry about having enough food for the next day... When I returned to Israel, I understood that, like the rabbits and turtles, the people around us are divided in a similar way: those who run from place to place but do not enjoy the content of what they do, like the rabbit in the story, and those who enjoy the content but do not plan well for the future, like the turtle. These people, though they won’t remain hungry, won’t achieve much either.\n\nWhat can be done? How can we balance things?\n\n Open the book and read. In this story, you will meet the rabbit and the turtle, so different from one another in their behavior and lifestyle. Despite the vast differences, they find a way to cooperate with each other and even learn from one another. Thus, young readers will learn something more about life and also have fun along the way.\nI hope you enjoy,\n\nYours, Rotem\n"
+    },
+    {
+      "id": "e7c-129c43e9101c",
+      "title": "Adventurous Ananit",
+      "price": "EcoverTypeHard.basicPrise",
+      "coverImage": "cloud.webp",
+      "coverType": [
+        "hard-cover",
+        "soft-cover"
+      ],
+      "illustratorName": "Antonia Winkelmann",
+      "description": "Adventures are fun, but you also need to know how to set boundaries. Why?\n\nBecause adventures can also be dangerous. In my youth, I traveled to many countries. I wrote this book inspired by my adventures. Today, one of my most exciting adventures is writing books. It's a big adventure, right, but compared to my past adventures, it’s relatively safe...\n\nIn this story, you will meet Ananit, the energetic and adventurous one, who fulfills her potential to reach magical places, and along the way, she also brings news to the group of clouds. She tells them stories about her experiences and brings them new information about the places she visits and the characters she meets. All of this generates great interest among all her friends, acquaintances, and admirers...\n\nAnd maybe this is the journey of each of us. The journey of developing our passions and honing our talents, along with the experiences of our lives, for our personal development and for the good of the community in which we live.\n\nIt is very important to maintain spontaneity and fun in life, but even more important to learn to be cautious, to understand that we have limitations, that it's okay and even desirable to be enthusiastic, but we also need to be cautious of dangers. It’s important that our children learn to take care of themselves because there is nothing more important than them.\n\nAnanit the Adventurer is my second book. My first book, about the hardworking rabbit and the turtle, delighted many children, parents, and teachers.\n\nHappy reading,\n\nRotem\n"
+    },
+    {
+      "id": "829-2023dfd73a33",
+      "title": "When We Were Little",
+      "price": "ECoverTypeHard.basicPrise",
+      "coverImage": "little.webp",
+      "coverType": [
+        "hard-cover",
+        "soft-cover"
+      ],
+      "illustratorName": "Antonia Winkelmann",
+      "description": "Are there fish in puddles on a winter day on the sidewalks?\n\nCan this be?\n\nDoes rain fall from the big faucet in the clouds? Where does the sun set at the end of the day, into the sea? That's how it seems. Up until now, I’ve already shared some of the secrets of the book with you.\n\n\"When We Were Little\" is a book about the magic of life and the world of childhood. It is my third book, after \"Ananit the Adventurer\" and \"The Rabbit and the Turtle.\" This book was written from my childhood memories and from memories children shared with me. Beautiful and good memories.\n\nThis is a wonderful book for children and also for adults. With you, the parents, it will bring back the world of childhood, even if only for a short time, and remind you of the lost secrets of the paradise of your childhood. Here, you can enjoy the warm memories of those innocent days when things were so simple, the days when everything was possible, and the world was full of magic.\n\nChildren will be happy to find in the story what they already know. They will understand that imagining is a lot of fun...\n\nI invite you, dear parents and children, to read the book and enjoy this special story.\n\nYours, Rotem"
+    },
+    {
+      "id": "ac93b430fd6353ff",
+      "title": "The Ant, the Cricket, and the Cold Winter",
+      "price": "ECoverTypeSoft.basicPrise",
+      "coverImage": "cricket.webp",
+      "coverType": [
+        "soft-cover"
+      ],
+      "illustratorName": "Ayelet Hoch",
+      "description": "My love for fables, their ability to transcend periods and times and remain relevant, led me to write the story of the cricket and the ant, adapted to our era with important and relevant messages.\n\nCome meet Shalom the musical cricket and Nimi the hard-working ant. Shalom the cricket – happy, free, and funny. He brings creativity, free spirit, and the ability to enjoy the moment. In contrast, Nimi the ant, who meets him in the forest while carrying a huge grain, represents awareness and brings planning skills, adaptation to reality, and focus on long-term goals.\n\nThe ant finds it difficult to enjoy the moment and always thinks about the future. And Shalom, who thinks only about the present, finds himself hungry and without shelter in the winter. Only when they combine their different strengths can they face challenges together and achieve positive results.\n\nThe message of the story is important in the era we live in, with the constant challenges of the climate crisis and the need for cultural and systemic change. It emphasizes the importance of cooperation and forward planning in facing challenges, as well as the ability to adapt and deal with changes in the environment."
+    },
+    {
+      "id": "fb1-3dd3e231e830",
+      "title": "The Fisherman and the Golden Fish",
+      "price": "ECoverTypeSoft.basicPrise",
+      "coverImage": "fish.webp",
+      "coverType": [
+        "soft-cover"
+      ],
+      "illustratorName": "Ayelet Hoch",
+      "description": "During my work with children, I often told the story \"The Fisherman and the Golden Fish.\" In this book, I added details and adapted it to 2024, as well as a different, more pleasant and interesting ending.\n\nThe story is about the fisherman and his wife who one day encounter a golden fish that offers to grant them three wishes. The fisherman and his wife, who live simply and in need, choose wishes that will improve their quality of life. However, the more they get, they are tempted to want more and more. Eventually, they learn the value of simple and modest living and understand that material wealth does not necessarily bring happiness or spiritual satisfaction. The story emphasizes the values of gratitude and humility and the consequences of greed.\n\nMy story also highlights the importance of community, productivity, and contentment with what we have. It is an important message for both children and adults, especially in our time."
+    },
+    {
+      "id": "5a7-4893d28dfcb3",
+      "title": "The Mice and the Magic Melody",
+      "price": "ECoverTypeSoft.basicPrise",
+      "coverImage": "mouse.webp",
+      "coverType": [
+        "soft-cover"
+      ],
+      "illustratorName": "Rotem Shem Tov",
+      "description": "I first encountered the story \"The Pied Piper of Hamelin\" when I was a little girl. I was fascinated by the story but always thought about rewriting it, connecting it to our times and changing its ending.\n\nThe residents of Hamelin face a serious problem that affects their quality of life. They have a plague of mice that they cannot solve with the means at their disposal. Even the piper with his magical powers cannot permanently remove the problem.\n\nSimilar to the climate crisis of 2024, which also involves confronting powerful natural forces, the solution lies in the residents understanding the importance of long-term solutions and cooperation. Eventually, they realize there are no magical solutions to climate challenges and that investment in learning, changing behavior and lifestyles, and environmental conservation is essential - as part of a community approach to solving these complex challenges.\n\nMay we learn from them and not repeat the mistakes of the past."
+    }
+  ]
+}

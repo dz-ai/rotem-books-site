@@ -38,7 +38,7 @@ ul {
 }
 
 .reusable-control-btn svg {
-    margin-left: 5px;
+    margin: 0 5px;
 }
 
 /*#ffd640*/
@@ -52,5 +52,9 @@ ul {
 }
 
 .reusable-control-btn:focus-visible {
+    outline: none;
+}
+
+.language-selection select:focus-visible {
     outline: none;
 }

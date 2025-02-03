@@ -1,8 +1,11 @@
 import React, {useState} from "react";
 import "./loginPage.css";
 import {useNavigate} from "react-router-dom";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 
 const LoginPage = () => {
+
+    const generalContext = useGeneralStateContext();
 
     const navigate = useNavigate();
 
@@ -14,7 +17,7 @@ const LoginPage = () => {
         e.preventDefault();
 
         if (!email || !password) {
-            setError('יש להזין אימייל וסיסמא');
+            setError(generalContext.t('loginPage.emailPasswordRequiredError'));
             return;
         }
 
@@ -31,22 +34,22 @@ const LoginPage = () => {
 
             if (response.ok) {
                 setError('');
-                alert('Login successful!');
+                alert(generalContext.t('loginPage.loginSuccess'));
                 navigate('/back-office-page');
             } else {
-                setError(data.message || "משהו השתבש");
+                setError(data.message || generalContext.t('loginPage.loginError'));
             }
         } catch (err) {
-            setError(err instanceof Error ? err.message : "לא ניתן להתחבר לשרת");
+            setError(err instanceof Error ? err.message : generalContext.t('loginPage.serverError'));
         }
     };
 
     return (
         <div className="login-container">
-            <h2>הרשמה</h2>
+            <h2>{generalContext.t('loginPage.title')}</h2>
             <form onSubmit={handleSubmit}>
                 {error && <p className="error">{error}</p>}
-                <label>אימייל:</label>
+                <label>{generalContext.t('loginPage.emailLabel')}</label>
                 <input
                     type="email"
                     value={email}
@@ -54,7 +57,7 @@ const LoginPage = () => {
                     required
                     autoComplete="email"
                 />
-                <label>סיסמא:</label>
+                <label>{generalContext.t('loginPage.passwordLabel')}</label>
                 <input
                     type="password"
                     value={password}
@@ -62,7 +65,10 @@ const LoginPage = () => {
                     required
                     autoComplete="current-password"
                 />
-                <button type="submit" className="reusable-control-btn">שלח</button>
+                <button
+                    type="submit"
+                    className="reusable-control-btn">{generalContext.t('loginPage.submitButton')}
+                </button>
             </form>
         </div>
     );

@@ -1,27 +1,29 @@
+import {language} from "../../../context/generalStateContext.tsx";
+
 interface ITranslateOrderStatusReturnVal {
     status: string;
     color: string;
 }
 
-export const translateOrderStatusUtil = (status: number): ITranslateOrderStatusReturnVal => {
+export const translateOrderStatusUtil = (status: number, lang: language): ITranslateOrderStatusReturnVal => {
     let resultStatus = '';
     let resultColor = '';
 
     switch (status) {
         case 0:
-            resultStatus = 'פתוחה';
+            resultStatus = lang === 'he' ? 'פתוחה' : 'open';
             resultColor = 'violet';
             break
         case 2 || 1:
-            resultStatus = 'סגורה';
+            resultStatus = lang === 'he' ? 'סגורה' : 'closed';
             resultColor = 'gray';
             break
         case 4:
-            resultStatus = 'מבוטלת';
+            resultStatus = lang === 'he' ? 'מבוטלת' : 'cancelled';
             resultColor = 'orange';
             break
         case 3:
-            resultStatus = 'מסמך מבטל';
+            resultStatus = lang === 'he' ? 'מסמך מבטל' : 'Canceling document';
             resultColor = 'yellow';
 
     }

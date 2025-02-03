@@ -4,8 +4,9 @@ import {useNavigate, useParams, useSearchParams} from 'react-router-dom';
 import {coverType, IBook} from '../../components/book/book.tsx';
 import {useCart} from "../../context/cartContext.tsx";
 import {useInterSectionObserver} from "../../hooks/useIntersectionObserver.ts";
-import {MdKeyboardDoubleArrowRight} from "react-icons/md";
 import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
+import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
 
 interface IBtnSectionTemplateProps {
     book: IBook;
@@ -13,6 +14,7 @@ interface IBtnSectionTemplateProps {
 }
 
 const BtnSectionTemplate: React.FC<IBtnSectionTemplateProps> = ({book, bookCoverType}) => {
+    const generalContext = useGeneralStateContext();
     const cartContext = useCart();
     const navigate = useNavigate();
 
@@ -37,11 +39,12 @@ const BtnSectionTemplate: React.FC<IBtnSectionTemplateProps> = ({book, bookCover
     return (
         <div className="book-details-btn-section">
             <button className="reusable-control-btn" onClick={() => window.history.back()}>
-                <MdKeyboardDoubleArrowRight/>
-                חזרה לדף הקודם
+                <ArrowIcon arrowDirection={'R'}/>
+                {generalContext.t('shared.backToPreviousPage')}
             </button>
-            <button className="reusable-control-btn" onClick={addToCart}>הוסף לעגלה</button>
-            <button className="reusable-control-btn" onClick={buyNow}>לרכישה</button>
+            <button className="reusable-control-btn"
+                    onClick={addToCart}>{generalContext.t('shared.add_to_cart')}</button>
+            <button className="reusable-control-btn" onClick={buyNow}>{generalContext.t('shared.buyNow')}</button>
         </div>
     );
 };
@@ -51,6 +54,7 @@ interface IBookDetailPageProps {
 }
 
 const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
+    const generalContext = useGeneralStateContext();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const coverType = searchParams.get('cover-type') as coverType;
@@ -79,9 +83,9 @@ const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
                 <BtnSectionTemplate book={book} bookCoverType={coverType}/>
             </span>
             <h2>{book.title}</h2>
-            <span>{coverType === 'hard-cover' ? 'כריכה קשה' : 'כריכה רכה'}</span>
+            <span>{coverType === 'hard-cover' ? generalContext.t('shared.hardcover') : generalContext.t('shared.softcover')}</span>
 
-            <div className="bookDetail">
+            <div className="book-detail">
                 <div className="book-details-columns left">
                     <img
                         src={`${import.meta.env.VITE_IMAGEKIT_URL}/${book.coverImage}`}
@@ -90,16 +94,16 @@ const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
                     />
                     <p>
                         <strong>
-                            מחיר: ₪{coverType === 'hard-cover' ? ECoverTypeHard.basicPrise : ECoverTypeSoft.basicPrise}
+                            {generalContext.t('cart.pricePerUnit')} ₪{coverType === 'hard-cover' ? ECoverTypeHard.basicPrise : ECoverTypeSoft.basicPrise}
                         </strong>
                     </p>
                 </div>
 
                 <div className="book-details-columns right">
                     <div className="author-illustrator-section">
-                        <p>רותם שם טוב</p>
+                        <p>{generalContext.t('bookDetailsPage.name')}</p>
                         <p>&nbsp;/&nbsp;</p>
-                        <p>איורים: {book.illustratorName}</p>
+                        <p>{generalContext.t('bookDetailsPage.illustrations')}: {book.illustratorName}</p>
                     </div>
                     <p className='book-details-description'>{book.description}</p>
                 </div>

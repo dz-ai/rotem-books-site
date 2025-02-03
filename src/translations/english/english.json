@@ -1,0 +1,138 @@
+{
+  "home": {
+    "title": "Rotem's Books"
+  },
+  "header": {
+    "homeBtn": "Home",
+    "pricingBtn": "Pricing",
+    "aboutBtn": "About",
+    "contactBtn": "Contact",
+    "cartBtn": "Shopping Cart"
+  },
+  "footer": {
+    "socialMediaLinks": "SocialMediaLinks iconsSize={20}",
+    "publisher": "Oren Books Publishing 🌲 Rotem's Theater",
+    "activities": "Drama Classes, Story Hour, Birthdays",
+    "phone": "Phone: 050-648-1668",
+    "moreContent": "For more content: www.rotemshemtov.com",
+    "sitePolicy": "Site Policy",
+    "allRightsReserved": "© All rights reserved",
+    "creditLinks": "social media icons by \"Icon-Finder\""
+  },
+  "cart": {
+    "cartHeader": "Shopping Cart",
+    "itemDetails": "Item Details",
+    "pricePerUnit": "Price per unit",
+    "totalPrice": "Total",
+    "quantityDiscount": "Includes quantity discount",
+    "removeFromCart": "Delete",
+    "checkout": "Proceed to Checkout"
+  },
+  "cartPopup": {
+    "goToCart": "Go to Cart",
+    "removedFromCart": "Removed from Cart",
+    "addedToCart": "Added to Cart"
+  },
+  "clientDetailsPage": {
+    "backToCart": "Back to Cart",
+    "clientDetails": "Client Details",
+    "name": "Name",
+    "namePlaceholder": "First and Last Name",
+    "email": "Email",
+    "emailPlaceholder": "Please enter an email address for receipt",
+    "phone": "Phone",
+    "phonePlaceholder": "Please enter a phone number",
+    "shippingAddress": "Shipping Address",
+    "addressPlaceholder": "Please enter a residential address for shipping",
+    "houseNumber": "House Number",
+    "houseNumberPlaceholder": "Please enter the house number",
+    "apartmentNumber": "Apartment Number",
+    "apartmentNumberPlaceholder": "Please enter the apartment number (if applicable)",
+    "zipCode": "Zip Code",
+    "zipCodePlaceholder": "Please enter the zip code",
+    "totalPrice": "Total to Pay",
+    "deliveryNotice": "Delivery service is currently limited to the Jerusalem area only. Delivery time is up to 5 business days",
+    "policyAgreement": "I have read and agree to the site policy",
+    "policyPage": "Site Policy",
+    "submit": "Pay",
+    "loadingMessage": "Loading",
+    "errorMessage": "showMessage"
+  },
+  "bookDetailsPage": {
+    "name": "Rotem Shem Tov",
+    "illustrations": "Illustrations"
+  },
+  "pricingPage": {
+    "hardcoverPrices": "Hardcover Prices",
+    "softcoverPrices": "Softcover-Prices",
+    "quantity": "Quantity",
+    "price": "Price per Book",
+    "moreThen": "and above"
+  },
+  "aboutPage": {
+    "alt": "The author with her theater puppet",
+    "mainText": "Hello, my name is Rotem. I am a professional storyteller, and this is the bookstore of my own works, based partly on folk tales and partly on my original stories. I have always loved reading books. Today we are all overwhelmed by stimuli from screens, and I find the world of books and children's stories as a place where I can find and receive inspiration from things that happen in our lives. More than anything, my love for fables, their ability to transcend borders and times and remain relevant, led me to write the books presented to you here, adapted to our times with important messages that are still relevant today. I hope that here in the books presented to you, you too can dive in and fill your world with stories from the worlds of fables and children's stories.",
+    "endText1": "Wishing you an enjoyable reading experience,",
+    "endText2": "Rotem Shem Tov (and also my husband Jonathan)."
+  },
+  "contactPage": {
+    "contactPageText": "Encountered an issue while purchasing on the site, want to book an activity for children (puppet theater, drama classes, story hour, birthdays) or just want to leave a comment, feel free to write to me and I will try to respond as soon as possible. 🙂",
+    "nameLabel": "Name:",
+    "namePlaceholder": "First and Last Name",
+    "phoneLabel": "Phone:",
+    "phonePlaceholder": "Please enter a phone number",
+    "emailLabel": "Email:",
+    "emailPlaceholder": "Please enter an email address",
+    "subjectLabel": "Subject:",
+    "subjectPlaceholder": "Please enter the subject of the inquiry",
+    "messagePlaceholder": "Message content...",
+    "submitButton": "Send",
+    "loadingAriaLabel": "three-dots-loading",
+    "backButton": "Back",
+    "phoneLink": "Phone: 050-648-1668",
+    "emailSentSuccess": "The message was sent successfully!",
+    "emailSentError": "Something went wrong :("
+  },
+  "loginPage": {
+    "title": "Login",
+    "emailLabel": "Email:",
+    "passwordLabel": "Password:",
+    "submitButton": "Submit",
+    "emailPasswordRequiredError": "Email and password are required",
+    "loginSuccess": "Login successful!",
+    "loginError": "Something went wrong",
+    "serverError": "Cannot connect to the server"
+  },
+  "backOfficePage": {
+    "orders": "Orders",
+    "ordersLoading": "Orders are loading",
+    "noOrders": "There are no orders to display at the moment"
+  },
+  "backOfficeOrderDetails": {
+    "order_list": "Order List",
+    "client_details": "Client Details",
+    "address": "Address",
+    "zip": "ZIP Code",
+    "phone": "Phone",
+    "email": "Email",
+    "purchase_details": "Purchase Details",
+    "missing_order_details": "Order details are missing :(",
+    "total_payment": "Total Payment",
+    "download_receipt": "Download and View Receipt",
+    "the_order_status": "Orders Status",
+    "archive_order": "Move Order to Archive",
+    "cannot_close_order": "Cannot close an order with status",
+    "book_name": "Book Name",
+    "quantity": "Quantity",
+    "books": "Books",
+    "total_item_price": "Total Item Price"
+  },
+  "shared": {
+    "softcover": "Softcover",
+    "hardcover": "Hardcover",
+    "add_to_cart": "Add to Cart",
+    "buyNow": "Buy now",
+    "backToPreviousPage": "Back to the previous page",
+    "logoAlt": "Hedgehog Logo with Guitar"
+  }
+}

@@ -6,6 +6,7 @@ import {NavLink} from "react-router-dom";
 import {translateOrderStatusUtil} from "../util/translateOrderStatusUtil.ts";
 import {MdKeyboardDoubleArrowRight} from "react-icons/md";
 import {ThreeDots} from "react-loader-spinner";
+import {useGeneralStateContext} from "../../../context/generalStateContext.tsx";
 
 interface IBackOfficeOrderDetailsProps {
     order: IGetOrderResults;
@@ -19,14 +20,15 @@ export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
                                                                                    order,
                                                                                    isSmallScreen,
                                                                                    setOpenOrderBar,
-                                                                                   setMessage,
                                                                                    closeOrder,
                                                                                }) => {
+
+    const generalContext = useGeneralStateContext();
 
     const {client, income, url, amountLocal, documentDate} = order;
     const {name, address, city, zip, emails, phone} = client;
 
-    const {status, color} = translateOrderStatusUtil(order.status);
+    const {status, color} = translateOrderStatusUtil(order.status, generalContext.language);
     const date: string[] = documentDate.split('-');
 
     const [loadingClose, setLoadingClose] = useState(false);
@@ -37,7 +39,7 @@ export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
                 isSmallScreen &&
                 <button className="reusable-control-btn" onClick={() => setOpenOrderBar(true)}>
                     <MdKeyboardDoubleArrowRight/>
-                    לרשימת ההזמנות
+                    {generalContext.t('backOfficeOrderDetails.order_list')}
                 </button>
             }
 
@@ -48,57 +50,59 @@ export const BackOfficeOrderDetails: React.FC<IBackOfficeOrderDetailsProps> = ({
             </div>
 
             <div className="back-office-order-details-client-details horizontal-line">
-                <h3>פרטי הלקוח</h3>
-                <p>כתובת: {address} {city}</p>
-                <p>מיקוד: {zip}</p>
-                <p>טלפון: {phone}</p>
-                <p>אימייל: {emails[0]}</p>
+                <h3>{generalContext.t('backOfficeOrderDetails.client_details')}</h3>
+                <p>{generalContext.t('backOfficeOrderDetails.address')}: {address} {city}</p>
+                <p>{generalContext.t('backOfficeOrderDetails.zip')}: {zip}</p>
+                <p>{generalContext.t('backOfficeOrderDetails.phone')}: {phone}</p>
+                <p>{generalContext.t('backOfficeOrderDetails.email')}: {emails[0]}</p>
             </div>
 
             <div className="back-office-order-details-cart-details">
-                <h2>פרטי הרכישה</h2>
+                <h2>{generalContext.t('backOfficeOrderDetails.purchase_details')}</h2>
                 <ul>
                     {
                         income ?
                             income.map(cartItem =>
                                 <BackOfficeCartItem key={cartItem.description} cartItem={cartItem}/>)
                             :
-                            <p>פרטי ההזמנה חסרים :(</p>
+                            <p>{generalContext.t('backOfficeOrderDetails.missing_order_details')}</p>
                     }
                 </ul>
 
-                <p className="back-office-order-details-total">סה״כ לתשלום: {amountLocal}</p>
+                <p className="back-office-order-details-total">{generalContext.t('backOfficeOrderDetails.total_payment')}: {amountLocal}</p>
             </div>
 
             <div className={'back-office-order-details-receipt-close-order-bts'}>
-                <NavLink to={url.origin} className="reusable-control-btn">להורדה וצפיה בקבלה</NavLink>
-                <button
-                    className="reusable-control-btn"
-                    onClick={async () => {
-                        if (order.status === 0) {
-                            setLoadingClose(true);
-                            order.status = await closeOrder(order.id) || order.status
-                        } else {
-                            setMessage({message: `לא ניתן לסגור הזמנה בסטטוס ${status}`, color: 'green'});
+                <NavLink to={url.origin}
+                         className="reusable-control-btn">{generalContext.t('backOfficeOrderDetails.download_receipt')}</NavLink>
+                {
+                    order.status === 0 &&
+                    <button
+                        className="reusable-control-btn"
+                        onClick={async () => {
+                            if (order.status === 0) {
+                                setLoadingClose(true);
+                                order.status = await closeOrder(order.id) || order.status
+                            }
+                            setLoadingClose(false);
+                        }}
+                    >
+                        {
+                            loadingClose ?
+                                <ThreeDots
+                                    visible={true}
+                                    height="35"
+                                    width="35"
+                                    color="#4fa94d"
+                                    radius="9"
+                                    ariaLabel="three-dots-loading"
+                                />
+                                :
+                                !loadingClose &&
+                                generalContext.t('backOfficeOrderDetails.archive_order')
                         }
-                        setLoadingClose(false);
-                    }}
-                >
-                    {
-                        loadingClose ?
-                            <ThreeDots
-                                visible={true}
-                                height="35"
-                                width="35"
-                                color="#4fa94d"
-                                radius="9"
-                                ariaLabel="three-dots-loading"
-                            />
-                            :
-                            !loadingClose &&
-                            order.status === 0 ? 'להעברת ההזמנה לארכיון' : `ההזמנה ${status}`
-                    }
-                </button>
+                    </button>
+                }
             </div>
         </div>
     );

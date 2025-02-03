@@ -1,15 +1,15 @@
 import React from 'react';
 import './booklist.css';
 import Book from '../book/book.tsx';
-import {books} from '../../App.tsx';
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 
 // render the books-cards on the homepage
 const BookList: React.FC = () => {
-
+    const generalContext = useGeneralStateContext();
     return (
         <div className="book-list">
             {
-                books.map((book) => {
+                generalContext.books.map((book) => {
                         return (
                             <Book key={book.id} book={book}/>
                         )

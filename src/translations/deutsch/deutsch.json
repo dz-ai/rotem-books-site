@@ -1,0 +1,138 @@
+{
+  "home": {
+    "title": "Rotems Bücher"
+  },
+  "header": {
+    "homeBtn": "Startseite",
+    "pricingBtn": "Preisliste",
+    "aboutBtn": "Über mich",
+    "contactBtn": "Kontakt",
+    "cartBtn": "Warenkorb"
+  },
+  "footer": {
+    "socialMediaLinks": "SocialMediaLinks iconsSize={20}",
+    "publisher": "Oren Bücher Verlag 🌲 Rotems Theater",
+    "activities": "Drama-Kurse, Geschichtenstunde, Geburtstage",
+    "phone": "Telefon: 050-648-1668",
+    "moreContent": "Für weitere Inhalte: www.rotemshemtov.com",
+    "sitePolicy": "Website-Richtlinie",
+    "allRightsReserved": "© Alle Rechte vorbehalten",
+    "creditLinks": "social media icons von \"Icon-Finder\""
+  },
+  "cart": {
+    "cartHeader": "Warenkorb",
+    "itemDetails": "Artikel Details",
+    "pricePerUnit": "Preis pro Einheit",
+    "totalPrice": "Gesamt",
+    "quantityDiscount": "Mengenrabatt enthalten",
+    "removeFromCart": "löschen",
+    "checkout": "Zur Kasse"
+  },
+  "cartPopup": {
+    "goToCart": "Zum Warenkorb",
+    "removedFromCart": "wird aus dem Warenkorb entfernt",
+    "addedToCart": "wird zum Warenkorb hinzugefügt"
+  },
+  "clientDetailsPage": {
+    "backToCart": "Zurück zum Warenkorb",
+    "clientDetails": "Kundendaten",
+    "name": "Name",
+    "namePlaceholder": "Vor und Nachname",
+    "email": "E-Mail",
+    "emailPlaceholder": "Eine E-Mail-Adresse für die Quittung",
+    "phone": "Telefon",
+    "phonePlaceholder": "Eine Telefonnummer",
+    "shippingAddress": "Lieferadresse",
+    "addressPlaceholder": "Wohnadresse für den Versand",
+    "houseNumber": "Hausnummer",
+    "houseNumberPlaceholder": "Die Hausnummer",
+    "apartmentNumber": "Wohnungsnummer",
+    "apartmentNumberPlaceholder": "Die Wohnungsnummer (falls zutreffend)F",
+    "zipCode": "Postleitzahl",
+    "zipCodePlaceholder": "Bitte geben Sie die Postleitzahl ein",
+    "totalPrice": "Gesamtbetrag",
+    "deliveryNotice": "Der Lieferservice ist derzeit nur auf das Gebiet Jerusalem beschränkt. Die Lieferzeit beträgt bis zu 5 Werktage",
+    "policyAgreement": "Ich habe die Website-Richtlinie gelesen und stimme zu",
+    "policyPage": "Website-Richtlinie",
+    "submit": "Zahlen",
+    "loadingMessage": "Laden",
+    "errorMessage": "showMessage"
+  },
+  "bookDetailsPage": {
+    "name": "Rotem Shem Tov",
+    "illustrations": "Illustrationen"
+  },
+  "pricingPage": {
+    "hardcoverPrices": "Hardcover-Preise",
+    "softcoverPrices": "Softcover-Preise",
+    "quantity": "Menge",
+    "price": "Preis pro Buch",
+    "moreThen": "und mehr"
+  },
+  "aboutPage": {
+    "alt": "Die Autorin mit ihrer Theaterpuppe",
+    "mainText": "Hallo, mein Name ist Rotem. Ich bin eine professionelle Geschichtenerzählerin, und dies ist der Buchladen meiner eigenen Werke, die teils auf Volksmärchen und teils auf meinen eigenen Geschichten basieren. Ich habe es schon immer geliebt, Bücher zu lesen. Heute sind wir alle von Bildschirmreizen überwältigt, und ich finde die Welt der Bücher und Kindergeschichten als einen Ort, an dem ich Inspiration aus den Dingen, die in unserem Leben passieren, finden und erhalten kann. Mehr als alles andere führte mich meine Liebe zu Fabeln, ihre Fähigkeit, Grenzen und Zeiten zu überschreiten und relevant zu bleiben, dazu, die Bücher zu schreiben, die Ihnen hier präsentiert werden, angepasst an unsere Zeit mit wichtigen Botschaften, die auch heute noch aktuell sind. Ich hoffe, dass Sie hier in den Ihnen präsentierten Büchern auch eintauchen und Ihre Welt mit Geschichten aus den Welten der Fabeln und Kindergeschichten füllen können.",
+    "endText1": "Ich wünsche Ihnen ein angenehmes Leseerlebnis,",
+    "endText2": "Rotem Shem Tov (und auch mein Mann Jonathan)."
+  },
+  "contactPage": {
+    "contactPageText": "Haben Sie ein Problem beim Kauf auf der Website festgestellt, möchten Sie eine Aktivität für Kinder buchen (Puppentheater, Schauspielkurse, Geschichtsstunde, Geburtstage) oder einfach einen Kommentar hinterlassen, schreiben Sie mir gerne und ich werde versuchen, so schnell wie möglich zu antworten. 🙂",
+    "nameLabel": "Name:",
+    "namePlaceholder": "Vor- und Nachname",
+    "phoneLabel": "Telefon:",
+    "phonePlaceholder": "Telefonnummer",
+    "emailLabel": "E-Mail:",
+    "emailPlaceholder": "E-Mail-Adresse ein",
+    "subjectLabel": "Betreff:",
+    "subjectPlaceholder": "Der Betreff der Anfrage",
+    "messagePlaceholder": "Nachrichteninhalt...",
+    "submitButton": "Senden",
+    "loadingAriaLabel": "three-dots-loading",
+    "backButton": "Zurück",
+    "phoneLink": "Telefon: 050-648-1668",
+    "emailSentSuccess": "Die Nachricht wurde erfolgreich gesendet!",
+    "emailSentError": "Etwas ist schief gelaufen :("
+  },
+  "loginPage": {
+    "title": "Anmeldung",
+    "emailLabel": "E-Mail:",
+    "passwordLabel": "Passwort:",
+    "submitButton": "Einreichen",
+    "emailPasswordRequiredError": "E-Mail und Passwort sind erforderlich",
+    "loginSuccess": "Anmeldung erfolgreich!",
+    "loginError": "Etwas ist schief gelaufen",
+    "serverError": "Keine Verbindung zum Server möglich"
+  },
+  "backOfficePage": {
+    "orders": "Bestellungen",
+    "ordersLoading": "Bestellungen werden geladen",
+    "noOrders": "Derzeit keine Bestellungen anzuzeigen"
+  },
+  "backOfficeOrderDetails": {
+    "order_list": "Bestellliste",
+    "client_details": "Kundendetails",
+    "address": "Adresse",
+    "zip": "Postleitzahl",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "purchase_details": "Kaufdetails",
+    "missing_order_details": "Bestelldetails fehlen :(",
+    "total_payment": "Gesamtbetrag",
+    "download_receipt": "Beleg herunterladen und anzeigen",
+    "the_order_status": "Beschtelungs Status",
+    "archive_order": "Bestellung ins Archiv verschieben",
+    "cannot_close_order": "Bestellung mit Status kann nicht geschlossen werden",
+    "book_name": "Buchtitel",
+    "quantity": "Menge",
+    "books": "Bücher",
+    "total_item_price": "Gesamtpreis für Artikel"
+  },
+  "shared": {
+    "softcover": "Taschenbuch",
+    "hardcover": "Gebundene Ausgabe",
+    "add_to_cart": "In den Warenkorb",
+    "buyNow": "Jetzt kaufen",
+    "backToPreviousPage": "Zurück zur vorherigen Seite",
+    "logoAlt": "Igel-Logo mit Gitarre"
+  }
+}

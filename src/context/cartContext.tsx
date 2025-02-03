@@ -2,6 +2,7 @@ import React, {createContext, ReactNode, useContext, useEffect, useState} from '
 import Cookies from 'js-cookie';
 import {coverType} from "../components/book/book.tsx";
 import {determinePrice} from "../components/book/determineBookPriceUtil.ts";
+import {useGeneralStateContext} from "./generalStateContext.tsx";
 
 export interface ICartItem {
     id: string;
@@ -26,6 +27,9 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({children}: { children: ReactNode }) => {
+
+    const generalContext = useGeneralStateContext();
+
     const [firstLoad, setFirstLoad] = useState(true);
     const [cart, setCart] = useState<ICartItem[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -39,9 +43,9 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
 
         if (item) {
             item.quantity > quantity ?
-                setChangesReporter([`${item.title} הוסר מהעגלה`])
+                setChangesReporter([`${item.title} ${generalContext.t('cartPopup.removedFromCart')}`])
                 :
-                setChangesReporter([`${item.title} נוסף לעגלה`]);
+                setChangesReporter([`${item.title} ${generalContext.t('cartPopup.addedToCart')}`]);
             cart[itemIndex] = {...item, quantity: Math.max(1, quantity)}
         }
 
@@ -53,17 +57,17 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
 
         if (itemInCart) {
             updateCartItem(item.id, itemInCart.quantity += 1, item.coverType);
-            setChangesReporter([`${itemInCart.title} נוסף לעגלה`]);
+            setChangesReporter([`${itemInCart.title} ${generalContext.t('cartPopup.addedToCart')}`]);
         } else {
             setCart((prevCart) => [...prevCart, item]);
-            setChangesReporter([`${item.title} נוסף לעגלה`]);
+            setChangesReporter([`${item.title} ${generalContext.t('cartPopup.addedToCart')}`]);
         }
     }
 
     const removeFromCart = (id: string, coverType: coverType) => {
         setCart((prevCart) => prevCart.filter((item) => {
             if (item.id === id && item.coverType === coverType) {
-                setChangesReporter([`${item.title} הוסר מהעגלה`]);
+                setChangesReporter([`${item.title} ${generalContext.t('cartPopup.removedFromCart')}`]);
             }
             return item.id !== id || (item.id === id && item.coverType !== coverType);
         }));
@@ -106,6 +110,31 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
     useEffect(() => {
         updateItemsPrice();
     }, [totalQuantityInCart]);
+
+    // change the cart items values to the current used language
+    useEffect(() => {
+        setCart(prevState => {
+            prevState = prevState.map(cartItem => {
+                let newCartItem: ICartItem = {...cartItem};
+
+                generalContext.books.forEach(book => {
+                    if (book.id === cartItem.id) {
+                        newCartItem = {
+                            id: book.id,
+                            title: book.title,
+                            quantity: cartItem.quantity,
+                            price: cartItem.price,
+                            image: book.coverImage,
+                            coverType: cartItem.coverType,
+                        }
+                    }
+                });
+
+                return newCartItem;
+            });
+            return prevState;
+        })
+    }, [generalContext.language]);
 
     function updateItemsPrice() {
         setCart(prevState =>

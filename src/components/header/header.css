@@ -26,6 +26,17 @@ header nav ul {
     margin: 0;
 }
 
+header ul.mobile-nav {
+    position: absolute;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+header ul.mobile-nav.he-language {
+    flex-direction: row-reverse;
+}
+
 nav ul li {
     height: 100%;
     display: flex;
@@ -76,10 +87,12 @@ nav ul li a.nav-link:hover::after {
         height: unset;
     }
 
-    header .cart-icon {
+    header span.language-selection {
+        width: unset;
         position: fixed;
-        top: 10px;
-        left: 50px;
+        top: 14px;
+        left: 190px;
+        padding: 0;
     }
 }
 

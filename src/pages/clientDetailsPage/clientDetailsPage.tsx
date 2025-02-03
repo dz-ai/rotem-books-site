@@ -3,8 +3,9 @@ import './clientDetailsPage.css';
 import {googleLogo} from "../../assets";
 import {NavLink} from 'react-router-dom';
 import {useCart} from "../../context/cartContext.tsx";
-import {MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight} from "react-icons/md";
 import {ThreeDots} from "react-loader-spinner";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
+import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
 
 export interface IAddress {
     city: string;
@@ -36,6 +37,8 @@ export interface IPaymentDetails {
 }
 
 const ClientDetailsFormPage: React.FC = () => {
+
+    const generalContext = useGeneralStateContext();
 
     const addressDetailsDefaultVal = {
         zipCode: '',
@@ -206,8 +209,8 @@ const ClientDetailsFormPage: React.FC = () => {
 
             <div className="back-to-cart-btn-container">
                 <NavLink to="/cart-page" className="reusable-control-btn">
-                    <MdKeyboardDoubleArrowRight/>
-                    חזרה לעגלה
+                    <ArrowIcon arrowDirection={'R'}/>
+                    {generalContext.t('clientDetailsPage.backToCart')}
                 </NavLink>
             </div>
 
@@ -215,48 +218,49 @@ const ClientDetailsFormPage: React.FC = () => {
                 <div className="form-container">
 
                     <div className="client-details">
-                        <h3>פרטי הלקוח</h3>
+                        <h3>{generalContext.t('clientDetailsPage.clientDetails')}</h3>
 
                         <label>
-                            שם:
+                            {generalContext.t('clientDetailsPage.name')}:
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 required
-                                placeholder="שם ושם משפחה"
+                                placeholder={generalContext.t('clientDetailsPage.namePlaceholder')}
                                 autoComplete="name"
                             />
                         </label>
                         <label>
-                            אי-מייל:
+                            {generalContext.t('clientDetailsPage.email')}:
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                placeholder="נא להזין כתובת אי-מייל למשלוח קבלה"
+                                placeholder={generalContext.t('clientDetailsPage.emailPlaceholder')}
                                 autoComplete="email"
                             />
                         </label>
                         <label>
-                            טלפון:
+                            {generalContext.t('clientDetailsPage.phone')}:
                             <input
+                                className={generalContext.language === 'he' ? "he" : ""}
                                 type="tel"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 required
-                                placeholder="נא להזין מספר טלפון"
+                                placeholder={generalContext.t('clientDetailsPage.phonePlaceholder')}
                                 autoComplete="tel"
                             />
                         </label>
                     </div>
 
                     <div className="client-address">
-                        <h3>כתובת למשלוח</h3>
+                        <h3>{generalContext.t('clientDetailsPage.shippingAddress')}</h3>
 
                         <label>
-                            כתובת למשלוח:
+                            {generalContext.t('clientDetailsPage.shippingAddress')}:
                             <input
                                 className="address-input"
                                 type="text"
@@ -266,7 +270,7 @@ const ClientDetailsFormPage: React.FC = () => {
                                     searchDebounceWrapper(e.target.value, getGoogleAutoCompleteAddressInCity);
                                 }}
                                 required
-                                placeholder="נא להזין כתובת מגורים למשלוח"
+                                placeholder={generalContext.t('clientDetailsPage.addressPlaceholder')}
                             />
                             {
                                 addressSearchResults && addressSearchResults.length > 0 &&
@@ -284,43 +288,45 @@ const ClientDetailsFormPage: React.FC = () => {
                             <img className="google-logo" src={googleLogo} alt="google logo in color"/>
                         </label>
                         <label className="house-number-input">
-                            מספר הבית:
+                            {generalContext.t('clientDetailsPage.houseNumber')}:
                             <input
                                 type="number"
                                 value={addressDetails.houseNum}
                                 onChange={(e) =>
                                     setAddressDetails(prevState => ({...prevState, houseNum: e.target.value}))}
                                 required
-                                placeholder="נא להזין את מספר הבית"
+                                placeholder={generalContext.t('clientDetailsPage.houseNumberPlaceholder')}
                             />
                         </label>
                         <label>
-                            מספר הדירה:
+                            {generalContext.t('clientDetailsPage.apartmentNumber')}:
                             <input
                                 type="number"
                                 value={addressDetails.apartmentNum}
                                 onChange={(e) =>
                                     setAddressDetails(prevState => ({...prevState, apartmentNum: e.target.value}))}
-                                placeholder="נא להזין מספר דירה (אם קיים)"
+                                placeholder={generalContext.t('clientDetailsPage.apartmentNumberPlaceholder')}
                             />
                         </label>
                         <label>
-                            מיקוד:
+                            {generalContext.t('clientDetailsPage.zipCode')}:
                             <input
                                 type="number"
                                 value={addressDetails.zipCode}
                                 onChange={(e) =>
                                     setAddressDetails(prevState => ({...prevState, zipCode: e.target.value}))}
                                 required
-                                placeholder="נא להזין מיקוד"
+                                placeholder={generalContext.t('clientDetailsPage.zipCodePlaceholder')}
                                 autoComplete="postal-code"
                             />
                         </label>
                     </div>
                 </div>
-                <div className="client-details-total-price">סה״כ לתשלום: {cartContext.totalPrice} ₪</div>
+                <div
+                    className="client-details-total-price">{generalContext.t('clientDetailsPage.totalPrice')}: {cartContext.totalPrice} ₪
+                </div>
                 <div className="policy-agreement">
-                    <p>שרות המשלוחים מוגבל כרגע לאזור ירושלים בלבד זמן אספקת המשלוח הוא עד 5 ימי עסקים</p>
+                    <p>{generalContext.t('clientDetailsPage.deliveryNotice')}</p>
                     <label className="policy-agreement-checkbox">
                         <input
                             type="checkbox"
@@ -328,17 +334,18 @@ const ClientDetailsFormPage: React.FC = () => {
                             checked={policyAgreement}
                             onChange={() => setPolicyAgreement(!policyAgreement)}
                         />
-                        קראתי ואני מסכים לתקנון האתר
+                        {generalContext.t('clientDetailsPage.policyAgreement')}
                     </label>
-                    <NavLink to={'/policy-page'}>תקנון האתר</NavLink>
+                    <NavLink className="site-policy-link"
+                             to={'/policy-page'}>{generalContext.t('clientDetailsPage.policyPage')}</NavLink>
                 </div>
 
                 <button className="reusable-control-btn" type="submit" disabled={addressSearchResults.length > 0}>
                     {
                         !loading &&
                         <>
-                            למלוי פרטי אשראי ותשלום
-                            <MdKeyboardDoubleArrowLeft/>
+                            {generalContext.t('clientDetailsPage.submit')}
+                            <ArrowIcon arrowDirection={'L'}/>
                         </>
                     }
                     {

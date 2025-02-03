@@ -39,8 +39,15 @@
     margin: 0;
 }
 
-.book .cover-type:first-child {
-    margin-left: 10px;
+.cover-type-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.book .cover-type {
+    margin: 0 5px;
 }
 
 .book input[type="radio"], .cover-type:hover {
@@ -48,11 +55,15 @@
 }
 
 .book-add-remove-from-cart-controllers {
+    position: relative;
     display: flex;
     align-items: center;
+    margin-top: 10px;
 }
 
 .book-add-remove-from-cart-controllers svg {
+    position: absolute;
+    left: -25px;
     padding: 1px;
     font-size: 22px;
 }

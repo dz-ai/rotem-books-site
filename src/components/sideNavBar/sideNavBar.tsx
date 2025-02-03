@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './sideNavBar.css';
-import {NavLink, useLocation, useNavigate} from 'react-router-dom';
-import {logo} from '../../assets';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {useCart} from "../../context/cartContext.tsx";
 import {GiShoppingCart} from "react-icons/gi";
 import {RiArrowDownWideFill} from "react-icons/ri";
@@ -57,15 +56,15 @@ const SideNavBar = () => {
                     &times;
                 </button>
                 <ul>
-                    <li onClick={() => onNavBtnClicked('/')}>דף הבית</li>
-                    <li onClick={() => onNavBtnClicked('/pricing')}>מחירון</li>
+                    <li onClick={() => onNavBtnClicked('/')}>{generalContext.t('header.homeBtn')}</li>
+                    <li onClick={() => onNavBtnClicked('/pricing')}>{generalContext.t('header.pricingBtn')}</li>
                     <li className="cart-icon" onClick={() => onNavBtnClicked('/cart-page')}>
-                        עגלת הקניות
+                        {generalContext.t('header.cartBtn')}
                         <GiShoppingCart/>
                         <span>{cartContext.totalQuantityInCart}</span>
                     </li>
-                    <li onClick={() => onNavBtnClicked('/about')}>אודות</li>
-                    <li onClick={() => onNavBtnClicked('/contact-page')}>צור קשר</li>
+                    <li onClick={() => onNavBtnClicked('/about')}>{generalContext.t('header.aboutBtn')}</li>
+                    <li onClick={() => onNavBtnClicked('/contact-page')}>{generalContext.t('header.contactBtn')}</li>
                     {
                         generalContext.isLoggedIn &&
                         <li className="admin-btn" onClick={() => setIsAdminOpen(!isAdminOpen)}>
@@ -90,9 +89,6 @@ const SideNavBar = () => {
                 </ul>
             </nav>
             <div className={`side-bar-background ${isOpen ? 'nav-open' : ''}`} onClick={() => setIsOpen(false)}></div>
-            <NavLink to="/">
-                <img className="logo" src={logo} alt="לוגו קיפוד עם גיטרה"/>
-            </NavLink>
         </div>
     );
 };

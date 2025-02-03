@@ -7,11 +7,8 @@
     align-items: center;
 }
 
-.back-office-order-details-header h2 {
-    margin-left: 15px;
-}
-
 .back-office-order-details-header-date {
+    margin: 0 15px;
     color: green;
 }
 
@@ -54,9 +51,13 @@
 }
 
 .back-office-order-cart-item-details-quantity {
-    border-left: 1px solid;
     padding: 0 15px;
     margin-left: 15px;
+}
+
+.back-office-order-cart-item-details-quantity-separator {
+    height: 20px;
+    border-left: 1px solid;
 }
 
 .back-office-order-details-total {
@@ -67,6 +68,7 @@
 
 .back-office-order-details-receipt-close-order-bts {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
 }
 
