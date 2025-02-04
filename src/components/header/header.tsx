@@ -92,7 +92,9 @@ const Header: React.FC = () => {
                     </ul>
                     <ul>
                         <li className="language-selection">
-                            <select onChange={(e) => {
+                            <select
+                                value={generalContext.language}
+                                onChange={(e) => {
                                 const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;
                                 val &&
                                 generalContext.setLanguage(val);

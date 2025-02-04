@@ -44,7 +44,7 @@ const handler: Handler = async (event) => {
             amount,
             maxPayments: 1,
             pluginId: pluginId,
-            group: 100,
+            // group: 100, /* activate only for the real site */
             client: {
                 name,
                 emails: emails,
@@ -55,7 +55,7 @@ const handler: Handler = async (event) => {
                 phone,
                 add: true
             },
-            income,/* the items */
+            income,
             successUrl: `${urlToUse}/payment-success-page`,
             failureUrl: `${urlToUse}/payment-failure-page`,
             notifyUrl: `${urlToUse}/.netlify/functions/save-receipt-after-payment-success`,
