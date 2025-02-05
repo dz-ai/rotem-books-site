@@ -56,7 +56,13 @@
     "policyPage": "Site Policy",
     "submit": "Pay",
     "loadingMessage": "Loading",
-    "errorMessage": "showMessage"
+    "errorMessage": "showMessage",
+    "message1": "The shopping cart is empty",
+    "message2": "The customer's name is missing",
+    "message3": "The email address is missing",
+    "message4": "Invalid phone number",
+    "message5": "Invalid address, please select an address from the list of options (only addresses within the State of Israel can be entered)",
+    "message6": "The website's terms of use must be accepted"
   },
   "bookDetailsPage": {
     "name": "Rotem Shem Tov",

@@ -3,9 +3,9 @@ import translations, {ITranslations} from "../translations/index.ts";
 import {coverType, IBook} from "../components/book/book.tsx";
 
 export type language = 'he' | 'en' | 'de';
-type theme = 'light' | 'dark';
+export type theme = 'light' | 'dark';
 
-interface GeneralStateContextType {
+export interface GeneralStateContextType {
     isLoggedIn: boolean;
     setIsLoggedIn: (isLoggedIn: boolean) => void;
     checkAuthentication: () => Promise<void>;

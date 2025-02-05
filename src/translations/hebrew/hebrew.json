@@ -56,7 +56,13 @@
     "policyPage": "תקנון האתר",
     "submit": "למלוי פרטי אשראי ותשלום",
     "loadingMessage": "loading",
-    "errorMessage": "showMessage"
+    "errorMessage": "showMessage",
+    "message1": "עגלת הקניות ריקה מפריטים",
+    "message2": "שם הלקוח חסר",
+    "message3": "כתובת אימייל חסרה",
+    "message4": "מס׳ טלפון לא תקין",
+    "message5": "כתובת לא תקינה נא לבחור כתובת מתוך רשימת האפשרויות (ניתן להזין כתובת בשיטחי מדינת ישראל בלבד)",
+    "message6": "יש לאשר את תנאי השימוש באתר"
   },
   "bookDetailsPage": {
     "name": "רותם שם טוב",

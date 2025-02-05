@@ -3,8 +3,8 @@ import './clientDetailsPage.css';
 import {googleLogo} from "../../assets";
 import {NavLink} from 'react-router-dom';
 import {useCart} from "../../context/cartContext.tsx";
+import {GeneralStateContextType, useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import {ThreeDots} from "react-loader-spinner";
-import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
 
 export interface IAddress {
@@ -36,6 +36,33 @@ export interface IPaymentDetails {
     income: TPaymentDetailsItem[];
 }
 
+function validateFormFields(paymentDetails: IPaymentDetails, policyAgreement: boolean, generalContext: GeneralStateContextType): {
+    field: number,
+    status: boolean,
+    message: string
+} {
+
+    const {income, client} = paymentDetails;
+    const {city, street, houseNum, zipCode} = paymentDetails.client.address;
+
+    if (income.length <= 0) return {field: 1, status: false, message: generalContext.t('clientDetailsPage.message1')};
+    if (client.name === '') return {field: 2, status: false, message: generalContext.t('clientDetailsPage.message2')};
+    if (client.emails[0] === '') return {
+        field: 3,
+        status: false,
+        message: generalContext.t('clientDetailsPage.message3')
+    };
+    if (client.phone === '') return {field: 4, status: false, message: generalContext.t('clientDetailsPage.message4')};
+    if (city === '' || street === '' || houseNum === '' || zipCode === '') return {
+        field: 5,
+        status: false,
+        message: generalContext.t('clientDetailsPage.message5')
+    };
+    if (!policyAgreement) return {field: 6, status: false, message: generalContext.t('clientDetailsPage.message6')};
+
+    return {field: 0, status: true, message: ''};
+}
+
 const ClientDetailsFormPage: React.FC = () => {
 
     const generalContext = useGeneralStateContext();
@@ -63,6 +90,7 @@ const ClientDetailsFormPage: React.FC = () => {
     const [policyAgreement, setPolicyAgreement] = useState(false);
 
     const [showMessage, setShowMessage] = useState<null | string>(null);
+    const [inValidField, setInValidField] = useState<null | number>(null);
     const [loading, setLoading] = useState(false);
 
     const cartContext = useCart();
@@ -70,10 +98,9 @@ const ClientDetailsFormPage: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-
+        setShowMessage(null);
         setLoading(true);
-
-        scrollToSubmitBtn();
+        scrollTo('down');
 
         // prepare the payment details that should be sent to create the payment form in the server
 
@@ -105,7 +132,8 @@ const ClientDetailsFormPage: React.FC = () => {
             income,
         }
 
-        if (name && email && checkAddressDetails() && phone && totalPrice && income.length > 0 && policyAgreement) {
+        const {field, status, message} = validateFormFields(paymentDetails, policyAgreement, generalContext);
+        if (status) {
 
             try {
                 // fetching the payment form (credit card form details) from "Morning API"
@@ -125,6 +153,12 @@ const ClientDetailsFormPage: React.FC = () => {
                     window.location.href = paymentForm.url;
                 } else {
                     setLoading(false);
+
+                    if (paymentForm.errorMessage === 'לא נשלח שם וטלפון או שאינו תקין') {
+                        setInValidField(4);
+                        scrollTo('up');
+                    }
+
                     setShowMessage(paymentForm.errorMessage);
                 }
             } catch (err) {
@@ -135,8 +169,9 @@ const ClientDetailsFormPage: React.FC = () => {
 
         } else {
             setLoading(false);
-            if (income.length === 0) setShowMessage('עגלת הקניות ריקה מפריטים');
-            else setShowMessage('נא למלא את כל הפרטים');
+            setShowMessage(message);
+            setInValidField(field);
+            scrollTo('up');
         }
     }
 
@@ -173,16 +208,20 @@ const ClientDetailsFormPage: React.FC = () => {
 
     // make sure that the user start from the top of the page as user navigate to the page
     useEffect(() => {
-        const mainElement = document.querySelector('main');
-        mainElement &&
-        mainElement.scrollTo(0, 0);
+        scrollTo('up');
     }, []);
 
     // scroll down as the user clicks the "submit" button
-    function scrollToSubmitBtn() {
+    function scrollTo(direction: 'up' | 'down') {
+
         const submitButton = document.querySelector('button[type="submit"].reusable-control-btn');
-        if (submitButton) {
+        const rootElement = document.getElementById('root');
+
+        if (submitButton && direction === 'down') {
             submitButton.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+        if (rootElement && direction === 'up') {
+            rootElement.scrollTo({top: 0, behavior: 'smooth'});
         }
     }
 
@@ -199,9 +238,19 @@ const ClientDetailsFormPage: React.FC = () => {
         }, 400);
     }
 
-    function checkAddressDetails(): boolean {
-        const {city, street, houseNum, zipCode} = addressDetails;
-        return city !== '' && street !== '' && houseNum !== '' && zipCode !== '';
+    function phoneClassName(): string {
+        let className = '';
+        if (inValidField === 4 && generalContext.language === 'he') className = 'highlight-invalid-red he';
+        if (inValidField === 4) className = 'highlight-invalid-red';
+        if (generalContext.language === 'he') className = 'he';
+
+        return className;
+    }
+
+    function inputLimiter(limit: number, value: string, cb: (val: string) => void): void {
+        if (value === '' || Number(value) >= limit) {
+            cb(value);
+        }
     }
 
     return (
@@ -214,6 +263,10 @@ const ClientDetailsFormPage: React.FC = () => {
                 </NavLink>
             </div>
 
+            {
+                showMessage &&
+                <p className="error-message">{showMessage}</p>
+            }
             <form onSubmit={handleSubmit}>
                 <div className="form-container">
 
@@ -223,6 +276,7 @@ const ClientDetailsFormPage: React.FC = () => {
                         <label>
                             {generalContext.t('clientDetailsPage.name')}:
                             <input
+                                className={inValidField === 2 ? 'highlight-invalid-red' : ''}
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -234,6 +288,7 @@ const ClientDetailsFormPage: React.FC = () => {
                         <label>
                             {generalContext.t('clientDetailsPage.email')}:
                             <input
+                                className={inValidField === 3 ? 'highlight-invalid-red' : ''}
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -245,7 +300,7 @@ const ClientDetailsFormPage: React.FC = () => {
                         <label>
                             {generalContext.t('clientDetailsPage.phone')}:
                             <input
-                                className={generalContext.language === 'he' ? "he" : ""}
+                                className={phoneClassName()}
                                 type="tel"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
@@ -262,7 +317,7 @@ const ClientDetailsFormPage: React.FC = () => {
                         <label>
                             {generalContext.t('clientDetailsPage.shippingAddress')}:
                             <input
-                                className="address-input"
+                                className={inValidField === 5 ? 'address-input highlight-invalid-red' : 'address-input'}
                                 type="text"
                                 value={addressInput}
                                 onChange={(e) => {
@@ -290,10 +345,13 @@ const ClientDetailsFormPage: React.FC = () => {
                         <label className="house-number-input">
                             {generalContext.t('clientDetailsPage.houseNumber')}:
                             <input
+                                className={inValidField === 5 ? 'highlight-invalid-red' : ''}
                                 type="number"
                                 value={addressDetails.houseNum}
-                                onChange={(e) =>
-                                    setAddressDetails(prevState => ({...prevState, houseNum: e.target.value}))}
+                                onChange={(e) => {
+                                    inputLimiter(1, e.target.value, (value) =>
+                                        setAddressDetails(prevState => ({...prevState, houseNum: value})));
+                                }}
                                 required
                                 placeholder={generalContext.t('clientDetailsPage.houseNumberPlaceholder')}
                             />
@@ -303,18 +361,23 @@ const ClientDetailsFormPage: React.FC = () => {
                             <input
                                 type="number"
                                 value={addressDetails.apartmentNum}
-                                onChange={(e) =>
-                                    setAddressDetails(prevState => ({...prevState, apartmentNum: e.target.value}))}
+                                onChange={(e) => {
+                                    inputLimiter(1, e.target.value, (value) =>
+                                        setAddressDetails(prevState => ({...prevState, apartmentNum: value})));
+                                }}
                                 placeholder={generalContext.t('clientDetailsPage.apartmentNumberPlaceholder')}
                             />
                         </label>
                         <label>
                             {generalContext.t('clientDetailsPage.zipCode')}:
                             <input
+                                className={inValidField === 5 ? 'highlight-invalid-red' : ''}
                                 type="number"
                                 value={addressDetails.zipCode}
-                                onChange={(e) =>
-                                    setAddressDetails(prevState => ({...prevState, zipCode: e.target.value}))}
+                                onChange={(e) => {
+                                    inputLimiter(0, e.target.value, (value) =>
+                                        setAddressDetails(prevState => ({...prevState, zipCode: value})));
+                                }}
                                 required
                                 placeholder={generalContext.t('clientDetailsPage.zipCodePlaceholder')}
                                 autoComplete="postal-code"
@@ -329,6 +392,7 @@ const ClientDetailsFormPage: React.FC = () => {
                     <p>{generalContext.t('clientDetailsPage.deliveryNotice')}</p>
                     <label className="policy-agreement-checkbox">
                         <input
+                            className={inValidField === 6 ? 'highlight-invalid-red' : ''}
                             type="checkbox"
                             required
                             checked={policyAgreement}
