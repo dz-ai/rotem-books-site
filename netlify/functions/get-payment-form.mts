@@ -44,7 +44,7 @@ const handler: Handler = async (event) => {
             amount,
             maxPayments: 1,
             pluginId: pluginId,
-            // group: 100, /* activate only for the real site */
+            group: 100, /* activate only for the real site */
             client: {
                 name,
                 emails: emails,

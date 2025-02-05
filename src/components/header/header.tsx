@@ -43,20 +43,20 @@ const Header: React.FC = () => {
                                 <CartPopup/>
                                 <span>{cartContext.totalQuantityInCart}</span>
                             </li>
-                            <li className="language-selection">
-                                <select
-                                    value={generalContext.language}
-                                    onChange={(e) => {
-                                        const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;
-                                        val &&
-                                        generalContext.setLanguage(val);
-                                    }}
-                                >
-                                    <option value="he">he</option>
-                                    <option value="en">en</option>
-                                    <option value="de">de</option>
-                                </select>
-                            </li>
+                            {/*<li className="language-selection">*/}
+                            {/*    <select*/}
+                            {/*        value={generalContext.language}*/}
+                            {/*        onChange={(e) => {*/}
+                            {/*            const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;*/}
+                            {/*            val &&*/}
+                            {/*            generalContext.setLanguage(val);*/}
+                            {/*        }}*/}
+                            {/*    >*/}
+                            {/*        <option value="he">he</option>*/}
+                            {/*        <option value="en">en</option>*/}
+                            {/*        <option value="de">de</option>*/}
+                            {/*    </select>*/}
+                            {/*</li>*/}
                         </ul>
                     </nav>
                 </>
@@ -91,19 +91,19 @@ const Header: React.FC = () => {
                         </li>
                     </ul>
                     <ul>
-                        <li className="language-selection">
-                            <select
-                                value={generalContext.language}
-                                onChange={(e) => {
-                                const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;
-                                val &&
-                                generalContext.setLanguage(val);
-                            }}>
-                                <option value="he">he</option>
-                                <option value="en">en</option>
-                                <option value="de">de</option>
-                            </select>
-                        </li>
+                        {/*<li className="language-selection">*/}
+                        {/*    <select*/}
+                        {/*        value={generalContext.language}*/}
+                        {/*        onChange={(e) => {*/}
+                        {/*        const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;*/}
+                        {/*        val &&*/}
+                        {/*        generalContext.setLanguage(val);*/}
+                        {/*    }}>*/}
+                        {/*        <option value="he">he</option>*/}
+                        {/*        <option value="en">en</option>*/}
+                        {/*        <option value="de">de</option>*/}
+                        {/*    </select>*/}
+                        {/*</li>*/}
                         <li>
                             <NavLink to="/cart-page"
                                      className={({isActive}) => isActive ? 'cart-icon active-nav-link nav-link' : 'cart-icon nav-link'}

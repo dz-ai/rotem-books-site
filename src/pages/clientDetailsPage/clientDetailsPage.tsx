@@ -240,9 +240,9 @@ const ClientDetailsFormPage: React.FC = () => {
 
     function phoneClassName(): string {
         let className = '';
-        if (inValidField === 4 && generalContext.language === 'he') className = 'highlight-invalid-red he';
-        if (inValidField === 4) className = 'highlight-invalid-red';
         if (generalContext.language === 'he') className = 'he';
+        if (inValidField === 4) className = 'highlight-invalid-red';
+        if (inValidField === 4 && generalContext.language === 'he') className = 'highlight-invalid-red he';
 
         return className;
     }
