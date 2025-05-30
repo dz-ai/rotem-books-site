@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import "./loginPage.css";
 import {useNavigate} from "react-router-dom";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
-
+// todo navigate properly after login
 const LoginPage = () => {
 
     const generalContext = useGeneralStateContext();
@@ -35,7 +35,7 @@ const LoginPage = () => {
             if (response.ok) {
                 setError('');
                 alert(generalContext.t('loginPage.loginSuccess'));
-                navigate('/back-office-page');
+                navigate(-2);
             } else {
                 setError(data.message || generalContext.t('loginPage.loginError'));
             }

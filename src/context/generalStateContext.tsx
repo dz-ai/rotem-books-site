@@ -23,7 +23,7 @@ const GeneralStateContext = createContext<GeneralStateContextType | undefined>(u
 export const GeneralStateProvider: React.FC<{ children: ReactNode }> = ({children}) => {
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const [language, setLanguage] = useState<language>('de');
+    const [language, setLanguage] = useState<language>('he');
     const [theme, setTheme] = useState<theme>('light');
 
     const t = (key: string): string => {

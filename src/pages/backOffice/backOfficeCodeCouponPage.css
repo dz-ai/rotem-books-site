@@ -1,0 +1,84 @@
+.back-office-coupon-page {
+    min-height: 95vh;
+    padding: 30px;
+}
+
+.back-office-coupon-page p {
+    margin: 0;
+}
+
+.back-office-coupon-page input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #bdbcb4;
+    outline: none;
+    padding: 4px 0;
+}
+
+.back-office-coupon-page input:focus {
+    outline: none;
+}
+
+.add-new-coupon-btn-wrapper {
+    display: flex;
+}
+
+.coupon-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #b3b3b3;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    font-size: 17px;
+    transition: transform 0.1s ease;
+}
+
+.new-coupon-btn {
+    height: 40px;
+    width: 40px;
+    font-size: 30px;
+}
+
+.coupon-btn:hover {
+    background: #cacaca;
+}
+
+.coupon-btn:active {
+    transform: scale(0.95);
+}
+
+.add-new-coupon-btn-wrapper p {
+    margin: auto 15px;
+}
+
+.coupon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: 2px solid #bdbcb4;
+    padding: 10px;
+}
+
+.coupon-list-item {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #bdbcb4;
+    padding: 10px;
+}
+
+.coupon-list-item-btn-section {
+    display: flex;
+    gap: 5px;
+}
+
+@media (max-width: 650px) {
+    .coupon-list-item {
+        flex-direction: column;
+    }
+
+    .coupon-list-item-btn-section {
+        margin-top: 10px;
+    }
+}

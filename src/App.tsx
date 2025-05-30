@@ -17,6 +17,7 @@ import LoginPage from "./pages/loginPage/loginPage.tsx";
 import PrivateRoute from "./components/protected-route/protectedRoute.tsx";
 import PolicyPage from "./pages/policyPage/policyPage.tsx";
 import {useGeneralStateContext} from "./context/generalStateContext.tsx";
+import {BackOfficeCodeCouponPage} from "./pages/backOffice/backOfficeCodeCouponPage.tsx";
 
 export enum ECoverTypeHard {
     basicPrise = 70,
@@ -64,6 +65,7 @@ const App: React.FC = () => {
                     <Route path="/payment-failure-page" element={<PaymentFailurePage/>}/>
                     <Route element={<PrivateRoute/>}>
                         <Route path="/back-office-page" element={<BackOfficePage/>}/>
+                        <Route path="/back-office-code-coupon" element={<BackOfficeCodeCouponPage/>}/>
                     </Route>
                     <Route path="/login-page" element={<LoginPage/>}/>
                 </Routes>
