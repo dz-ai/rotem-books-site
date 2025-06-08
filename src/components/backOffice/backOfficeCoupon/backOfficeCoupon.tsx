@@ -3,6 +3,7 @@ import {ICoupon} from "../../../pages/backOffice/backOfficeCodeCouponPage.tsx";
 import {FaRegTrashAlt} from "react-icons/fa";
 
 type Props = {
+    coupon: ICoupon;
     couponId: string;
     couponName: string;
     couponCode: string;
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export const BackOfficeCoupon = ({
+                                     coupon,
                                      couponId,
                                      couponName,
                                      couponCode,
@@ -39,6 +41,13 @@ export const BackOfficeCoupon = ({
             nameInputRef.current?.focus();
         }
     }, []);
+
+    // Detect any changes in coupon or its values and update the UI
+    useEffect(() => {
+        if (couponName !== nameOfCoupon) setNameOfCoupon(couponName);
+        if (couponCode !== codeOfCoupon) setCodeOfCoupon(couponCode);
+        if (discount !== discountOfCoupon) setDiscountOfCoupon(discount);
+    }, [coupon, couponName, couponCode, discount]);
 
     return (
         <li className="coupon-list-item">
@@ -75,17 +84,18 @@ export const BackOfficeCoupon = ({
                             if (!checkFields()) return;
                             setInEdit(null);
                             editCoupons(couponId, 'save', {
-                                couponId,
+                                _id: couponId,
                                 couponName: nameOfCoupon,
                                 couponCode: codeOfCoupon,
                                 discount: discountOfCoupon,
+                                createdAt: new Date(),
                             })
                         }}>שמור</button>
                 ) : (
                     <button className="coupon-btn" onClick={() => setInEdit(couponId)}>ערוך</button>
                 )}
                 <button
-                    className="coupon-btn"
+                    className="coupon-btn delete-btn"
                     onClick={() => {
                         editCoupons(couponId, 'delete');
                         setInEdit(null);

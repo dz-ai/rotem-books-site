@@ -35,6 +35,10 @@
     transition: transform 0.1s ease;
 }
 
+.coupon-btn.delete-btn {
+    background: #a86262;
+}
+
 .new-coupon-btn {
     height: 40px;
     width: 40px;
