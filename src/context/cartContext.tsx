@@ -22,6 +22,7 @@ interface CartContextType {
     updateCartItem: (id: string, quantity: number, coverType: coverType) => void;
     removeFromCart: (id: string, coverType: coverType) => void;
     cleanCartCookie: () => void;
+    discountTotalPrice: (percent: number) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -76,6 +77,11 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
     const cleanCartCookie = () => {
         setCart([]);
         Cookies.remove('cart');
+    }
+
+    const discountTotalPrice = (percent: number): void => {
+        const newPrice: number = totalPrice - (totalPrice / 100 * percent);
+        setTotalPrice(newPrice);
     }
 
     // retrieve the cart stored in the cookie and set it to maintain the cart items even after the site is reloaded
@@ -159,7 +165,8 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
                 addToCart,
                 updateCartItem,
                 removeFromCart,
-                cleanCartCookie
+                cleanCartCookie,
+                discountTotalPrice
             }}>
             {children}
         </CartContext.Provider>

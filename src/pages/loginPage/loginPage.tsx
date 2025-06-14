@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import "./loginPage.css";
+import {Helmet} from "react-helmet";
 import {useNavigate} from "react-router-dom";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
-
+// todo navigate properly after login
 const LoginPage = () => {
 
     const generalContext = useGeneralStateContext();
@@ -35,7 +36,7 @@ const LoginPage = () => {
             if (response.ok) {
                 setError('');
                 alert(generalContext.t('loginPage.loginSuccess'));
-                navigate('/back-office-page');
+                navigate(-2);
             } else {
                 setError(data.message || generalContext.t('loginPage.loginError'));
             }
@@ -46,6 +47,10 @@ const LoginPage = () => {
 
     return (
         <div className="login-container">
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
+            </Helmet>
+
             <h2>{generalContext.t('loginPage.title')}</h2>
             <form onSubmit={handleSubmit}>
                 {error && <p className="error">{error}</p>}

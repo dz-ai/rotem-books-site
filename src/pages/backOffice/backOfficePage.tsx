@@ -9,6 +9,7 @@ import {IBackofficeSideBar} from "../../components/backOffice/backOfficeSideBar.
 import {useMediaQuery} from "react-responsive";
 import {BackOfficeMessage} from "../../components/backOffice/util/backOfficeMessage.tsx";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
+import {Helmet} from "react-helmet";
 
 const BackOfficePage: React.FC = () => {
 
@@ -205,6 +206,9 @@ const BackOfficePage: React.FC = () => {
 
     return (
         <div className="back-office-page">
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
+            </Helmet>
 
             <IBackofficeSideBar
                 isSmallScreen={isSmallScreen}

@@ -6,6 +6,8 @@ import {useCart} from "../../context/cartContext.tsx";
 import {GeneralStateContextType, useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import {ThreeDots} from "react-loader-spinner";
 import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
+import {FcCheckmark} from "react-icons/fc";
+import {Helmet} from "react-helmet";
 
 export interface IAddress {
     city: string;
@@ -88,6 +90,8 @@ const ClientDetailsFormPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [policyAgreement, setPolicyAgreement] = useState(false);
+
+    const [couponCode, setCouponCode] = useState('');
 
     const [showMessage, setShowMessage] = useState<null | string>(null);
     const [inValidField, setInValidField] = useState<null | number>(null);
@@ -206,6 +210,19 @@ const ClientDetailsFormPage: React.FC = () => {
         setAddressSearchResults([]);
     }
 
+    // Check the validation of the Coupon-Code and give the discount if found valid
+    // const handleCouponCode = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    //     e.preventDefault();
+    //
+    //     const coupon: ICoupon | undefined = mockArray.find((coupon: ICoupon) => {
+    //
+    //         return coupon.couponCode === couponCode;
+    //     });
+    //     if (coupon) {
+    //         cartContext.discountTotalPrice(+coupon.discount);
+    //     }
+    // }
+
     // make sure that the user start from the top of the page as user navigate to the page
     useEffect(() => {
         scrollTo('up');
@@ -255,6 +272,9 @@ const ClientDetailsFormPage: React.FC = () => {
 
     return (
         <div className="client-details-page">
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
+            </Helmet>
 
             <div className="back-to-cart-btn-container">
                 <NavLink to="/cart-page" className="reusable-control-btn">
@@ -383,6 +403,19 @@ const ClientDetailsFormPage: React.FC = () => {
                                 autoComplete="postal-code"
                             />
                         </label>
+                    </div>
+                    <div className="coupon-section">
+                        <label>
+                            במידה וקיים קוד קופון ניתן להזין כאן
+                            <input
+                                type="text"
+                                value={couponCode}
+                                onChange={(e) => setCouponCode(e.target.value)}
+                            />
+                        </label>
+                        <button className="reusable-control-btn" onClick={(e) => {/*handleCouponCode(e)*/}}>
+                            <FcCheckmark/>
+                        </button>
                     </div>
                 </div>
                 <div

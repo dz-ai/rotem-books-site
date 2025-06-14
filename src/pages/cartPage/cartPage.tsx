@@ -6,6 +6,7 @@ import {useCart} from "../../context/cartContext.tsx";
 import {coverType} from "../../components/book/book.tsx";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
+import {Helmet} from "react-helmet";
 
 const CartPage: React.FC = () => {
     const navigate = useNavigate();
@@ -23,13 +24,17 @@ const CartPage: React.FC = () => {
 
     return (
         <div className="cart-wrapper">
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
+            </Helmet>
+
             <button className="reusable-control-btn" onClick={() => window.history.back()}>
                 <ArrowIcon arrowDirection={'R'}/>
                 {generalContext.t('shared.backToPreviousPage')}
             </button>
             <div className="cart-container">
                 <div className="cart-header">
-                    <h1>{generalContext.t('cart.cartHeader')}</h1>
+                    <h2>{generalContext.t('cart.cartHeader')}</h2>
                 </div>
                 <ul className="cart-list">
                     {cartItems.map((item) => (
