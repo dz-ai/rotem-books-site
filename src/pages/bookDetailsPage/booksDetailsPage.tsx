@@ -7,6 +7,7 @@ import {useInterSectionObserver} from "../../hooks/useIntersectionObserver.ts";
 import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
+import {Helmet} from "react-helmet";
 
 interface IBtnSectionTemplateProps {
     book: IBook;
@@ -78,6 +79,14 @@ const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
 
     return (
         <div className="book-details-container">
+            <Helmet>
+                <title>{`${book.title} ספר מאת סופרת הילדים רותם שםטוב`}</title>
+                <meta
+                    name="description"
+                    content={`קיראו אודות הספר ${book.title} מאת סופרת הילדים רותם שםטוב `}
+                />
+                <link rel="canonical" href={`https://www.rotems-books.store/book-details/${book.id}`}/>
+            </Helmet>
 
             <span ref={upperBtnSectionRef}>
                 <BtnSectionTemplate book={book} bookCoverType={coverType}/>

@@ -1,8 +1,19 @@
 import "./policyPage.css";
+import {Helmet} from "react-helmet";
+import React from "react";
 
 const PolicyPage = () => {
     return (
         <div className="site-policy-page">
+            <Helmet>
+                <title>תקנון האתר ״הספרים של רותם״ ספרי ילדים מאת רותם שמטוב</title>
+                <meta
+                    name="description"
+                    content="פירוט כללי ומדיניות הרכישה באתר ״הספרים של רותם״ ספרי ילדים מאת הסופרת רותם שמטוב"
+                />
+                <link rel="canonical" href="https://www.rotems-books.store/policy-page"/>
+            </Helmet>
+
             <h2>תקנון אתר "הספרים של רותם"</h2>
 
             <h3>מבוא:</h3>

@@ -2,6 +2,7 @@ import "./backOfficeCodeCouponPage.css"
 import {BackOfficeCoupon} from "../../components/backOffice/backOfficeCoupon/backOfficeCoupon.tsx";
 import React, {useEffect, useState} from "react";
 import {ThreeDots} from "react-loader-spinner";
+import {Helmet} from "react-helmet";
 
 export interface ICoupon {
     _id: string;
@@ -107,6 +108,10 @@ export const BackOfficeCodeCouponPage = () => {
 
     return (
         <div className="back-office-coupon-page">
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow" />
+            </Helmet>
+
             <div className="add-new-coupon-btn-wrapper">
                 <button
                     className="coupon-btn new-coupon-btn"

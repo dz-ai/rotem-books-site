@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {NavLink, useSearchParams} from "react-router-dom";
 import {useCart} from "../../context/cartContext.tsx";
 import {ColorRing} from 'react-loader-spinner'
+import {Helmet} from "react-helmet";
 import {LuDownload} from "react-icons/lu";
 import {MdOutlineMarkEmailRead} from "react-icons/md";
 
@@ -45,6 +46,10 @@ function PaymentSuccessPage() {
 
     return (
         <div className="success-failure-page">
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
+            </Helmet>
+
             <h2>ההזמנה הושלמה בהצלחה</h2>
             <p className="order-id">מס׳ ההזמנה: {orderId}</p>
             {

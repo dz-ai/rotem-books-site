@@ -7,6 +7,7 @@ import {GeneralStateContextType, useGeneralStateContext} from "../../context/gen
 import {ThreeDots} from "react-loader-spinner";
 import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
 import {FcCheckmark} from "react-icons/fc";
+import {Helmet} from "react-helmet";
 
 export interface IAddress {
     city: string;
@@ -271,6 +272,9 @@ const ClientDetailsFormPage: React.FC = () => {
 
     return (
         <div className="client-details-page">
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
+            </Helmet>
 
             <div className="back-to-cart-btn-container">
                 <NavLink to="/cart-page" className="reusable-control-btn">

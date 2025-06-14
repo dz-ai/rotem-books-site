@@ -5,6 +5,7 @@ import {ISendMailClientSupportPayLoad} from "../../../netlify/functions/send-ema
 import {ThreeDots} from "react-loader-spinner";
 import {GrSend} from "react-icons/gr";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
+import {Helmet} from "react-helmet";
 
 function ContactPage() {
 
@@ -60,6 +61,15 @@ function ContactPage() {
 
     return (
         <div className="contact-page">
+            <Helmet>
+                <title>צור קשר עם סופרת הילדים רותם שמטוב</title>
+                <meta
+                    name="description"
+                    content="כאן ניתן לישלוח הודעה לסופרת רותם שמטוב או לגשת לקישורים ומספר הטלפון של הסופרת"
+                />
+                <link rel="canonical" href="https://www.rotems-books.store/contact-page"/>
+            </Helmet>
+
             {
                 !emailSentMessage &&
                 <div className="contact-page-container">
