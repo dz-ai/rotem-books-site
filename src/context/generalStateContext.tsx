@@ -21,9 +21,10 @@ export interface GeneralStateContextType {
 const GeneralStateContext = createContext<GeneralStateContextType | undefined>(undefined);
 
 export const GeneralStateProvider: React.FC<{ children: ReactNode }> = ({children}) => {
+    const isTestEnv: boolean = import.meta.env.VITE_TEST_ENV === 'true';
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const [language, setLanguage] = useState<language>('he');
+    const [language, setLanguage] = useState<language>(isTestEnv ? 'de' : 'he');
     const [theme, setTheme] = useState<theme>('light');
 
     const t = (key: string): string => {
