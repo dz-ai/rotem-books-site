@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Home Page -->
+    <url>
+        <loc>https://www.rotems-books.store/</loc>
+        <lastmod>2025-06-12</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <!-- About Page -->
+    <url>
+        <loc>https://www.rotems-books.store/about</loc>
+        <lastmod>2025-06-01</lastmod>
+        <priority>0.9</priority>
+    </url>
+    <!-- Contact Page -->
+    <url>
+        <loc>https://www.rotems-books.store/contact-page</loc>
+        <lastmod>2025-06-10</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <!-- Pricing Page -->
+    <url>
+        <loc>https://www.rotems-books.store/pricing</loc>
+        <lastmod>2025-06-10</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <!-- BOOKS DETAILS PAGE -->
+    <!-- the rigid rabbit -->
+    <url>
+        <loc>https://www.rotems-books.store/book-details/44-699cc34ecd9fd</loc>
+        <lastmod>2025-06-10</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <!-- the adventured cloud -->
+    <url>
+        <loc>https://www.rotems-books.store/book-details/e7c-129c43e9101c</loc>
+        <lastmod>2025-06-10</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <!-- as we were kids -->
+    <url>
+        <loc>https://www.rotems-books.store/book-details/829-2023dfd73a33</loc>
+        <lastmod>2025-06-10</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <!-- the ent and the cricket -->
+    <url>
+        <loc>https://www.rotems-books.store/book-details/ac93b430fd6353ff</loc>
+        <lastmod>2025-06-10</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <!-- the fisher -->
+    <url>
+        <loc>https://www.rotems-books.store/book-details/fb1-3dd3e231e830</loc>
+        <lastmod>2025-06-10</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <!-- the mouse -->
+    <url>
+        <loc>https://www.rotems-books.store/book-details/5a7-4893d28dfcb3</loc>
+        <lastmod>2025-06-10</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <!-- the jump of Sardine -->
+    <url>
+        <loc>https://www.rotems-books.store/book-details/8d4-bd45f5b9b759</loc>
+        <lastmod>2025-06-10</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <!--  END BOOK DETAILS PAGE  -->
+    <!-- Site Policy Page -->
+    <url>
+        <loc>https://www.rotems-books.store/policy-page</loc>
+        <lastmod>2025-06-10</lastmod>
+        <priority>0.5</priority>
+    </url>
+</urlset>
