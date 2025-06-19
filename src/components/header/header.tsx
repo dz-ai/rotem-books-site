@@ -13,6 +13,8 @@ import {GiShoppingCart} from "react-icons/gi";
 import {RiArrowDownWideFill, RiArrowUpWideFill} from "react-icons/ri";
 
 const Header: React.FC = () => {
+    const isTestEnv: boolean = import.meta.env.VITE_TEST_ENV === 'true';
+
     const cartContext = useCart();
     const generalContext = useGeneralStateContext();
 
@@ -28,6 +30,7 @@ const Header: React.FC = () => {
 
     return (
         <header>
+            {/* -- MOBILE HEADER -- */}
             {
                 isSmallScreen &&
                 <>
@@ -43,24 +46,28 @@ const Header: React.FC = () => {
                                 <CartPopup/>
                                 <span>{cartContext.totalQuantityInCart}</span>
                             </li>
-                            {/*<li className="language-selection">*/}
-                            {/*    <select*/}
-                            {/*        value={generalContext.language}*/}
-                            {/*        onChange={(e) => {*/}
-                            {/*            const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;*/}
-                            {/*            val &&*/}
-                            {/*            generalContext.setLanguage(val);*/}
-                            {/*        }}*/}
-                            {/*    >*/}
-                            {/*        <option value="he">he</option>*/}
-                            {/*        <option value="en">en</option>*/}
-                            {/*        <option value="de">de</option>*/}
-                            {/*    </select>*/}
-                            {/*</li>*/}
+                            {
+                                isTestEnv &&
+                                <li className="language-selection">
+                                    <select
+                                        value={generalContext.language}
+                                        onChange={(e) => {
+                                            const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;
+                                            val &&
+                                            generalContext.setLanguage(val);
+                                        }}
+                                    >
+                                        <option value="he">he</option>
+                                        <option value="en">en</option>
+                                        <option value="de">de</option>
+                                    </select>
+                                </li>
+                            }
                         </ul>
                     </nav>
                 </>
             }
+            {/* -- WIDE SCREEN HEADER -- */}
             {
                 !isSmallScreen &&
                 <nav>
@@ -91,19 +98,22 @@ const Header: React.FC = () => {
                         </li>
                     </ul>
                     <ul>
-                        {/*<li className="language-selection">*/}
-                        {/*    <select*/}
-                        {/*        value={generalContext.language}*/}
-                        {/*        onChange={(e) => {*/}
-                        {/*        const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;*/}
-                        {/*        val &&*/}
-                        {/*        generalContext.setLanguage(val);*/}
-                        {/*    }}>*/}
-                        {/*        <option value="he">he</option>*/}
-                        {/*        <option value="en">en</option>*/}
-                        {/*        <option value="de">de</option>*/}
-                        {/*    </select>*/}
-                        {/*</li>*/}
+                        {
+                            isTestEnv &&
+                            <li className="language-selection">
+                                <select
+                                    value={generalContext.language}
+                                    onChange={(e) => {
+                                        const val: language | undefined = e.target.value === 'en ' || 'he' || 'de' ? e.target.value as language : undefined;
+                                        val &&
+                                        generalContext.setLanguage(val);
+                                    }}>
+                                    <option value="he">he</option>
+                                    <option value="en">en</option>
+                                    <option value="de">de</option>
+                                </select>
+                            </li>
+                        }
                         <li>
                             <NavLink to="/cart-page"
                                      className={({isActive}) => isActive ? 'cart-icon active-nav-link nav-link' : 'cart-icon nav-link'}

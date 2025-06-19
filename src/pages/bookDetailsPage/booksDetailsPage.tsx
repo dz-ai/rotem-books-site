@@ -8,6 +8,7 @@ import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
 import {Helmet} from "react-helmet";
+import {HelmetTestEnv} from "../../componentsReusable/helmetTestEnv.tsx";
 
 interface IBtnSectionTemplateProps {
     book: IBook;
@@ -55,6 +56,8 @@ interface IBookDetailPageProps {
 }
 
 const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
+    const isTestEnv: boolean = import.meta.env.VITE_TEST_ENV === 'true';
+
     const generalContext = useGeneralStateContext();
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -79,15 +82,21 @@ const BookDetailPage: React.FC<IBookDetailPageProps> = ({books}) => {
 
     return (
         <div className="book-details-container">
-            <Helmet>
-                <title>{`${book.title} ספר מאת סופרת הילדים רותם שםטוב`}</title>
-                <meta
-                    name="description"
-                    content={`קיראו אודות הספר ${book.title} מאת סופרת הילדים רותם שםטוב `}
-                />
-                <link rel="canonical" href={`https://www.rotems-books.store/book-details/${book.id}`}/>
-            </Helmet>
+            {
+                isTestEnv && <HelmetTestEnv/>
+            }
 
+            {
+                !isTestEnv &&
+                <Helmet>
+                    <title>{`${book.title} ספר מאת סופרת הילדים רותם שםטוב`}</title>
+                    <meta
+                        name="description"
+                        content={`קיראו אודות הספר ${book.title} מאת סופרת הילדים רותם שםטוב `}
+                    />
+                    <link rel="canonical" href={`https://www.rotems-books.store/book-details/${book.id}`}/>
+                </Helmet>
+            }
             <span ref={upperBtnSectionRef}>
                 <BtnSectionTemplate book={book} bookCoverType={coverType}/>
             </span>

@@ -3,19 +3,28 @@ import "./pricingPage.css";
 import {logo} from "../../assets";
 import {Helmet} from "react-helmet";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
+import {HelmetTestEnv} from "../../componentsReusable/helmetTestEnv.tsx";
 
 const PricingPage = () => {
+    const isTestEnv: boolean = import.meta.env.VITE_TEST_ENV === 'true';
     const generalContext = useGeneralStateContext();
+
     return (
         <div className="pricing-page">
-            <Helmet>
-                <title>מחירון חנות ספרי הילדים של רותם שמטוב</title>
-                <meta
-                    name="description"
-                    content="כאן תוכלו להתעדכן לגבי המחירים של ספרי הילדים מאת הסופרת רותם שמטוב"
-                />
-                <link rel="canonical" href="https://www.rotems-books.store/pricing"/>
-            </Helmet>
+            {
+                isTestEnv && <HelmetTestEnv/>
+            }
+            {
+                !isTestEnv &&
+                <Helmet>
+                    <title>מחירון חנות ספרי הילדים של רותם שמטוב</title>
+                    <meta
+                        name="description"
+                        content="כאן תוכלו להתעדכן לגבי המחירים של ספרי הילדים מאת הסופרת רותם שמטוב"
+                    />
+                    <link rel="canonical" href="https://www.rotems-books.store/pricing"/>
+                </Helmet>
+            }
 
             <table>
                 <caption>{generalContext.t('pricingPage.hardcoverPrices')}</caption>

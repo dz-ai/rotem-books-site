@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build:prod": "tsc -b && vite build && cp static/sitemap.xml dist/sitemap.xml && cp static/robots.prod.txt dist/robots.txt",
+    "build:test": "tsc -b && vite build && cp static/robots.test.txt dist/robots.txt",
     "lint": "eslint .",
     "preview": "vite preview",
     "netlify-dev": "netlify dev",
@@ -41,7 +42,7 @@
     "@types/cookie": "^0.6.0",
     "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.7",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.15.31",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
@@ -50,6 +51,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "sitemap": "^8.0.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^6.3.5"

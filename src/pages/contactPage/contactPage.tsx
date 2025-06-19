@@ -6,8 +6,10 @@ import {ThreeDots} from "react-loader-spinner";
 import {GrSend} from "react-icons/gr";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import {Helmet} from "react-helmet";
+import {HelmetTestEnv} from "../../componentsReusable/helmetTestEnv.tsx";
 
 function ContactPage() {
+    const isTestEnv: boolean = import.meta.env.VITE_TEST_ENV === 'true';
 
     const generalContext = useGeneralStateContext();
 
@@ -61,14 +63,20 @@ function ContactPage() {
 
     return (
         <div className="contact-page">
-            <Helmet>
-                <title>צור קשר עם סופרת הילדים רותם שמטוב</title>
-                <meta
-                    name="description"
-                    content="כאן ניתן לישלוח הודעה לסופרת רותם שמטוב או לגשת לקישורים ומספר הטלפון של הסופרת"
-                />
-                <link rel="canonical" href="https://www.rotems-books.store/contact-page"/>
-            </Helmet>
+            {
+                isTestEnv && <HelmetTestEnv/>
+            }
+            {
+                !isTestEnv &&
+                <Helmet>
+                    <title>צור קשר עם סופרת הילדים רותם שמטוב</title>
+                    <meta
+                        name="description"
+                        content="כאן ניתן לישלוח הודעה לסופרת רותם שמטוב או לגשת לקישורים ומספר הטלפון של הסופרת"
+                    />
+                    <link rel="canonical" href="https://www.rotems-books.store/contact-page"/>
+                </Helmet>
+            }
 
             {
                 !emailSentMessage &&

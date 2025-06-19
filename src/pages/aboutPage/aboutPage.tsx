@@ -1,20 +1,30 @@
+import React from "react";
 import "./aboutPage.css";
 import {logo} from "../../assets";
 import {Helmet} from "react-helmet";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
+import {HelmetTestEnv} from "../../componentsReusable/helmetTestEnv.tsx";
 
 function AboutPage() {
+    const isTestEnv: boolean = import.meta.env.VITE_TEST_ENV === 'true';
+
     const generalContext = useGeneralStateContext();
     return (
         <div className="about-me-page">
-            <Helmet>
-                <title>אודות רותם שמטוב – סופרת ספרי ילדים</title>
-                <meta
-                    name="description"
-                    content="הכירו את רותם שמטוב, סופרת ספרי ילדים, יוצרת של סיפורים מרגשים בעברית. קראו על הדרך שלה, ההשראה לכתיבה, והחזון מאחורי כל ספר."
-                />
-                <link rel="canonical" href="https://www.rotems-books.store/about"/>
-            </Helmet>
+            {
+                isTestEnv && <HelmetTestEnv/>
+            }
+            {
+                !isTestEnv &&
+                <Helmet>
+                    <title>אודות רותם שמטוב – סופרת ספרי ילדים</title>
+                    <meta
+                        name="description"
+                        content="הכירו את רותם שמטוב, סופרת ספרי ילדים, יוצרת של סיפורים מרגשים בעברית. קראו על הדרך שלה, ההשראה לכתיבה, והחזון מאחורי כל ספר."
+                    />
+                    <link rel="canonical" href="https://www.rotems-books.store/about"/>
+                </Helmet>
+            }
             <div className="about-me-container">
                 <img
                     src={`${import.meta.env.VITE_IMAGEKIT_URL}/rotems_about_image.webp`}
