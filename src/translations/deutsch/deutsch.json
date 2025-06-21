@@ -51,6 +51,7 @@
     "zipCode": "Postleitzahl",
     "zipCodePlaceholder": "Bitte geben Sie die Postleitzahl ein",
     "totalPrice": "Gesamtbetrag",
+    "couponCode": "Falls Sie einen Gutscheincode haben, können Sie ihn hier eingeben",
     "deliveryNotice": "Der Lieferservice ist derzeit nur auf das Gebiet Jerusalem beschränkt. Die Lieferzeit beträgt bis zu 5 Werktage",
     "policyAgreement": "Ich habe die Website-Richtlinie gelesen und stimme zu",
     "policyPage": "Website-Richtlinie",
@@ -62,7 +63,9 @@
     "message3": "Die E-Mail-Adresse fehlt",
     "message4": "Ungültige Telefonnummer",
     "message5": "Ungültige Adresse, bitte wählen Sie eine Adresse aus der Liste der Optionen (es können nur Adressen innerhalb des Staates Israel eingegeben werden)",
-    "message6": "Die Nutzungsbedingungen der Website müssen akzeptiert werden"
+    "message6": "Die Nutzungsbedingungen der Website müssen akzeptiert werden",
+    "messageCoupon": "Es wurde ein Rabatt gewährt: ",
+    "messageCouponError": "Der Gutscheincode wurde abgelehnt. Bitte überprüfen Sie die Gültigkeit des Codes."
   },
   "bookDetailsPage": {
     "name": "Rotem Shem Tov",

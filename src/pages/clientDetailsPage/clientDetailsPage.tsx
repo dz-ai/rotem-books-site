@@ -8,6 +8,7 @@ import {ThreeDots} from "react-loader-spinner";
 import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
 import {FcCheckmark} from "react-icons/fc";
 import {Helmet} from "react-helmet";
+import {determinePrice} from "../../components/book/determineBookPriceUtil.ts";
 
 export interface IAddress {
     city: string;
@@ -65,6 +66,7 @@ function validateFormFields(paymentDetails: IPaymentDetails, policyAgreement: bo
     return {field: 0, status: true, message: ''};
 }
 
+// todo CHANGE WHOLE PRICE CALCULATION TO BE DONE FROM THE BACKEND move the Produces-List to the Backend too
 const ClientDetailsFormPage: React.FC = () => {
 
     const generalContext = useGeneralStateContext();
@@ -92,10 +94,13 @@ const ClientDetailsFormPage: React.FC = () => {
     const [policyAgreement, setPolicyAgreement] = useState(false);
 
     const [couponCode, setCouponCode] = useState('');
+    const [discount, setDiscount] = useState<number | null>(null);
+    const [couponMessage, setCouponMessage] = useState<{ message: string; color: 'red' | 'black' } | null>(null);
 
     const [showMessage, setShowMessage] = useState<null | string>(null);
     const [inValidField, setInValidField] = useState<null | number>(null);
     const [loading, setLoading] = useState(false);
+    const [couponLoading, setCouponLoading] = useState(false);
 
     const cartContext = useCart();
     const cartItems = cartContext.cart;
@@ -108,14 +113,12 @@ const ClientDetailsFormPage: React.FC = () => {
 
         // prepare the payment details that should be sent to create the payment form in the server
 
-        // TOTAL PRICE
-        const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
         // PRODUCTS DETAILS
         const income: TPaymentDetailsItem[] = cartItems.map(book => {
             return {
                 description: `${book.title} / ${book.coverType === 'hard-cover' ? 'כריכה קשה' : 'כריכה רכה'}`,
                 quantity: book.quantity,
-                price: book.price,
+                price: determinePrice(book.coverType, cartContext.totalQuantityInCart, discount),
                 currency: 'ILS',
                 vatType: 0
             };
@@ -131,7 +134,7 @@ const ClientDetailsFormPage: React.FC = () => {
 
         // PAYMENT DETAILS - pack all the information to one object that will be sent to the server
         const paymentDetails: IPaymentDetails = {
-            amount: totalPrice,
+            amount: cartContext.discountCouponPrice || cartContext.totalPrice,
             client,
             income,
         }
@@ -211,19 +214,40 @@ const ClientDetailsFormPage: React.FC = () => {
     }
 
     // Check the validation of the Coupon-Code and give the discount if found valid
-    // const handleCouponCode = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    //     e.preventDefault();
-    //
-    //     const coupon: ICoupon | undefined = mockArray.find((coupon: ICoupon) => {
-    //
-    //         return coupon.couponCode === couponCode;
-    //     });
-    //     if (coupon) {
-    //         cartContext.discountTotalPrice(+coupon.discount);
-    //     }
-    // }
+    const handleCouponCode = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+        e.preventDefault();
+        setCouponLoading(true);
 
-    // make sure that the user start from the top of the page as user navigate to the page
+        try {
+            const couponResponse = await fetch(`.netlify/functions/get-coupon?code=${couponCode}`, {
+                method: 'get',
+            });
+
+            if (couponResponse.ok) {
+                const couponCodeResults: string = await couponResponse.json();
+                if (typeof +couponCodeResults === 'number') {
+                    setDiscount(+couponCodeResults);
+                    setCouponMessage({
+                        message: `${generalContext.t('clientDetailsPage.messageCoupon')}${couponCodeResults}%`,
+                        color: 'black',
+                    });
+                    cartContext.discountTotalPrice(+couponCodeResults);
+                }
+            } else {
+                setCouponMessage({
+                    message: generalContext.t('clientDetailsPage.messageCouponError'),
+                    color: 'red'
+                });
+                console.error(`Response is: ${couponResponse.status} Coupon not found`);
+            }
+            setCouponLoading(false);
+        } catch (err) {
+            console.log(err);
+            setCouponLoading(false);
+        }
+    }
+
+    // Make sure that the user start from the top of the page as user navigate to the page
     useEffect(() => {
         scrollTo('up');
     }, []);
@@ -405,21 +429,37 @@ const ClientDetailsFormPage: React.FC = () => {
                         </label>
                     </div>
                     <div className="coupon-section">
-                        <label>
-                            במידה וקיים קוד קופון ניתן להזין כאן
+                        <label onClick={() => setCouponMessage(null)}>
+                            {generalContext.t('clientDetailsPage.couponCode')}
                             <input
                                 type="text"
                                 value={couponCode}
                                 onChange={(e) => setCouponCode(e.target.value)}
                             />
                         </label>
-                        <button className="reusable-control-btn" onClick={(e) => {/*handleCouponCode(e)*/}}>
-                            <FcCheckmark/>
+                        <button className="reusable-control-btn" onClick={handleCouponCode}>
+                            {
+                                !couponLoading ?
+                                    <FcCheckmark/>
+                                    :
+                                    <ThreeDots
+                                        visible={true}
+                                        height="35"
+                                        width="35"
+                                        color="#3f3fbf"
+                                        radius="9"
+                                        ariaLabel="three-dots-loading"
+                                    />}
                         </button>
+                        {
+                            couponMessage &&
+                            <p className="coupon-message"
+                               style={{color: couponMessage.color}}>{couponMessage.message}</p>
+                        }
                     </div>
                 </div>
                 <div
-                    className="client-details-total-price">{generalContext.t('clientDetailsPage.totalPrice')}: {cartContext.totalPrice} ₪
+                    className="client-details-total-price">{generalContext.t('clientDetailsPage.totalPrice')}: {cartContext.discountCouponPrice || cartContext.totalPrice} ₪
                 </div>
                 <div className="policy-agreement">
                     <p>{generalContext.t('clientDetailsPage.deliveryNotice')}</p>
@@ -451,7 +491,7 @@ const ClientDetailsFormPage: React.FC = () => {
                             visible={true}
                             height="35"
                             width="35"
-                            color="#4fa94d"
+                            color="#3f3fbf"
                             radius="9"
                             ariaLabel="three-dots-loading"
                         />

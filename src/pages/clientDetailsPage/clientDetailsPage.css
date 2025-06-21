@@ -104,8 +104,11 @@
 }
 
 .form-container .coupon-section {
+    width: 100%;
     display: flex;
+    flex-wrap: wrap;
     align-items: end;
+    gap: 10px;
     margin-top: 10px;
 }
 
@@ -114,11 +117,18 @@
 }
 
 .form-container .coupon-section label {
+    max-width: 300px;
     margin: 0;
 }
 
 .form-container .coupon-section .reusable-control-btn {
     margin: 0 5px;
+}
+
+.form-container .coupon-section .coupon-message {
+    background: antiquewhite;
+    margin: auto;
+    padding: 5px 10px;
 }
 
 .client-details-total-price {
