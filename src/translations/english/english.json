@@ -51,6 +51,7 @@
     "zipCode": "Zip Code",
     "zipCodePlaceholder": "Please enter the zip code",
     "totalPrice": "Total to Pay",
+    "couponCode": "If you have a coupon code, you can enter it hear",
     "deliveryNotice": "Delivery service is currently limited to the Jerusalem area only. Delivery time is up to 5 business days",
     "policyAgreement": "I have read and agree to the site policy",
     "policyPage": "Site Policy",
@@ -62,7 +63,9 @@
     "message3": "The email address is missing",
     "message4": "Invalid phone number",
     "message5": "Invalid address, please select an address from the list of options (only addresses within the State of Israel can be entered)",
-    "message6": "The website's terms of use must be accepted"
+    "message6": "The website's terms of use must be accepted",
+    "messageCoupon": "A discount was given: ",
+    "messageCouponError": "The coupon code was rejected. Please check the validity of the code."
   },
   "bookDetailsPage": {
     "name": "Rotem Shem Tov",

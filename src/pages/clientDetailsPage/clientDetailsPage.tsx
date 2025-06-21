@@ -100,6 +100,7 @@ const ClientDetailsFormPage: React.FC = () => {
     const [showMessage, setShowMessage] = useState<null | string>(null);
     const [inValidField, setInValidField] = useState<null | number>(null);
     const [loading, setLoading] = useState(false);
+    const [couponLoading, setCouponLoading] = useState(false);
 
     const cartContext = useCart();
     const cartItems = cartContext.cart;
@@ -215,6 +216,7 @@ const ClientDetailsFormPage: React.FC = () => {
     // Check the validation of the Coupon-Code and give the discount if found valid
     const handleCouponCode = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
         e.preventDefault();
+        setCouponLoading(true);
 
         try {
             const couponResponse = await fetch(`.netlify/functions/get-coupon?code=${couponCode}`, {
@@ -226,20 +228,22 @@ const ClientDetailsFormPage: React.FC = () => {
                 if (typeof +couponCodeResults === 'number') {
                     setDiscount(+couponCodeResults);
                     setCouponMessage({
-                        message: `הנחה של ${couponCodeResults}% התקבלה`,
+                        message: `${generalContext.t('clientDetailsPage.messageCoupon')}${couponCodeResults}%`,
                         color: 'black',
                     });
                     cartContext.discountTotalPrice(+couponCodeResults);
                 }
             } else {
                 setCouponMessage({
-                    message: 'קוד הקופון נדחה אנא ודא תוקף הקוד',
+                    message: generalContext.t('clientDetailsPage.messageCouponError'),
                     color: 'red'
                 });
                 console.error(`Response is: ${couponResponse.status} Coupon not found`);
             }
+            setCouponLoading(false);
         } catch (err) {
             console.log(err);
+            setCouponLoading(false);
         }
     }
 
@@ -423,7 +427,7 @@ const ClientDetailsFormPage: React.FC = () => {
                     </div>
                     <div className="coupon-section">
                         <label onClick={() => setCouponMessage(null)}>
-                            במידה וקיים קוד קופון ניתן להזין כאן
+                            {generalContext.t('clientDetailsPage.couponCode')}
                             <input
                                 type="text"
                                 value={couponCode}
@@ -431,7 +435,18 @@ const ClientDetailsFormPage: React.FC = () => {
                             />
                         </label>
                         <button className="reusable-control-btn" onClick={handleCouponCode}>
-                            <FcCheckmark/>
+                            {
+                                !couponLoading ?
+                                    <FcCheckmark/>
+                                    :
+                                    <ThreeDots
+                                        visible={true}
+                                        height="35"
+                                        width="35"
+                                        color="#3f3fbf"
+                                        radius="9"
+                                        ariaLabel="three-dots-loading"
+                                    />}
                         </button>
                         {
                             couponMessage &&
@@ -473,7 +488,7 @@ const ClientDetailsFormPage: React.FC = () => {
                             visible={true}
                             height="35"
                             width="35"
-                            color="#4fa94d"
+                            color="#3f3fbf"
                             radius="9"
                             ariaLabel="three-dots-loading"
                         />
