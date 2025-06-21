@@ -1,6 +1,6 @@
 import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
 
-export function determinePrice(coverType: string, quantityInCart: null | number): ECoverTypeHard | ECoverTypeSoft {
+export function determinePrice(coverType: string, quantityInCart: number | null, discount?: number | null): ECoverTypeHard | ECoverTypeSoft {
     let price: number;
 
     if (coverType === 'hard-cover') {
@@ -36,6 +36,9 @@ export function determinePrice(coverType: string, quantityInCart: null | number)
             default :
                 price = ECoverTypeSoft.basicPrise;
         }
+    }
+    if (discount) {
+        price = price - (price / 100 * discount);
     }
 
     return price;
