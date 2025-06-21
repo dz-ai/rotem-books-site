@@ -17,6 +17,7 @@ interface CartContextType {
     cart: ICartItem[];
     totalQuantityInCart: number;
     totalPrice: number;
+    discountCouponPrice: number | null;
     changesReporter: string[];
     addToCart: (item: ICartItem) => void;
     updateCartItem: (id: string, quantity: number, coverType: coverType) => void;
@@ -34,6 +35,7 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
     const [firstLoad, setFirstLoad] = useState(true);
     const [cart, setCart] = useState<ICartItem[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
+    const [discountCouponPrice, setDiscountCouponPrice] = useState<number | null>(null);
     const [changesReporter, setChangesReporter] = useState<string[]>(['']);
     const [totalQuantityInCart, setTotalQuantityInCart] = useState(0);
 
@@ -81,7 +83,7 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
 
     const discountTotalPrice = (percent: number): void => {
         const newPrice: number = totalPrice - (totalPrice / 100 * percent);
-        setTotalPrice(newPrice);
+        setDiscountCouponPrice(newPrice);
     }
 
     // retrieve the cart stored in the cookie and set it to maintain the cart items even after the site is reloaded
@@ -161,6 +163,7 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
                 cart,
                 totalQuantityInCart,
                 totalPrice,
+                discountCouponPrice,
                 changesReporter,
                 addToCart,
                 updateCartItem,
