@@ -21,6 +21,7 @@ export const BackOfficeCodeCouponPage = () => {
 
     // Add new Coupon with empty fields and set the status to "in Edit"
     const addNewCoupon = (): void => {
+        setMessage(null);
         const id: string = crypto.randomUUID();
         setCoupons((prevState: ICoupon[]) => {
             return [{_id: id, couponName: '', couponCode: '', discount: '0', createdAt: new Date()}, ...prevState];
@@ -45,6 +46,13 @@ export const BackOfficeCodeCouponPage = () => {
         }
 
         if (action === 'delete') {
+            if (payload?.couponName === '' || payload?.couponCode === '' || payload?.discount === '') {
+                const newCouponsArr: ICoupon[] = [];
+                coupons.forEach((coupon: ICoupon) => coupon._id !== payload._id && newCouponsArr.push(coupon));
+                setCoupons(newCouponsArr);
+                return;
+            }
+
             const deletedCoupon: ICoupon | null = await saveCoupon(couponId, action, payload);
             if (!deletedCoupon) {
                 setMessage(`משהו השתבש השינוי לא נשמר`);
@@ -109,7 +117,7 @@ export const BackOfficeCodeCouponPage = () => {
     return (
         <div className="back-office-coupon-page">
             <Helmet>
-                <meta name="robots" content="noindex, nofollow" />
+                <meta name="robots" content="noindex, nofollow"/>
             </Helmet>
 
             <div className="add-new-coupon-btn-wrapper">

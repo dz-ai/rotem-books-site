@@ -88,7 +88,7 @@ export const BackOfficeCoupon = ({
                                 couponName: nameOfCoupon,
                                 couponCode: codeOfCoupon,
                                 discount: discountOfCoupon,
-                                createdAt: new Date(),
+                                createdAt: coupon.createdAt || new Date(),
                             })
                         }}>שמור</button>
                 ) : (
@@ -97,7 +97,13 @@ export const BackOfficeCoupon = ({
                 <button
                     className="coupon-btn delete-btn"
                     onClick={() => {
-                        editCoupons(couponId, 'delete');
+                        editCoupons(couponId, 'delete', {
+                            _id: couponId,
+                            couponName: nameOfCoupon,
+                            couponCode: codeOfCoupon,
+                            discount: discountOfCoupon,
+                            createdAt: coupon.createdAt || new Date(),
+                        });
                         setInEdit(null);
                     }
                     }
