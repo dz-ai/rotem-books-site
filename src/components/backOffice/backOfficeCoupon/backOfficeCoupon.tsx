@@ -51,65 +51,73 @@ export const BackOfficeCoupon = ({
 
     return (
         <li className="coupon-list-item">
-            <input
-                ref={nameInputRef}
-                type="text"
-                value={nameOfCoupon}
-                readOnly={inEdit !== couponId}
-                onChange={(e) => setNameOfCoupon(e.target.value)}
-                placeholder="שם הקופון"
-            />
-            <input
-                type="text"
-                value={codeOfCoupon}
-                readOnly={inEdit !== couponId}
-                onChange={(e) => setCodeOfCoupon(e.target.value)}
-                placeholder="קוד הקופון"
-            />
-            <span>
-                %<input
-                type="text"
-                value={discountOfCoupon}
-                readOnly={inEdit !== couponId}
-                onChange={(e) => setDiscountOfCoupon(e.target.value)}
-            />
-            </span>
+            <div className="coupon-list-item-wrapper">
+                <label>
+                    <p className="coupon-list-item-title">שם הקופון</p>
+                    <input
+                        ref={nameInputRef}
+                        type="text"
+                        value={nameOfCoupon}
+                        readOnly={inEdit !== couponId}
+                        onChange={(e) => setNameOfCoupon(e.target.value)}
+                        placeholder="שם הקופון"
+                    />
+                </label>
+                <label>
+                    <p className="coupon-list-item-title">קוד קופון</p>
+                    <input
+                        type="text"
+                        value={codeOfCoupon}
+                        readOnly={inEdit !== couponId}
+                        onChange={(e) => setCodeOfCoupon(e.target.value)}
+                        placeholder="קוד הקופון"
+                    />
+                </label>
+                <span>
+                    %<input
+                    type="text"
+                    value={discountOfCoupon}
+                    readOnly={inEdit !== couponId}
+                    onChange={(e) => setDiscountOfCoupon(e.target.value)}
+                />
+                </span>
 
-            <div className="coupon-list-item-btn-section">
-                {inEdit === couponId ? (
+                <div className="coupon-list-item-btn-section">
+                    {inEdit === couponId ? (
+                        <button
+                            className="coupon-btn"
+                            onClick={() => {
+
+                                if (!checkFields()) return;
+                                setInEdit(null);
+                                editCoupons(couponId, 'save', {
+                                    _id: couponId,
+                                    couponName: nameOfCoupon,
+                                    couponCode: codeOfCoupon,
+                                    discount: discountOfCoupon,
+                                    createdAt: coupon.createdAt || new Date(),
+                                })
+                            }}>שמור</button>
+                    ) : (
+                        <button className="coupon-btn" onClick={() => setInEdit(couponId)}>ערוך</button>
+                    )}
                     <button
-                        className="coupon-btn"
+                        className="coupon-btn delete-btn"
                         onClick={() => {
-
-                            if (!checkFields()) return;
-                            setInEdit(null);
-                            editCoupons(couponId, 'save', {
+                            editCoupons(couponId, 'delete', {
                                 _id: couponId,
                                 couponName: nameOfCoupon,
                                 couponCode: codeOfCoupon,
                                 discount: discountOfCoupon,
                                 createdAt: coupon.createdAt || new Date(),
-                            })
-                        }}>שמור</button>
-                ) : (
-                    <button className="coupon-btn" onClick={() => setInEdit(couponId)}>ערוך</button>
-                )}
-                <button
-                    className="coupon-btn delete-btn"
-                    onClick={() => {
-                        editCoupons(couponId, 'delete', {
-                            _id: couponId,
-                            couponName: nameOfCoupon,
-                            couponCode: codeOfCoupon,
-                            discount: discountOfCoupon,
-                            createdAt: coupon.createdAt || new Date(),
-                        });
-                        setInEdit(null);
-                    }
-                    }
-                >
-                    <FaRegTrashAlt/>
-                </button>
+                            });
+                            setInEdit(null);
+                        }
+                        }
+                    >
+                        <FaRegTrashAlt/>
+                    </button>
+                </div>
             </div>
         </li>
     );

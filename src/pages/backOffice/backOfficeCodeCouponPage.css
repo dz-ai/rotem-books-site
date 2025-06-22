@@ -66,9 +66,13 @@
 }
 
 .coupon-list-item {
+    border: 1px solid #bdbcb4;
+}
+
+.coupon-list-item .coupon-list-item-wrapper {
     display: flex;
     justify-content: space-between;
-    border: 1px solid #bdbcb4;
+    align-items: flex-end;
     padding: 10px;
 }
 
@@ -79,7 +83,18 @@
 
 @media (max-width: 650px) {
     .coupon-list-item {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .coupon-list-item-wrapper {
         flex-direction: column;
+    }
+
+    p.coupon-list-item-title {
+        display: inline;
+        margin-left: 15px;
     }
 
     .coupon-list-item-btn-section {
