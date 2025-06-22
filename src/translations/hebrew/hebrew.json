@@ -135,6 +135,9 @@
     "books": "ספרים",
     "total_item_price": "סה״כ לפריט"
   },
+  "notFoundPage": {
+    "notFoundText": "\uD83D\uDE32 העמוד שאתם מחפשים לא נמצא נסו כתובת אחרת \uD83D\uDE32"
+  },
   "shared": {
     "softcover": "כריכה רכה",
     "hardcover": "כריכה קשה",

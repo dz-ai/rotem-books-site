@@ -136,6 +136,9 @@
     "books": "Bücher",
     "total_item_price": "Gesamtpreis für Artikel"
   },
+  "notFoundPage": {
+    "notFoundText": "😲 Die Seite, die Sie suchen, wurde nicht gefunden. Bitte versuchen Sie es mit einer anderen Adresse. 😲"
+  },
   "shared": {
     "softcover": "Taschenbuch",
     "hardcover": "Gebundene Ausgabe",
