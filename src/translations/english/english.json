@@ -136,6 +136,9 @@
     "books": "Books",
     "total_item_price": "Total Item Price"
   },
+  "notFoundPage": {
+    "notFoundText": "😲 The page you are looking for was not found. Please try a different address. 😲"
+  },
   "shared": {
     "softcover": "Softcover",
     "hardcover": "Hardcover",
