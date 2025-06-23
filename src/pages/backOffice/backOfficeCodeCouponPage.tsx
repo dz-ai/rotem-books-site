@@ -1,6 +1,7 @@
+import React, {useEffect, useState} from "react";
 import "./backOfficeCodeCouponPage.css"
 import {BackOfficeCoupon} from "../../components/backOffice/backOfficeCoupon/backOfficeCoupon.tsx";
-import React, {useEffect, useState} from "react";
+import {useUserConfirmation} from "../../hooks/useUserConfirmation.ts";
 import {ThreeDots} from "react-loader-spinner";
 import {Helmet} from "react-helmet";
 
@@ -14,6 +15,8 @@ export interface ICoupon {
 
 export const BackOfficeCodeCouponPage = () => {
 
+    const {isVisible, requestConfirmation, handleUserResponse} = useUserConfirmation();
+
     const [coupons, setCoupons] = useState<ICoupon[]>([]);
     const [inEdit, setInEdit] = useState<null | string>(null); /* get the coupon id as a string to make unique identifier to the currently edited coupon */
     const [message, setMessage] = useState<string | null>(null);
@@ -21,6 +24,7 @@ export const BackOfficeCodeCouponPage = () => {
 
     // Add new Coupon with empty fields and set the status to "in Edit"
     const addNewCoupon = (): void => {
+        setMessage(null);
         const id: string = crypto.randomUUID();
         setCoupons((prevState: ICoupon[]) => {
             return [{_id: id, couponName: '', couponCode: '', discount: '0', createdAt: new Date()}, ...prevState];
@@ -29,7 +33,7 @@ export const BackOfficeCodeCouponPage = () => {
     }
 
     // save a new coupon or new state of coupon or delete the coupon in the Database and update the UI.
-    const editCoupons = async (couponId: string, action: 'save' | 'delete', payload?: ICoupon): Promise<void> => {
+    const editCoupons = async (couponId: string, action: 'save' | 'delete', payload: ICoupon): Promise<void> => {
 
         if (action === 'save' && payload) {
             const savedCoupon: ICoupon | null = await saveCoupon(couponId, action, payload);
@@ -45,6 +49,17 @@ export const BackOfficeCodeCouponPage = () => {
         }
 
         if (action === 'delete') {
+            if (payload.couponName === '' || payload.couponCode === '' || payload.discount === '') {
+                const newCouponsArr: ICoupon[] = [];
+                coupons.forEach((coupon: ICoupon) => coupon._id !== payload._id && newCouponsArr.push(coupon));
+                setCoupons(newCouponsArr);
+                return;
+            }
+
+            // await to the user's delete confirmation
+            const usersReaction: boolean = await requestConfirmation();
+            if (!usersReaction) return;
+
             const deletedCoupon: ICoupon | null = await saveCoupon(couponId, action, payload);
             if (!deletedCoupon) {
                 setMessage(`משהו השתבש השינוי לא נשמר`);
@@ -109,7 +124,7 @@ export const BackOfficeCodeCouponPage = () => {
     return (
         <div className="back-office-coupon-page">
             <Helmet>
-                <meta name="robots" content="noindex, nofollow" />
+                <meta name="robots" content="noindex, nofollow"/>
             </Helmet>
 
             <div className="add-new-coupon-btn-wrapper">
@@ -158,6 +173,22 @@ export const BackOfficeCodeCouponPage = () => {
             {
                 message &&
                 <p className="message">{message}</p>
+            }
+            {
+                isVisible &&
+                <div className="delete-coupon-popup-wrapper">
+                    <div className="delete-coupon-popup">
+                        <p>האם ברצונך לבטל את הקופון?</p>
+                        <section>
+                            <button className="coupon-btn delete-btn" onClick={() => handleUserResponse(true)}>
+                                בטל קופון
+                            </button>
+                            <button className="coupon-btn" onClick={() => handleUserResponse(false)}>
+                                סגור
+                            </button>
+                        </section>
+                    </div>
+                </div>
             }
         </div>
     );
