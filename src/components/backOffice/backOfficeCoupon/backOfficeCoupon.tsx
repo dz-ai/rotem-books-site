@@ -10,7 +10,7 @@ type Props = {
     discount: string
     inEdit: null | string;
     setInEdit: (inEdit: null | string) => void;
-    editCoupons: (codeCoupon: string, action: 'save' | 'delete', payload?: ICoupon) => void;
+    editCoupons: (codeCoupon: string, action: 'save' | 'delete', payload: ICoupon) => void;
 };
 
 export const BackOfficeCoupon = ({

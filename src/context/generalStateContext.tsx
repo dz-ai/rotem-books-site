@@ -24,7 +24,7 @@ export const GeneralStateProvider: React.FC<{ children: ReactNode }> = ({childre
     const isTestEnv: boolean = import.meta.env.VITE_TEST_ENV === 'true';
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const [language, setLanguage] = useState<language>(/*isTestEnv ? 'de' : 'he'*/'he');
+    const [language, setLanguage] = useState<language>(isTestEnv ? 'de' : 'he');
     const [theme, setTheme] = useState<theme>('light');
 
     const t = (key: string): string => {
