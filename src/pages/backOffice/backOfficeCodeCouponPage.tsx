@@ -13,7 +13,7 @@ export interface ICoupon {
     createdAt: Date;
 }
 
-export const BackOfficeCodeCouponPage = () => {
+const BackOfficeCodeCouponPage = () => {
 
     const {isVisible, requestConfirmation, handleUserResponse} = useUserConfirmation();
 
@@ -193,3 +193,5 @@ export const BackOfficeCodeCouponPage = () => {
         </div>
     );
 };
+
+export default BackOfficeCodeCouponPage;
