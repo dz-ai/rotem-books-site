@@ -111,6 +111,12 @@
     "loginError": "משהו השתבש",
     "serverError": "לא ניתן להתחבר לשרת"
   },
+  "adminPage": {
+    "title": "תפריט אדמין",
+    "coupons": "קופונים",
+    "orders": "מעקב הזמנות",
+    "logout": "התנתק"
+  },
   "backOfficePage": {
     "orders": "הזמנות",
     "ordersLoading": "ההזמנות בטעינה",
@@ -135,10 +141,23 @@
     "books": "ספרים",
     "total_item_price": "סה״כ לפריט"
   },
+  "backOfficeCoupons": {
+    "newCouponBtn": "הוסף קופון חדש",
+    "couponName": "שם הקופון",
+    "couponCode": "קוד קופון",
+    "discount": "הנחה (%)",
+    "noCouponsToShow": "אין כרגע קופונים להציג",
+    "deleteCouponQuestion": "האם ברצונך לבטל את הקופון?",
+    "deleteCoupon": "בטל קופון",
+    "errorMessage": "משהו השתבש השינוי לא נשמר"
+  },
   "notFoundPage": {
     "notFoundText": "\uD83D\uDE32 העמוד שאתם מחפשים לא נמצא נסו כתובת אחרת \uD83D\uDE32"
   },
   "shared": {
+    "save": "שמור",
+    "close": "סגור",
+    "edit": "ערוך",
     "softcover": "כריכה רכה",
     "hardcover": "כריכה קשה",
     "add_to_cart": "הוסף לעגלה",

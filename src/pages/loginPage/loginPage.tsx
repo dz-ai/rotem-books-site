@@ -1,21 +1,27 @@
 import React, {useState} from "react";
 import "./loginPage.css";
+import {useLocation, useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
-import {useNavigate} from "react-router-dom";
+import {ThreeDots} from "react-loader-spinner";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
-// todo navigate properly after login
+
 const LoginPage = () => {
 
     const generalContext = useGeneralStateContext();
 
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const from = location.state?.from?.pathname || "/admin-page";
+
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [error, setError] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
 
         if (!email || !password) {
             setError(generalContext.t('loginPage.emailPasswordRequiredError'));
@@ -35,13 +41,14 @@ const LoginPage = () => {
 
             if (response.ok) {
                 setError('');
-                alert(generalContext.t('loginPage.loginSuccess'));
-                navigate(-2);
+                navigate(from, {replace: true});
             } else {
                 setError(data.message || generalContext.t('loginPage.loginError'));
             }
+            setLoading(false);
         } catch (err) {
             setError(err instanceof Error ? err.message : generalContext.t('loginPage.serverError'));
+            setLoading(false);
         }
     };
 
@@ -72,7 +79,20 @@ const LoginPage = () => {
                 />
                 <button
                     type="submit"
-                    className="reusable-control-btn">{generalContext.t('loginPage.submitButton')}
+                    className="reusable-control-btn">
+                    {
+                        !loading ?
+                            generalContext.t('loginPage.submitButton')
+                            :
+                            <ThreeDots
+                                visible={true}
+                                height="35"
+                                width="35"
+                                color="#3f3fbf"
+                                radius="9"
+                                ariaLabel="three-dots-loading"
+                            />
+                    }
                 </button>
             </form>
         </div>

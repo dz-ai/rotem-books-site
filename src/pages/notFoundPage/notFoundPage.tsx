@@ -3,7 +3,7 @@ import {Helmet} from "react-helmet";
 import React from "react";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 
-export const NotFoundPage = () => {
+const NotFoundPage = () => {
     const generalContext = useGeneralStateContext();
     return (
         <div className="not-found-page">
@@ -16,3 +16,5 @@ export const NotFoundPage = () => {
         </div>
     );
 };
+
+export default NotFoundPage;

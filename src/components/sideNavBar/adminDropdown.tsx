@@ -16,10 +16,13 @@ const AdminDropdown: React.FC<IAdminDropdown> = ({onOptionClicked}) => {
             onClick={() => onOptionClicked()}
         >
             <li>
+                <NavLink to={'/admin-page'}>Admin Page</NavLink>
+            </li>
+            <li>
                 <NavLink to={'/back-office-page'}>Back Office</NavLink>
             </li>
             <li>
-                <NavLink to={'/login-page'}>Login</NavLink>
+                <NavLink to={'/back-office-code-coupon'}>Coupons</NavLink>
             </li>
             <li onClick={generalContext.logout}>Logout</li>
         </ul>

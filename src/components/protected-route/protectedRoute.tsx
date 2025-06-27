@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import "./protectedRoute.css";
-import {Navigate, Outlet} from "react-router-dom";
+import {Navigate, Outlet, useLocation} from "react-router-dom";
 import {ThreeDots} from "react-loader-spinner";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 
 const PrivateRoute: React.FC = () => {
 
     const generalContext = useGeneralStateContext();
+    const location = useLocation();
 
     const [firstLoad, setFirstLoad] = useState(true);
 
@@ -27,7 +28,7 @@ const PrivateRoute: React.FC = () => {
             />
         </div>
     );
-    return generalContext.isLoggedIn ? <Outlet/> : <Navigate to="/login-page"/>;
+    return generalContext.isLoggedIn ? <Outlet/> : <Navigate to="/login-page" state={{from: location}} replace/>;
 };
 
 export default PrivateRoute;

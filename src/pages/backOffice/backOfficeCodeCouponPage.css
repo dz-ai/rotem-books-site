@@ -109,6 +109,35 @@
     margin: 0 5px;
 }
 
+@media (max-width: 710px) {
+.delete-coupon-popup-wrapper {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #b3b3b3a3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-coupon-popup {
+    background: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 1px gray;
+}
+
+.delete-coupon-popup .coupon-btn {
+    margin: 0 5px;
+}
+
 @media (max-width: 650px) {
     .coupon-list-item {
         width: 100%;
@@ -116,8 +145,18 @@
         align-items: flex-start;
     }
 
+    .coupon-list-item-wrapper label {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
     .coupon-list-item-wrapper {
         flex-direction: column;
+    }
+
+    .coupon-list-item .coupon-list-item-wrapper.translated {
+        align-items: flex-start;
     }
 
     p.coupon-list-item-title {
@@ -125,7 +164,19 @@
         margin-left: 15px;
     }
 
+    p.coupon-list-item-title.translated {
+        margin: 0 10px 0 0;
+    }
+
     .coupon-list-item-btn-section {
+        width: 100%;
         margin-top: 10px;
+    }
+}
+
+@media (max-width: 370px) {
+    .coupon-list-item-wrapper label {
+        flex-direction: column;
+        margin-bottom: 15px;
     }
 }

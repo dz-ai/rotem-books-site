@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {Route, Routes, useLocation} from 'react-router-dom';
+import {useGeneralStateContext} from "./context/generalStateContext.tsx";
 import Header from './components/header/header.tsx';
 import Footer from './components/footer/footer.tsx';
 import HomePage from './pages/homePage/homePage.tsx';
@@ -11,14 +12,14 @@ import ContactPage from "./pages/contactPage/contactPage.tsx";
 import ClientDetailsFormPage from "./pages/clientDetailsPage/clientDetailsPage.tsx";
 import PaymentSuccessPage from "./pages/paymentSuccessFailure/paymentSuccessPage.tsx";
 import PaymentFailurePage from "./pages/paymentSuccessFailure/paymentFailurePage.tsx";
-import BackOfficePage from "./pages/backOffice/backOfficePage.tsx";
 import PricingPage from "./pages/pricingPage/pricingPage.tsx";
 import LoginPage from "./pages/loginPage/loginPage.tsx";
-import PrivateRoute from "./components/protected-route/protectedRoute.tsx";
 import PolicyPage from "./pages/policyPage/policyPage.tsx";
-import {useGeneralStateContext} from "./context/generalStateContext.tsx";
-import {BackOfficeCodeCouponPage} from "./pages/backOffice/backOfficeCodeCouponPage.tsx";
-import {NotFoundPage} from "./pages/notFoundPage/notFoundPage.tsx";
+import PrivateRoute from "./components/protected-route/protectedRoute.tsx";
+import AdminPage from "./pages/adminPage/adminPage.tsx";
+import BackOfficePage from "./pages/backOffice/backOfficePage.tsx";
+import BackOfficeCodeCouponPage from "./pages/backOffice/backOfficeCodeCouponPage.tsx";
+import NotFoundPage from "./pages/notFoundPage/notFoundPage.tsx";
 
 export enum ECoverTypeHard {
     basicPrise = 70,
@@ -65,6 +66,7 @@ const App: React.FC = () => {
                     <Route path="/payment-success-page" element={<PaymentSuccessPage/>}/>
                     <Route path="/payment-failure-page" element={<PaymentFailurePage/>}/>
                     <Route element={<PrivateRoute/>}>
+                        <Route path="/admin-page" element={<AdminPage/>}/>
                         <Route path="/back-office-page" element={<BackOfficePage/>}/>
                         <Route path="/back-office-code-coupon" element={<BackOfficeCodeCouponPage/>}/>
                     </Route>
