@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {ICoupon} from "../../../pages/backOffice/backOfficeCodeCouponPage.tsx";
 import {FaRegTrashAlt} from "react-icons/fa";
+import {useGeneralStateContext} from "../../../context/generalStateContext.tsx";
 
 type Props = {
     coupon: ICoupon;
@@ -25,6 +26,9 @@ export const BackOfficeCoupon = ({
                                  }: Props) => {
 
     const nameInputRef = useRef<HTMLInputElement>(null);
+
+    const generalContext = useGeneralStateContext();
+    const isTranslated = generalContext.language !== 'he';
 
     const [nameOfCoupon, setNameOfCoupon] = useState<string>(couponName);
     const [codeOfCoupon, setCodeOfCoupon] = useState<string>(couponCode);
@@ -51,36 +55,37 @@ export const BackOfficeCoupon = ({
 
     return (
         <li className="coupon-list-item">
-            <div className="coupon-list-item-wrapper">
+            <div className={isTranslated ? "coupon-list-item-wrapper translated" : "coupon-list-item-wrapper"}>
                 <label>
-                    <p className="coupon-list-item-title">שם הקופון</p>
+                    <p className={isTranslated ? "coupon-list-item-title translated" : "coupon-list-item-title"}>{generalContext.t('backOfficeCoupons.couponName')}</p>
                     <input
                         ref={nameInputRef}
                         type="text"
                         value={nameOfCoupon}
                         readOnly={inEdit !== couponId}
                         onChange={(e) => setNameOfCoupon(e.target.value)}
-                        placeholder="שם הקופון"
+                        placeholder={generalContext.t('backOfficeCoupons.couponName')}
                     />
                 </label>
                 <label>
-                    <p className="coupon-list-item-title">קוד קופון</p>
+                    <p className={isTranslated ? "coupon-list-item-title translated" : "coupon-list-item-title"}>{generalContext.t('backOfficeCoupons.couponCode')}</p>
                     <input
                         type="text"
                         value={codeOfCoupon}
                         readOnly={inEdit !== couponId}
                         onChange={(e) => setCodeOfCoupon(e.target.value)}
-                        placeholder="קוד הקופון"
+                        placeholder={generalContext.t('backOfficeCoupons.couponCode')}
                     />
                 </label>
-                <span>
-                    %<input
-                    type="text"
-                    value={discountOfCoupon}
-                    readOnly={inEdit !== couponId}
-                    onChange={(e) => setDiscountOfCoupon(e.target.value)}
-                />
-                </span>
+                <label>
+                    <p className={isTranslated ? "coupon-list-item-title translated" : "coupon-list-item-title "}>{generalContext.t('backOfficeCoupons.discount')}</p>
+                    <input
+                        type="text"
+                        value={discountOfCoupon}
+                        readOnly={inEdit !== couponId}
+                        onChange={(e) => setDiscountOfCoupon(e.target.value)}
+                    />
+                </label>
 
                 <div className="coupon-list-item-btn-section">
                     {inEdit === couponId ? (
@@ -97,9 +102,10 @@ export const BackOfficeCoupon = ({
                                     discount: discountOfCoupon,
                                     createdAt: coupon.createdAt || new Date(),
                                 })
-                            }}>שמור</button>
+                            }}>{generalContext.t('shared.save')}</button>
                     ) : (
-                        <button className="coupon-btn" onClick={() => setInEdit(couponId)}>ערוך</button>
+                        <button className="coupon-btn"
+                                onClick={() => setInEdit(couponId)}>{generalContext.t('shared.edit')}</button>
                     )}
                     <button
                         className="coupon-btn delete-btn"

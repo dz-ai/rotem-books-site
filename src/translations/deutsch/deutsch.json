@@ -112,6 +112,12 @@
     "loginError": "Etwas ist schief gelaufen",
     "serverError": "Keine Verbindung zum Server möglich"
   },
+  "adminPage": {
+    "title": "Admin-Menü",
+    "coupons": "Gutscheine",
+    "orders": "Bestellverfolgung",
+    "logout": "Abmelden"
+  },
   "backOfficePage": {
     "orders": "Bestellungen",
     "ordersLoading": "Bestellungen werden geladen",
@@ -136,10 +142,23 @@
     "books": "Bücher",
     "total_item_price": "Gesamtpreis für Artikel"
   },
+  "backOfficeCoupons": {
+    "newCouponBtn": "Neuen Gutschein hinzufügen",
+    "couponName": "Gutscheinname",
+    "couponCode": "Gutscheincode",
+    "discount": "Rabatt (%)",
+    "noCouponsToShow": "Keine Gutscheine vorhanden",
+    "deleteCouponQuestion": "Möchten Sie den Gutschein stornieren?",
+    "deleteCoupon": "Gutschein stornieren",
+    "errorMessage": "Etwas ist schiefgelaufen, die Änderung wurde nicht gespeichert"
+  },
   "notFoundPage": {
     "notFoundText": "😲 Die Seite, die Sie suchen, wurde nicht gefunden. Bitte versuchen Sie es mit einer anderen Adresse. 😲"
   },
   "shared": {
+    "save": "Speichern",
+    "close": "Schließen",
+    "edit": "Bearbeiten",
     "softcover": "Taschenbuch",
     "hardcover": "Gebundene Ausgabe",
     "add_to_cart": "In den Warenkorb",

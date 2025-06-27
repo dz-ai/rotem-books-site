@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./backOfficeCodeCouponPage.css"
 import {BackOfficeCoupon} from "../../components/backOffice/backOfficeCoupon/backOfficeCoupon.tsx";
+import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import {useUserConfirmation} from "../../hooks/useUserConfirmation.ts";
 import {ThreeDots} from "react-loader-spinner";
 import {Helmet} from "react-helmet";
@@ -14,6 +15,7 @@ export interface ICoupon {
 }
 
 const BackOfficeCodeCouponPage = () => {
+    const generalContext = useGeneralStateContext();
 
     const {isVisible, requestConfirmation, handleUserResponse} = useUserConfirmation();
 
@@ -40,7 +42,7 @@ const BackOfficeCodeCouponPage = () => {
             if (!savedCoupon) {
                 // the Objects reference must be changed to trigger rerender and set the values of the old coupons list.
                 setCoupons([...coupons.map(coupon => ({...coupon}))]);
-                setMessage(`משהו השתבש השינוי לא נשמר`);
+                setMessage(generalContext.t('backOfficeCoupons.errorMessage'));
                 return;
             }
             const couponToEditIndex = coupons.findIndex((coupon: ICoupon) => savedCoupon._id === coupon._id);
@@ -62,7 +64,7 @@ const BackOfficeCodeCouponPage = () => {
 
             const deletedCoupon: ICoupon | null = await saveCoupon(couponId, action, payload);
             if (!deletedCoupon) {
-                setMessage(`משהו השתבש השינוי לא נשמר`);
+                setMessage(generalContext.t('backOfficeCoupons.errorMessage'));
                 return;
             }
             setCoupons(prevState => {
@@ -134,7 +136,7 @@ const BackOfficeCodeCouponPage = () => {
                     disabled={inEdit !== null}>
                     +
                 </button>
-                <p>הוסף קופון חדש</p>
+                <p>{generalContext.t('backOfficeCoupons.newCouponBtn')}</p>
             </div>
             <ul className="coupon-list" onClick={() => setMessage(null)}>
                 {
@@ -167,7 +169,7 @@ const BackOfficeCodeCouponPage = () => {
                 }
                 {
                     coupons.length === 0 && !loading &&
-                    <p className="no-coupons-to-display">אין כרגע קופונים להציג</p>
+                    <p className="no-coupons-to-display">{generalContext.t('backOfficeCoupons.noCouponsToShow')}</p>
                 }
             </ul>
             {
@@ -178,13 +180,13 @@ const BackOfficeCodeCouponPage = () => {
                 isVisible &&
                 <div className="delete-coupon-popup-wrapper">
                     <div className="delete-coupon-popup">
-                        <p>האם ברצונך לבטל את הקופון?</p>
+                        <p>{generalContext.t('backOfficeCoupons.deleteCouponQuestion')}</p>
                         <section>
                             <button className="coupon-btn delete-btn" onClick={() => handleUserResponse(true)}>
-                                בטל קופון
+                                {generalContext.t('backOfficeCoupons.deleteCoupon')}
                             </button>
                             <button className="coupon-btn" onClick={() => handleUserResponse(false)}>
-                                סגור
+                                {generalContext.t('shared.close')}
                             </button>
                         </section>
                     </div>

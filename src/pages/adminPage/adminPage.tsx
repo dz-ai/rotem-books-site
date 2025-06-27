@@ -5,6 +5,7 @@ import {NavLink} from "react-router-dom";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import {CiLogout} from "react-icons/ci";
 import {ThreeDots} from "react-loader-spinner";
+import {logo} from "../../assets";
 
 const AdminPage = () => {
     const generalContext = useGeneralStateContext();
@@ -17,14 +18,14 @@ const AdminPage = () => {
                 <meta name="robots" content="noindex, nofollow"/>
             </Helmet>
 
-            <h2>תפריט אדמין</h2>
+            <h2>{generalContext.t('adminPage.title')}</h2>
 
             <section>
                 <NavLink className="reusable-control-btn" to={'/back-office-code-coupon'}>
-                    קופונים
+                    {generalContext.t('adminPage.coupons')}
                 </NavLink>
                 <NavLink className="reusable-control-btn" to={'/back-office-page'}>
-                    מעקב הזמנות
+                    {generalContext.t('adminPage.orders')}
                 </NavLink>
             </section>
 
@@ -37,8 +38,9 @@ const AdminPage = () => {
                 {
                     !loading ?
                         <>
-                            <CiLogout/>
-                            התנתק
+                            {generalContext.language !== 'he' && <CiLogout/>}
+                            {generalContext.t('adminPage.logout')}
+                            {generalContext.language === 'he' && <CiLogout/>}
                         </>
                         :
                         <ThreeDots
@@ -51,7 +53,8 @@ const AdminPage = () => {
                         />
                 }
             </button>
-            <img className="logo" src="/src/assets/rotem-logo.png" alt="Igel-Logo mit Gitarre"/></div>
+            <img className="logo" src={logo} alt={generalContext.t('shared.logoAlt')}/>
+        </div>
     );
 };
 

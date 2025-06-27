@@ -112,6 +112,12 @@
     "loginError": "Something went wrong",
     "serverError": "Cannot connect to the server"
   },
+  "adminPage": {
+    "title": "Admin Menu",
+    "coupons": "Coupons",
+    "orders": "Order Tracking",
+    "logout": "Log out"
+  },
   "backOfficePage": {
     "orders": "Orders",
     "ordersLoading": "Orders are loading",
@@ -136,10 +142,23 @@
     "books": "Books",
     "total_item_price": "Total Item Price"
   },
+  "backOfficeCoupons": {
+    "newCouponBtn": "Add new coupon",
+    "couponName": "Coupon name",
+    "couponCode": "Coupon code",
+    "discount": "Discount (%)",
+    "noCouponsToShow": "No coupons to display",
+    "deleteCouponQuestion": "Do you want to cancel the coupon?",
+    "deleteCoupon": "Cancel coupon",
+    "errorMessage": "Something went wrong, the change was not saved"
+  },
   "notFoundPage": {
     "notFoundText": "😲 The page you are looking for was not found. Please try a different address. 😲"
   },
   "shared": {
+    "save": "Save",
+    "close": "Close",
+    "edit": "Edit",
     "softcover": "Softcover",
     "hardcover": "Hardcover",
     "add_to_cart": "Add to Cart",
