@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build:prod": "tsc -b && vite build && cp static/sitemap.xml dist/sitemap.xml && cp static/robots.prod.txt dist/robots.txt",
-    "build:test": "tsc -b && vite build && cp static/robots.test.txt dist/robots.txt",
+    "build:test": "tsc -b && vite build && cp static/robots.test.txt dist/robots.txt && cp static/welcome-page.html dist/welcome-page.html",
     "lint": "eslint .",
     "preview": "vite preview",
     "netlify-dev": "netlify dev",

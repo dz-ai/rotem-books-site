@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" href="/src/assets/rotem-logo.png" type="image/x-icon">
+    <style>
+        html {
+            height: auto;
+            min-height: 100%;
+        }
+
+        body {
+            box-sizing: border-box;
+            height: auto;
+            min-height: 100%;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px 20px 100px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid;
+        }
+
+        header img {
+            width: 100px;
+            height: auto;
+        }
+
+        a {
+            background: #6cb7fe;
+            color: #330000;
+            padding: 20px;
+            font-size: larger;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        a:hover {
+            background: #83c4ff;
+        }
+
+        a:active {
+            background: #90cbff;
+        }
+
+        .welcome-page-btn-section {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0 50px 0;
+        }
+
+        .welcome-page-github-btn {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <title>Welcome-Page</title>
+</head>
+<body>
+<header>
+    <h2>Bücher Online-Shop Projekt</h2>
+    <img src="https://ik.imagekit.io/thfdl6dmv/rotem-books-site/_Pngtree_free%20cartoon%20book_4664481.png?updatedAt=1751194834784"
+         alt="books">
+</header>
+<p>
+    Hallo und herzlich willkommen zu meinem Projekt. Die Website ist ein Online-Kinderbuchladen, den ich für eine
+    Freundin gemacht habe, damit sie ihre Kinderbücher online verkaufen kann.
+    Die echte Seite läuft auf Hebräisch und man hat natürlich als Besucher keinen Zugang zum Admin-Bereich.<br/>
+    Deswegen
+    habe ich auch eine Demo-Variante erstellt.
+    Dadurch können die Besucher, die die Seite als Projekt sehen möchten, auch eine übersetze Version sehen und der
+    Zugang zum Admin-Bereich ist auch möglich.<br/><br/>
+    Die Demo-Seite benutzt ein Demo-Zahlungs-System. Da die Seite in Israel läuft, musste ich israelische API benutzen
+    und
+    deshalb ist das Formular leider nur auf Hebräisch.<br/><br/>
+    Die Kreditkarten-Daten lauten:<br/> Karten-Nummer: 4580 0000 0000 0000<br/> Ablaufdatum - 11/26<br/> Prüfnummer -
+    123<br/><br/>
+    Das letzte Feld im Formular ist der Ausweis, aber es muss nicht ausgefüllt werden.<br/><br/>
+    Damit Sie sich leicht und ohne Copy-Paste in die Login-Page einloggen können, habe ich den Username und das Passwort
+    automatisch ausgefüllt. Natürlich passiert es in der echten Version nicht!
+</p>
+<section class="welcome-page-btn-section">
+    <a href="https://rotem-books-test-env.netlify.app/" target="_blank">zur Demo-Seite</a>
+    <a href="https://rotem-books-test-env.netlify.app/login-page?user=user@example.com&pass=4YDNDoR7We1pN(oA;0bU'Vc5S9rJ"
+       target="_blank">zum Demo-Site-Backoffice</a>
+    <a href="https://www.rotems-books.store/" target="_blank">zur echten Seite</a>
+</section>
+
+<div class="welcome-page-github-btn">
+    <a href="https://github.com/dz-ai/rotem-books-site" target="_blank">zu GitHub repository</a>
+</div>
+</body>
+</html>

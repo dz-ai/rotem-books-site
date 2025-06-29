@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./loginPage.css";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
@@ -51,6 +51,15 @@ const LoginPage = () => {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        const params: URLSearchParams = new URLSearchParams(window.location.search);
+        const user: string | null = params.get('user');
+        const pass: string | null = params.get('pass');
+
+        if (user) setEmail(user);
+        if (pass) setPassword(pass);
+    }, []);
 
     return (
         <div className="login-container">
