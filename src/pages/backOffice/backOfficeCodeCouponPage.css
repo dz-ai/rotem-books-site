@@ -115,6 +115,23 @@
     margin: 0 5px;
 }
 
+.back-office-coupon-page .no-coupons-to-display {
+    color: green;
+    margin: auto;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.back-office-coupon-page .loader {
+    margin: auto;
+}
+
 @media (max-width: 710px) {
     .coupon-list-item {
         width: 100%;
