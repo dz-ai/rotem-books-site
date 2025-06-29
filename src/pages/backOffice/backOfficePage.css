@@ -177,8 +177,12 @@
     margin: auto;
 }
 
-.back-office-coupon-page .message {
+.red {
     color: red;
+}
+
+.green {
+    color: green;
 }
 
 .back-office-coupon-page .loader {

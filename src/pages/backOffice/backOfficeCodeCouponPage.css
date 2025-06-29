@@ -3,6 +3,12 @@
     padding: 30px;
 }
 
+.back-office-coupon-page .add-new-coupon-btn-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .back-office-coupon-page p {
     margin: 0;
 }
