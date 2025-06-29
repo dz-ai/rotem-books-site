@@ -149,6 +149,7 @@
     "noCouponsToShow": "אין כרגע קופונים להציג",
     "deleteCouponQuestion": "האם ברצונך לבטל את הקופון?",
     "deleteCoupon": "בטל קופון",
+    "saveMessage": "הקופון נשמר בהצלחה",
     "errorMessage": "משהו השתבש השינוי לא נשמר"
   },
   "notFoundPage": {

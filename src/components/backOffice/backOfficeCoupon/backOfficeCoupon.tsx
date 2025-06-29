@@ -44,7 +44,11 @@ export const BackOfficeCoupon = ({
         if (+discountOfCoupon === 0) {
             nameInputRef.current?.focus();
         }
-    }, []);
+
+        if (inEdit) {
+            nameInputRef.current?.focus();
+        }
+    }, [inEdit]);
 
     // Detect any changes in coupon or its values and update the UI
     useEffect(() => {

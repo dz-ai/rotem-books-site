@@ -150,6 +150,7 @@
     "noCouponsToShow": "No coupons to display",
     "deleteCouponQuestion": "Do you want to cancel the coupon?",
     "deleteCoupon": "Cancel coupon",
+    "saveMessage": "Coupon saved successfully",
     "errorMessage": "Something went wrong, the change was not saved"
   },
   "notFoundPage": {

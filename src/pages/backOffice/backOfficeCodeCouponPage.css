@@ -3,6 +3,12 @@
     padding: 30px;
 }
 
+.back-office-coupon-page .add-new-coupon-btn-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .back-office-coupon-page p {
     margin: 0;
 }
@@ -107,6 +113,23 @@
 
 .delete-coupon-popup .coupon-btn {
     margin: 0 5px;
+}
+
+.back-office-coupon-page .no-coupons-to-display {
+    color: green;
+    margin: auto;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.back-office-coupon-page .loader {
+    margin: auto;
 }
 
 @media (max-width: 710px) {

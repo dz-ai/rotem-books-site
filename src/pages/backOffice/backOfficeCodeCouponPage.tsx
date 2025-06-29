@@ -21,7 +21,7 @@ const BackOfficeCodeCouponPage = () => {
 
     const [coupons, setCoupons] = useState<ICoupon[]>([]);
     const [inEdit, setInEdit] = useState<null | string>(null); /* get the coupon id as a string to make unique identifier to the currently edited coupon */
-    const [message, setMessage] = useState<string | null>(null);
+    const [message, setMessage] = useState<{ text: string, color: 'red' | 'green' } | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     // Add new Coupon with empty fields and set the status to "in Edit"
@@ -42,12 +42,13 @@ const BackOfficeCodeCouponPage = () => {
             if (!savedCoupon) {
                 // the Objects reference must be changed to trigger rerender and set the values of the old coupons list.
                 setCoupons([...coupons.map(coupon => ({...coupon}))]);
-                setMessage(generalContext.t('backOfficeCoupons.errorMessage'));
+                setMessage({text: generalContext.t('backOfficeCoupons.errorMessage'), color: 'red'});
                 return;
             }
             const couponToEditIndex = coupons.findIndex((coupon: ICoupon) => savedCoupon._id === coupon._id);
             coupons[couponToEditIndex] = savedCoupon;
             setCoupons([...coupons]);
+            setMessage({text: generalContext.t('backOfficeCoupons.saveMessage'), color: 'green'});
         }
 
         if (action === 'delete') {
@@ -64,7 +65,7 @@ const BackOfficeCodeCouponPage = () => {
 
             const deletedCoupon: ICoupon | null = await saveCoupon(couponId, action, payload);
             if (!deletedCoupon) {
-                setMessage(generalContext.t('backOfficeCoupons.errorMessage'));
+                setMessage({text: generalContext.t('backOfficeCoupons.errorMessage'), color: 'red'});
                 return;
             }
             setCoupons(prevState => {
@@ -129,15 +130,21 @@ const BackOfficeCodeCouponPage = () => {
                 <meta name="robots" content="noindex, nofollow"/>
             </Helmet>
 
-            <div className="add-new-coupon-btn-wrapper">
-                <button
-                    className="coupon-btn new-coupon-btn"
-                    onClick={addNewCoupon}
-                    disabled={inEdit !== null}>
-                    +
-                </button>
-                <p>{generalContext.t('backOfficeCoupons.newCouponBtn')}</p>
-            </div>
+            <section className="add-new-coupon-btn-section">
+                <div className="add-new-coupon-btn-wrapper">
+                    <button
+                        className="coupon-btn new-coupon-btn"
+                        onClick={addNewCoupon}
+                        disabled={inEdit !== null}>
+                        +
+                    </button>
+                    <p>{generalContext.t('backOfficeCoupons.newCouponBtn')}</p>
+                </div>
+                {
+                    message &&
+                    <p className={message.color}>{message.text}</p>
+                }
+            </section>
             <ul className="coupon-list" onClick={() => setMessage(null)}>
                 {
                     coupons.length > 0 &&
@@ -172,10 +179,6 @@ const BackOfficeCodeCouponPage = () => {
                     <p className="no-coupons-to-display">{generalContext.t('backOfficeCoupons.noCouponsToShow')}</p>
                 }
             </ul>
-            {
-                message &&
-                <p className="message">{message}</p>
-            }
             {
                 isVisible &&
                 <div className="delete-coupon-popup-wrapper">

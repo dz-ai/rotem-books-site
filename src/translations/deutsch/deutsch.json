@@ -150,6 +150,7 @@
     "noCouponsToShow": "Keine Gutscheine vorhanden",
     "deleteCouponQuestion": "Möchten Sie den Gutschein stornieren?",
     "deleteCoupon": "Gutschein stornieren",
+    "saveMessage": "Der Gutschein wurde erfolgreich gespeichert",
     "errorMessage": "Etwas ist schiefgelaufen, die Änderung wurde nicht gespeichert"
   },
   "notFoundPage": {
