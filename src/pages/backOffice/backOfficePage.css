@@ -171,16 +171,3 @@
     margin: auto;
     width: fit-content;
 }
-
-.back-office-coupon-page .no-coupons-to-display {
-    color: green;
-    margin: auto;
-}
-
-.back-office-coupon-page .message {
-    color: red;
-}
-
-.back-office-coupon-page .loader {
-    margin: auto;
-}
