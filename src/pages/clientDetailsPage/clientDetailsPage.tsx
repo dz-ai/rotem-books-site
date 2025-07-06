@@ -39,6 +39,7 @@ export interface IPaymentDetails {
     income: TPaymentDetailsItem[];
     cart: ICartItem[];
     totalQuantityInCart: number;
+    couponCode: string;
 }
 
 function validateFormFields(paymentDetails: IPaymentDetails, policyAgreement: boolean, generalContext: GeneralStateContextType): {
@@ -68,7 +69,6 @@ function validateFormFields(paymentDetails: IPaymentDetails, policyAgreement: bo
     return {field: 0, status: true, message: ''};
 }
 
-// todo CHANGE WHOLE PRICE CALCULATION TO BE DONE FROM THE BACKEND move the Produces-List to the Backend too
 const ClientDetailsFormPage: React.FC = () => {
 
     const generalContext = useGeneralStateContext();
@@ -141,6 +141,7 @@ const ClientDetailsFormPage: React.FC = () => {
             income,
             cart: cartContext.cart,
             totalQuantityInCart: cartContext.totalQuantityInCart,
+            couponCode,
         }
 
         const {field, status, message} = validateFormFields(paymentDetails, policyAgreement, generalContext);

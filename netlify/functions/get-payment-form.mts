@@ -21,13 +21,13 @@ const handler: Handler = async (event) => {
         if (!event.body) return generateResponse(500, 'Error: the client details are missing');
 
         // get all the user and the payment details to create valid orderDetails Object that will be sent with the get payment form query
-        const {amount, client, income, cart, totalQuantityInCart}: IPaymentDetails = JSON.parse(event.body);
+        const {amount, client, income, cart, totalQuantityInCart, couponCode}: IPaymentDetails = JSON.parse(event.body);
         const {city, street, houseNum, apartmentNum, zipCode}: IAddress = client.address;
         const createAddressString = `רחוב ${street} ${houseNum} ${apartmentNum !== '' ? 'דירה ' + apartmentNum : ''}`;
         const {name, phone, emails}: IClientDetails = client;
 
         // calculate the total price on the backend to prevent tampering from the frontend.
-        const totalPrice: number = calculateTotalPrice(cart, totalQuantityInCart);
+        const totalPrice: number = await calculateTotalPrice(cart, totalQuantityInCart, couponCode);
         if (totalPrice !== amount) return generateResponse(400, 'Price mismatch. Total does not match calculated value.');
 
         const getTokenUrl = `${morningApiUrl}/account/token`;
