@@ -21,18 +21,6 @@ import BackOfficePage from "./pages/backOffice/backOfficePage.tsx";
 import BackOfficeCodeCouponPage from "./pages/backOffice/backOfficeCodeCouponPage.tsx";
 import NotFoundPage from "./pages/notFoundPage/notFoundPage.tsx";
 
-export enum ECoverTypeHard {
-    basicPrise = 70,
-    discountPrise = 60,
-}
-
-export enum ECoverTypeSoft {
-    basicPrise = 40,
-    towBooksPrise = 35,
-    threeBooksPrise = 30,
-    discountPrise = 25,
-}
-
 // TODO create loader component
 const App: React.FC = () => {
 

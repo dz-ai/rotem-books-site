@@ -2,13 +2,13 @@ import React, {useEffect, useRef, useState} from 'react';
 import './clientDetailsPage.css';
 import {googleLogo} from "../../assets";
 import {NavLink} from 'react-router-dom';
-import {useCart} from "../../context/cartContext.tsx";
+import {ICartItem, useCart} from "../../context/cartContext.tsx";
 import {GeneralStateContextType, useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import {ThreeDots} from "react-loader-spinner";
 import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
 import {FcCheckmark} from "react-icons/fc";
 import {Helmet} from "react-helmet";
-import {determinePrice} from "../../components/book/determineBookPriceUtil.ts";
+import {determinePrice} from "../../../shared/determine-price.ts";
 
 export interface IAddress {
     city: string;
@@ -37,6 +37,8 @@ export interface IPaymentDetails {
     amount: number;
     client: IClientDetails;
     income: TPaymentDetailsItem[];
+    cart: ICartItem[];
+    totalQuantityInCart: number;
 }
 
 function validateFormFields(paymentDetails: IPaymentDetails, policyAgreement: boolean, generalContext: GeneralStateContextType): {
@@ -137,6 +139,8 @@ const ClientDetailsFormPage: React.FC = () => {
             amount: cartContext.discountCouponPrice || cartContext.totalPrice,
             client,
             income,
+            cart: cartContext.cart,
+            totalQuantityInCart: cartContext.totalQuantityInCart,
         }
 
         const {field, status, message} = validateFormFields(paymentDetails, policyAgreement, generalContext);
@@ -166,7 +170,7 @@ const ClientDetailsFormPage: React.FC = () => {
                         scrollTo('up');
                     }
 
-                    setShowMessage(paymentForm.errorMessage);
+                    setShowMessage(paymentForm.errorMessage || paymentForm.message);
                 }
             } catch (err) {
                 console.error(err);
@@ -296,6 +300,9 @@ const ClientDetailsFormPage: React.FC = () => {
 
     return (
         <div className="client-details-page">
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
+            </Helmet>
 
             <div className="back-to-cart-btn-container">
                 <NavLink to="/cart-page" className="reusable-control-btn">

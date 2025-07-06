@@ -1,6 +1,19 @@
-import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
+import {coverType} from "../src/components/book/book.tsx";
 
-export function determinePrice(coverType: string, quantityInCart: number | null, discount?: number | null): ECoverTypeHard | ECoverTypeSoft {
+export enum ECoverTypeHard {
+    basicPrise = 70,
+    discountPrise = 60,
+}
+
+export enum ECoverTypeSoft {
+    basicPrise = 40,
+    towBooksPrise = 35,
+    threeBooksPrise = 30,
+    discountPrise = 25,
+}
+
+
+export function determinePrice(coverType: coverType, quantityInCart: number | null, discount?: number | null): ECoverTypeHard | ECoverTypeSoft {
     let price: number;
 
     if (coverType === 'hard-cover') {
