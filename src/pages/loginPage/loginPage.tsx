@@ -52,13 +52,16 @@ const LoginPage = () => {
         }
     };
 
+    // Only for test_env: used when a recruiter navigates from the Welcome Page link.
     useEffect(() => {
-        const params: URLSearchParams = new URLSearchParams(window.location.search);
-        const user: string | null = params.get('user');
-        const pass: string | null = params.get('pass');
+        if (import.meta.env.VITE_TEST_ENV === 'true') {
+            const params: URLSearchParams = new URLSearchParams(window.location.search);
+            const user: string | null = params.get('user');
+            const pass: string | null = params.get('pass');
 
-        if (user) setEmail(user);
-        if (pass) setPassword(pass);
+            if (user) setEmail(user);
+            if (pass) setPassword(pass);
+        }
     }, []);
 
     return (
