@@ -1,6 +1,8 @@
 import {Handler} from '@netlify/functions';
 import cookie from 'cookie';
 import {IAddress, IClientDetails, IPaymentDetails} from "../../src/pages/clientDetailsPage/clientDetailsPage.tsx";
+import {generateResponse} from "../../netlify-functions-util/validateRequest.ts";
+import {calculateTotalPrice} from "../../netlify-functions-util/calculateTotalPrice.ts";
 
 // get a credit card payment from "morning API (חשבונית ירוקה)
 const handler: Handler = async (event) => {
@@ -16,21 +18,17 @@ const handler: Handler = async (event) => {
     const urlToUse = dev ? 'https://rotem-books-test-env.netlify.app' : 'https://www.rotems-books.store';
 
     try {
-        if (!event.body) {
-            return {
-                statusCode: 500,
-                body: 'Error: the client details are missing',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-        }
+        if (!event.body) return generateResponse(500, 'Error: the client details are missing');
 
         // get all the user and the payment details to create valid orderDetails Object that will be sent with the get payment form query
-        const {amount, client, income}: IPaymentDetails = JSON.parse(event.body);
+        const {amount, client, income, cart, totalQuantityInCart, couponCode}: IPaymentDetails = JSON.parse(event.body);
         const {city, street, houseNum, apartmentNum, zipCode}: IAddress = client.address;
         const createAddressString = `רחוב ${street} ${houseNum} ${apartmentNum !== '' ? 'דירה ' + apartmentNum : ''}`;
         const {name, phone, emails}: IClientDetails = client;
+
+        // calculate the total price on the backend to prevent tampering from the frontend.
+        const totalPrice: number = await calculateTotalPrice(cart, totalQuantityInCart, couponCode);
+        if (totalPrice !== amount) return generateResponse(400, 'Price mismatch. Total does not match calculated value.');
 
         const getTokenUrl = `${morningApiUrl}/account/token`;
         const getPaymentFormUrl = `${morningApiUrl}/payments/form`;

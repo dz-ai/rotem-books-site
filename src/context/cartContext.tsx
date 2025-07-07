@@ -1,7 +1,7 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 import {coverType} from "../components/book/book.tsx";
-import {determinePrice} from "../components/book/determineBookPriceUtil.ts";
+import {determinePrice} from "../../shared/determine-price.ts";
 import {useGeneralStateContext} from "./generalStateContext.tsx";
 
 export interface ICartItem {

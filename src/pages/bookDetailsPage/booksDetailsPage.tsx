@@ -4,7 +4,7 @@ import {useNavigate, useParams, useSearchParams} from 'react-router-dom';
 import {coverType, IBook} from '../../components/book/book.tsx';
 import {useCart} from "../../context/cartContext.tsx";
 import {useInterSectionObserver} from "../../hooks/useIntersectionObserver.ts";
-import {ECoverTypeHard, ECoverTypeSoft} from "../../App.tsx";
+import {ECoverTypeHard, ECoverTypeSoft} from "../../../shared/determine-price.ts";
 import {useGeneralStateContext} from "../../context/generalStateContext.tsx";
 import ArrowIcon from "../../componentsReusable/arrowIcon/arrowIcon.tsx";
 import {Helmet} from "react-helmet";

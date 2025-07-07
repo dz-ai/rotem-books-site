@@ -25,6 +25,7 @@
   "include": [
     "src",
     "netlify",
-    "netlify-functions-util"
+    "netlify-functions-util",
+    "shared"
   ]
 }
