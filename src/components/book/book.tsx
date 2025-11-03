@@ -119,6 +119,7 @@ const Book: React.FC<BookProperties> = ({book}) => {
                      alt={book.title}
                 />
                 <h3>{book.title}</h3>
+                <div className="book-detail-question">{generalContext.t('home.bookDetailQuestion')}</div>
                 {
                     book.coverType.length > 1 ?
                         <div

@@ -1,6 +1,7 @@
 {
   "home": {
-    "title": "Rotems Bücher"
+    "title": "Rotems Bücher",
+    "bookDetailQuestion": "Über das Buch"
   },
   "header": {
     "homeBtn": "Startseite",

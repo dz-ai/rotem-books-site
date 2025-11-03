@@ -35,6 +35,12 @@
     margin: 0.5em 0;
 }
 
+.book-detail-question {
+    margin-bottom: 1em;
+    white-space: break-spaces;
+    color: #2d44fff5;
+}
+
 .book p {
     margin: 0;
 }
