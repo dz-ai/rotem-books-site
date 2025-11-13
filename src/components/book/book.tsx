@@ -146,7 +146,7 @@ const Book: React.FC<BookProperties> = ({book}) => {
                             </label>
                         </div>
                         :
-                        <p>{generalContext.t('shared.softcover')}</p>
+                        <p>{book.coverType[0] === 'soft-cover' ? generalContext.t('shared.softcover') : generalContext.t('shared.hardcover')}</p>
                 }
                 <p>₪{bookPrice}</p>
                 <div className="add-to-cart-container">
